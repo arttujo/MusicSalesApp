@@ -2,8 +2,8 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 14060,
-  "expoServerNgrokUrl": "https://dg-f23.anonymous.myfirstreactapp.exp.direct",
-  "packagerNgrokUrl": "https://packager.dg-f23.anonymous.myfirstreactapp.exp.direct",
-  "ngrokPid": 11216
+  "packagerPid": 6660,
+  "expoServerNgrokUrl": "https://dg-f23.anonymous.reactproject.exp.direct",
+  "packagerNgrokUrl": "https://packager.dg-f23.anonymous.reactproject.exp.direct",
+  "ngrokPid": 13648
 }
