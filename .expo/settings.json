@@ -1,0 +1,8 @@
+{
+  "urlRandomness": "dg-f23",
+  "hostType": "tunnel",
+  "lanType": "ip",
+  "dev": true,
+  "minify": false,
+  "https": false
+}
