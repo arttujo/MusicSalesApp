@@ -24,6 +24,7 @@ const Single = props => {
   const file = navigation.state.params.file;
   console.log("single:", file);
 
+
   useEffect(() => {
     fetchUser(file.user_id).then(json => {
       console.log("singleFetchUser", json);

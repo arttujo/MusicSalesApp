@@ -17,6 +17,7 @@ const validate = require("validate.js");
 import { MediaContext } from "../contexts/MediaContext";
 import {Video} from 'expo-av';
 
+
 import {
   Container,
   Header,
