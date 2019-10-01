@@ -30,7 +30,7 @@ const useUploadHooks = props => {
   };
 
   const handleUpload = async (result, title, description) => {
-    const { uploadFile, reloadAllMedia } = mediaAPI();
+    const { uploadFile, reloadAllMedia,addDefaultTag } = mediaAPI();
     // ImagePicker saves the taken photo to disk and returns a local URI to it
     const localUri = result.uri;
     const filename = localUri.split("/").pop();
@@ -58,30 +58,16 @@ const useUploadHooks = props => {
 
     const userToken = await AsyncStorage.getItem("userToken");
     console.log("FORMDATA", formData);
-    // const response = await fetch("http://media.mw.metropolia.fi/wbma/media", {
-    //   method: "POST",
-    //   body: formData,
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //     "x-access-token": userToken
-    //   }
-    // });
 
     uploadFile(formData).then(json => {
-      // console.log(json);
-      // clearForm();
-      // setMedia([]);
-      // setTimeout(() => {
-      //   reloadAllMedia(setMedia);
-      //   //setLoading(false);
-      //   props.navigation.navigate("Home");
-      //   console.log("Upload Done!");
-      //   alert("Upload Done!");
-      // }, 2000);
-    });
-    //const data = await response.json();
+      console.log("upload json:",json)
+      const defTag = {
+        file_id: json.file_id,
+        tag: 'music-sales_'
+      }
+      addDefaultTag(defTag).then(json=>console.log("added default tag:",json))
 
-    //return data
+    });
   };
 
   return {
