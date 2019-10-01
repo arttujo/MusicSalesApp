@@ -16,9 +16,11 @@ import {
   Right
 } from "native-base";
 import mediaAPI from "../hooks/ApiHooks";
+import { Video } from "expo-av";
 const Single = props => {
-  const { fetchUser } = mediaAPI();
+  const { fetchUser, getTags } = mediaAPI();
   const [username, setUsername] = useState({});
+  const [tags, setTags] = useState([]);
   const { navigation } = props;
   const file = navigation.state.params.file;
   console.log("single:", file);
@@ -28,8 +30,13 @@ const Single = props => {
       console.log("singleFetchUser", json);
       setUsername(json);
     });
+    getTags(file.file_id).then(json => {
+      console.log("tags object:", json);
+      setTags(json);
+    });
   }, []);
-
+  console.log("THIS IS TAGS STATE", tags);
+ console.log()
   return (
     <Container>
       <Content>
@@ -42,34 +49,42 @@ const Single = props => {
             </Body>
           </CardItem>
           <CardItem>
-            {file.media_type === 'image' &&
-            <Image
-              source={{
-                uri:
-                  "http://media.mw.metropolia.fi/wbma/uploads/" + file.filename
-              }}
-              style={{
-                flex: 1,
-                width: null,
-                height: 350
-              }}
-            />
-            }
-            {file.media_type === 'video' &&
-              <Video source={{uri: 'http://media.mw.metropolia.fi/wbma/uploads/' + file.filename}}
+            {file.media_type === "image" && (
+              <Image
+                source={{
+                  uri:
+                    "http://media.mw.metropolia.fi/wbma/uploads/" +
+                    file.filename
+                }}
                 style={{
-                  width: '100%',
-                  height: 500,
+                  flex: 1,
+                  width: null,
+                  height: 350
+                }}
+              />
+            )}
+            {file.media_type === "video" && (
+              <Video
+                source={{
+                  uri:
+                    "http://media.mw.metropolia.fi/wbma/uploads/" +
+                    file.filename
+                }}
+                style={{
+                  width: "100%",
+                  height: 500
                 }}
                 useNativeControls={true}
               />
-              }
+            )}
           </CardItem>
 
           <CardItem>
             <Body>
-              <Text>Description</Text>
+              <Text>Description:</Text>
               <Text>{file.description}</Text>
+              <Text>Tags:</Text>
+              <Text></Text>
             </Body>
           </CardItem>
         </Card>

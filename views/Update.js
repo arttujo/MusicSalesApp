@@ -15,6 +15,7 @@ import * as Permissions from "expo-permissions";
 import mediaAPI from "../hooks/ApiHooks";
 const validate = require("validate.js");
 import { MediaContext } from "../contexts/MediaContext";
+import {Video} from 'expo-av';
 
 
 import {

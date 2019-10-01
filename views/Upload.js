@@ -16,7 +16,6 @@ import mediaAPI from "../hooks/ApiHooks";
 const validate = require("validate.js");
 import { MediaContext } from "../contexts/MediaContext";
 
-
 import {
   Container,
   Header,
@@ -35,7 +34,7 @@ import List from "../components/List";
 const Upload = props => {
   const [image, setImage] = useState({});
   const [loading, setLoading] = useState(true);
-  const { reloadAllMedia } = mediaAPI();
+  const { reloadAllMedia, setDefaultTag } = mediaAPI();
   const { media, setMedia } = useContext(MediaContext);
 
   _pickImage = async () => {
@@ -111,10 +110,10 @@ const Upload = props => {
       constraints
     );
     if (!titleError.title && !descError.description) {
-      handleUpload(image, inputs.title, inputs.description)
+      handleUpload(image, inputs.title, inputs.description);
       console.log();
       clearForm();
-      setImage()
+      setImage();
       setMedia([]);
 
       setTimeout(() => {
@@ -124,22 +123,6 @@ const Upload = props => {
         console.log("Upload Done!");
         alert("Upload Done!");
       }, 2000);
-      // .then(data => {
-      //   //should add error handling here
-      //   console.log("then data:", data);
-      //   clearForm();
-      //   setImage();
-      //   setMedia([]);
-      //   setTimeout(()=>{
-      //     reloadAllMedia(setMedia)
-      //     setLoading(false)
-      //     props.navigation.navigate("Home");
-      //   },2000)
-
-      //   console.log("Upload Done!");
-      //   alert("Upload Done!");
-      // });
-
     } else {
       const errorArray = [titleError.title, descError.description];
 

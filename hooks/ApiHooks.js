@@ -34,6 +34,21 @@ const fetchPostUrl = async (url, data) => {
   return json;
 };
 
+const fetchPostUrlUserData = async (url, data) => {
+  const userToken = await AsyncStorage.getItem("userToken");
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": userToken
+    },
+    body: JSON.stringify(data)
+  });
+  const json = await response.json();
+  console.log("fetchPostUrl json", json);
+  return json;
+};
+
 const fetchDeleteUrl = async url => {
   const userToken = await AsyncStorage.getItem("userToken");
   console.log("fetchDeleteUrl", url);
@@ -78,6 +93,26 @@ const mediaAPI = () => {
   const updateFile = (file_id, data) => {
     fetchPutUrl(apiUrl + "media/" + file_id, data).then(json => {
       console.log(json);
+    });
+  };
+
+  const addDefaultTag = data => {
+    return fetchPostUrlUserData(apiUrl + "tags/", data).then(json => {
+      console.log("addDefaultTag", json);
+      return json;
+    });
+  };
+  const addTag = data => {
+    return fetchPostUrlUserData(apiUrl + "tags/", data).then(json => {
+      console.log("addTag", json);
+      return json;
+    });
+  };
+
+  const getTags = file_id => {
+    return fetchGetUrl(apiUrl + "tags/file/" + file_id).then(json => {
+      console.log("getTags", json);
+      return json
     });
   };
 
@@ -237,7 +272,10 @@ const mediaAPI = () => {
     fetchUser,
     getUserMedia,
     deleteFile,
-    updateFile
+    updateFile,
+    addDefaultTag,
+    addTag,
+    getTags
   };
 };
 
