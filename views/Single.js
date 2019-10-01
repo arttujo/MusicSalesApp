@@ -20,7 +20,7 @@ import { Video } from "expo-av";
 const Single = props => {
   const { fetchUser, getTags } = mediaAPI();
   const [username, setUsername] = useState({});
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState();
   const { navigation } = props;
   const file = navigation.state.params.file;
   console.log("single:", file);
@@ -30,13 +30,17 @@ const Single = props => {
       console.log("singleFetchUser", json);
       setUsername(json);
     });
+  }, []);
+
+  useEffect(() => {
     getTags(file.file_id).then(json => {
-      console.log("tags object:", json);
-      setTags(json);
+      console.log("tags object:", json[0].tag);
+      setTags(json[0].tag);
     });
   }, []);
+
   console.log("THIS IS TAGS STATE", tags);
- console.log()
+
   return (
     <Container>
       <Content>
@@ -84,7 +88,7 @@ const Single = props => {
               <Text>Description:</Text>
               <Text>{file.description}</Text>
               <Text>Tags:</Text>
-              <Text></Text>
+              <Text>{tags}</Text>
             </Body>
           </CardItem>
         </Card>
