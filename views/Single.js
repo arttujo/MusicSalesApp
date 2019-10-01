@@ -16,6 +16,7 @@ import {
   Right
 } from "native-base";
 import mediaAPI from "../hooks/ApiHooks";
+import {Video} from 'expo-av';
 const Single = props => {
   const { fetchUser } = mediaAPI();
   const [username, setUsername] = useState({});
