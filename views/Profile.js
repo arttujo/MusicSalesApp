@@ -33,7 +33,8 @@ const Profile = props => {
 
   const [avatar, setAvatar] = useState(undefined);
   getAvatar().then(result => {
-    setAvatar(result);
+    console.log("getAvatar",result)
+    setAvatar(result.url);
   });
 
   const [email, setEMail] = useState({});

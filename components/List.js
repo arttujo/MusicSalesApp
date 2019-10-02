@@ -46,7 +46,7 @@ const List = props => {
 
   return (
     <BaseList
-      dataArray={media}
+      dataArray={media.reverse()}
       renderRow={item => (
         <ListItem navigation={props.navigation} singleMedia={item} />
       )}

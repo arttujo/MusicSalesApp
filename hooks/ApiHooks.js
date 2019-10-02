@@ -80,9 +80,11 @@ const fetchPutUrl = async (url, data) => {
 
 const mediaAPI = () => {
   const reloadAllMedia = setMedia => {
-    fetchGetUrl("http://media.mw.metropolia.fi/wbma/tags/music-sales_").then(json => {
-      setMedia(json);
-    });
+    fetchGetUrl("http://media.mw.metropolia.fi/wbma/tags/music-sales_").then(
+      json => {
+        setMedia(json);
+      }
+    );
   };
 
   const deleteFile = file_id => {
@@ -112,7 +114,7 @@ const mediaAPI = () => {
   const getTags = file_id => {
     return fetchGetUrl(apiUrl + "tags/file/" + file_id).then(json => {
       console.log("getTags", json);
-      return json
+      return json;
     });
   };
 
@@ -216,16 +218,28 @@ const mediaAPI = () => {
     let avatar;
     console.log("avatar", apiUrl + "tags/avatar_" + user.user_id);
     return fetchGetUrl(apiUrl + "tags/avatar_" + user.user_id).then(json => {
-      console.log("avatarJson", json);
-      avatar = apiUrl + "uploads/" + json[0].filename;
-      return avatar;
+      avatarUrl = apiUrl + "uploads/" + json[0].filename;
+      avatarId = json[0].file_id
+      console.log("Avatar:",avatarId)
+      const avatarData = {
+        url: avatarUrl,
+        id: avatarId
+      }
+      return avatarData;
     });
   };
 
-  const uploadAvatar = () =>{
-    const { user } = useContext(MediaContext);
+  const uploadAvatar = data => {
 
-    fetchPostUrlUserData()
+    uploadFile(data).then(json => {
+      const tagData = {
+        file_id: json.file_id,
+        tag: "avatar_" + json.file_id
+      };
+      addTag(tagData).then(json => {
+        console.log("uploadAvatar", json);
+      });
+    });
   };
 
   const userToContext = async () => {

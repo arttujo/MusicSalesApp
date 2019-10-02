@@ -30,7 +30,7 @@ const useUploadHooks = props => {
   };
 
   const handleUpload = async (result, title, description) => {
-    const { uploadFile, reloadAllMedia,addDefaultTag } = mediaAPI();
+    const { uploadFile, reloadAllMedia, addDefaultTag } = mediaAPI();
     // ImagePicker saves the taken photo to disk and returns a local URI to it
     const localUri = result.uri;
     const filename = localUri.split("/").pop();
@@ -60,14 +60,32 @@ const useUploadHooks = props => {
     console.log("FORMDATA", formData);
 
     uploadFile(formData).then(json => {
-      console.log("upload json:",json)
+      console.log("upload json:", json);
       const defTag = {
         file_id: json.file_id,
-        tag: 'music-sales_'
-      }
-      addDefaultTag(defTag).then(json=>console.log("added default tag:",json))
+        tag: "music-sales_"
+      };
 
+      addDefaultTag(defTag).then(json =>
+        console.log("added default tag:", json)
+      );
     });
+  };
+  const handleAvatarChange = async avatarImg => {
+    const { uploadAvatar } = mediaAPI();
+    const localUri = avatarImg.uri;
+    const filename = localUri.split("/").pop();
+    let type = "";
+    if (avatarImg.type === "image") {
+      type = match ? `image/${match[1]}` : `image`;
+
+      if (type === "image/jpg") type = "image/jpeg";
+    } else {
+      type = match ? `video/${match[1]}` : `video`;
+    }
+    const formData = new FormData();
+    formData.append("file", { uri: localUri, name: filename, type });
+    uploadAvatar(formData)
   };
 
   return {
@@ -75,7 +93,8 @@ const useUploadHooks = props => {
     handleDescChange,
     handleUpload,
     inputs,
-    clearForm
+    clearForm,
+    handleAvatarChange
   };
 };
 export default useUploadHooks;

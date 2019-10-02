@@ -37,7 +37,7 @@ import List from "../components/List";
 const ProfPicUpload = props => {
   const [image, setImage] = useState({});
   const [loading, setLoading] = useState(true);
-  const { reloadAllMedia, setDefaultTag } = mediaAPI();
+  const { reloadAllMedia, setDefaultTag,uploadAvatar,uploadFile,addTag,deleteFile } = mediaAPI();
   const { media, setMedia } = useContext(MediaContext);
 
   _pickImage = async () => {
@@ -81,7 +81,21 @@ const ProfPicUpload = props => {
   };
   const isEnabled = canSubmit();
 
-  const changeAvatar = () =>{};
+  const changeAvatar = () =>{
+    defele
+
+
+    uploadFile(data).then(json => {
+      const tagData = {
+        file_id: json.file_id,
+        tag: "avatar_" + json.file_id
+      };
+      addTag(tagData).then(json => {
+        console.log("uploadAvatar", json);
+      });
+    });
+
+  };
 
   return (
     <Container>

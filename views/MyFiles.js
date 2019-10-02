@@ -1,12 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  AsyncStorage,
-  Alert,
-  Image
-} from "react-native";
+
 import mediaAPI from "../hooks/ApiHooks";
 import ListItem from "../components/ListItem";
 import { List as BaseList } from "native-base";
@@ -31,8 +24,13 @@ import {
 } from "native-base";
 
 const MyFiles = props => {
+
   const { getUserMedia } = mediaAPI();
   const uMedia = getUserMedia();
+
+  console.log("uMedia",uMedia)
+
+
   const { navigation } = props;
 
   return (
