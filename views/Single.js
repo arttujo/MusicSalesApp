@@ -13,7 +13,7 @@ import {
   Icon,
   Left,
   Body,
-  Right
+  Right,Title,
 } from "native-base";
 import mediaAPI from "../hooks/ApiHooks";
 import { Video } from "expo-av";
@@ -43,15 +43,24 @@ const Single = props => {
 
   return (
     <Container>
+       <Header>
+        <Left>
+          <Button
+            transparent
+            onPress={() => {
+              props.navigation.goBack();
+            }}
+          >
+            <Icon name="arrow-back" />
+          </Button>
+        </Left>
+        <Body>
+          <Title>{file.title} By: {username.username}</Title>
+        </Body>
+      </Header>
       <Content>
         <Card>
-          <CardItem>
-            <Body>
-              <Text>
-                {file.title} By: {username.username}
-              </Text>
-            </Body>
-          </CardItem>
+
           <CardItem>
             {file.media_type === "image" && (
               <Image

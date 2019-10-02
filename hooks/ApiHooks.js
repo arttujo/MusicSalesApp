@@ -222,6 +222,12 @@ const mediaAPI = () => {
     });
   };
 
+  const uploadAvatar = () =>{
+    const { user } = useContext(MediaContext);
+
+    fetchPostUrlUserData()
+  };
+
   const userToContext = async () => {
     // Call this when app starts (= Home.js)
     const { user, setUser } = useContext(MediaContext);
@@ -275,7 +281,8 @@ const mediaAPI = () => {
     updateFile,
     addDefaultTag,
     addTag,
-    getTags
+    getTags,
+    uploadAvatar
   };
 };
 

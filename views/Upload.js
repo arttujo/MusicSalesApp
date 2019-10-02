@@ -24,6 +24,7 @@ import {
   Item,
   Input,
   Label,
+  Title,
   Body,
   Card,
   CardItem
@@ -63,6 +64,7 @@ const Upload = props => {
   useEffect(() => {
     getPermissionAsync();
   });
+
   const {
     handleTitleChange,
     inputs,
@@ -136,11 +138,10 @@ const Upload = props => {
   };
 
   return (
+    <Container>
+      <Header><Body><Title>Upload</Title></Body></Header>
     <Content>
       <Form>
-        <Body>
-          <Text>Upload</Text>
-        </Body>
         <Card>
           <CardItem>
             <Button
@@ -204,6 +205,7 @@ const Upload = props => {
         />
       </Form>
     </Content>
+    </Container>
   );
 };
 export default Upload;

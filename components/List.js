@@ -40,7 +40,7 @@ const fetchViaTag = url => {
 
 const List = props => {
   const { navigation } = props;
-  const [media, loading] = fetchViaTag(
+  const [media] = fetchViaTag(
     "http://media.mw.metropolia.fi/wbma/tags/music-sales_"
   );
 
