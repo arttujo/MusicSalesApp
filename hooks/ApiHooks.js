@@ -80,7 +80,7 @@ const fetchPutUrl = async (url, data) => {
 
 const mediaAPI = () => {
   const reloadAllMedia = setMedia => {
-    fetchGetUrl(apiUrl + "media").then(json => {
+    fetchGetUrl("http://media.mw.metropolia.fi/wbma/tags/music-sales_").then(json => {
       setMedia(json);
     });
   };

@@ -81,6 +81,8 @@ const ProfPicUpload = props => {
   };
   const isEnabled = canSubmit();
 
+  const changeAvatar = () =>{};
+
   return (
     <Container>
       <Header>
@@ -109,9 +111,7 @@ const ProfPicUpload = props => {
               ><Text>Pick Avatar</Text></Button>
             </CardItem>
             <CardItem>
-              <Body>
-                <Text>Selected Image</Text>
-              </Body>
+
             </CardItem>
             {image && (
               <CardItem>
@@ -126,7 +126,9 @@ const ProfPicUpload = props => {
               </CardItem>
             )}
           </Card>
-          <Button  disabled={!isEnabled} onPress={() => {}}><Text>Upload!</Text></Button>
+          <Button  disabled={!isEnabled} onPress={() => {
+
+          }}><Text>Upload!</Text></Button>
           <Button
             onPress={() => {
               clearForm();
