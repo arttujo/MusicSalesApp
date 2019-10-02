@@ -13,7 +13,6 @@ import useSignUpForm from '../hooks/LoginHook';
 import mediaAPI from '../hooks/ApiHooks';
 
 const validate = require('validate.js');
-asdasda;
 import {
   Container,
   Header,
