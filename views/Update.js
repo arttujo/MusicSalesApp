@@ -141,7 +141,7 @@ const Update = props => {
         <Item>
           <FormTextInput
             autoCapitalize="none"
-            placeholder="title"
+            placeholder="curren title"
             onChangeText={handleTitleChange}
             value={inputs.title}
             required
