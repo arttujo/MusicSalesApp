@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import {
   StyleSheet,
   View,
-  Text,
+
   AsyncStorage,
   Alert,
   Image
@@ -19,6 +19,7 @@ import {
   Content,
   Form,
   Item,
+  Text,
   Input,
   Button,
   Label,
@@ -102,11 +103,10 @@ const ProfPicUpload = props => {
           <Card>
             <CardItem>
               <Button
-                title="Select Image"
                 onPress={() => {
                   _pickImage();
                 }}
-              />
+              ><Text>Pick Avatar</Text></Button>
             </CardItem>
             <CardItem>
               <Body>
@@ -126,18 +126,15 @@ const ProfPicUpload = props => {
               </CardItem>
             )}
           </Card>
+          <Button  disabled={!isEnabled} onPress={() => {}}><Text>Upload!</Text></Button>
           <Button
-            disabled={!isEnabled}
-            title="Change Avatar"
-            onPress={() => {}}
-          />
-          <Button
-            title="Reset Form"
             onPress={() => {
               clearForm();
               setImage();
             }}
-          />
+          >
+            <Text>Clear Form</Text>
+          </Button>
         </Form>
       </Content>
     </Container>

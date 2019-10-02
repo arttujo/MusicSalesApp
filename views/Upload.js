@@ -2,8 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import {
   StyleSheet,
   View,
-  Text,
-  Button,
+
   AsyncStorage,
   Alert,
   Image
@@ -22,6 +21,8 @@ import {
   Content,
   Form,
   Item,
+  Text,
+  Button,
   Input,
   Label,
   Title,
@@ -145,11 +146,10 @@ const Upload = props => {
         <Card>
           <CardItem>
             <Button
-              title="Select Image"
               onPress={() => {
                 _pickImage();
               }}
-            />
+            ><Text>Select Image</Text></Button>
           </CardItem>
           <CardItem>
             <Body>
@@ -191,18 +191,18 @@ const Upload = props => {
 
         <Button
           disabled={!isEnabled}
-          title="Upload!"
+
           onPress={() => {
             validateInputs(inputs, props);
           }}
-        />
+        ><Text>Upload!</Text></Button>
         <Button
-          title="Reset Form"
+
           onPress={() => {
             clearForm();
             setImage();
           }}
-        />
+        ><Text>Reset Form</Text></Button>
       </Form>
     </Content>
     </Container>
