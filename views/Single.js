@@ -17,15 +17,21 @@ import {
 } from "native-base";
 import mediaAPI from "../hooks/ApiHooks";
 import { Video } from "expo-av";
+import useSingleHooks from "../hooks/SingleHooks";
+import { List as BaseList } from "native-base";
+import CommentListItem from "../components/CommentListItem";
+
+
 const Single = props => {
   const { fetchUser, getTags, getComments } = mediaAPI();
   const [username, setUsername] = useState({});
   const [tags, setTags] = useState();
-  const [comments, setComments] = useState();
+  const [comments, setComments] = useState({});
   const { navigation } = props;
 
   const file = navigation.state.params.file;
   console.log("single:", file);
+
 
   const {
     inputs,
@@ -50,8 +56,9 @@ const Single = props => {
 
   useEffect(() => {
     getComments(file.file_id).then(json => {
-      console.log("comments object:", json[0]);
-      setComments(json[0]);
+      console.log("get comments", json);
+      setComments(json);
+      console.log("current comments", comments);
     });
   }, []);
 
@@ -108,7 +115,6 @@ const Single = props => {
               />
             )}
           </CardItem>
-
           <CardItem>
             <Body>
               <Text>Description:</Text>
@@ -122,12 +128,24 @@ const Single = props => {
               autoCapitalize="none"
               placeholder="add comment"
               value={inputs.comment}
+              onChangeText={handleCommentChange}
             />
           </Item>
-          <Button>
+          <Button
+          onPress={() => {
+            handleComment(file.file_id);
+          }}
+          >
             <Text>Post comment</Text>
           </Button>
         </Card>
+      <BaseList
+        dataArray={comments}
+        renderRow={item => (
+          <CommentListItem navigation={props.navigation} singleComment={item} />
+        )}
+        keyExtractor={(item, index) => index.toString()}
+      />
       </Content>
     </Container>
   );

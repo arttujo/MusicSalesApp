@@ -49,24 +49,6 @@ const ListItem = props => {
         </Text>
       </Body>
       <Right >
-      {/* style={{flex:1,flexDirection:"row", justifyContent:"space-between"}} */}
-      {/* <Button
-          onPress={() => {
-            deleteFile(file.file_id);
-          }}
-        >
-          <Text>Delete</Text>
-        </Button>
-
-        <Button
-          onPress={() => {
-            updateFile(file.file_id);
-          }}
-        >
-          <Text>Update</Text>
-        </Button> */}
-
-
         <Button
           onPress={() => {
             navigation.push("Single", { file: singleMedia });
