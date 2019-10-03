@@ -2,10 +2,22 @@ import React from "react";
 import { StyleSheet, View, ToolbarAndroid, Image, Text } from "react-native";
 import List from "../components/List";
 import { MediaProvider } from "../contexts/MediaContext";
-import { Container, Content } from "native-base";
 import PropTypes from 'prop-types';
 import mediaAPI from '../hooks/ApiHooks';
-
+import {
+  Container,
+  Header,
+  Content,
+  Form,
+  Item,
+  Input,
+  Label,
+  Body,
+  Left,
+  Card,
+  CardItem,
+  Title
+} from "native-base";
 
 
 
@@ -22,6 +34,7 @@ const Home = props => {
 
   return (
     <Container>
+      <Header><Body><Title>Music Sales</Title></Body></Header>
       <Content>
         <List navigation={navigation}></List>
       </Content>

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 
+
 const MediaContext = React.createContext({});
 const MediaProvider = (props) => {
   const {
@@ -19,6 +20,7 @@ const MediaProvider = (props) => {
   };
 
   return (
+
     <MediaContext.Provider value={appContext}>
       {children}
     </MediaContext.Provider>

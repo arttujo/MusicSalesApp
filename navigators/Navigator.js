@@ -5,9 +5,10 @@ import { createStackNavigator } from "react-navigation-stack";
 import Home from "../views/Home";
 import Profile from "../views/Profile";
 import Single from "../views/Single";
-import Upload from "../views/Upload"
-import MyFiles from "../views/MyFiles"
-import Update from "../views/Update"
+import Upload from "../views/Upload";
+import MyFiles from "../views/MyFiles";
+import ProfPicUpload from "../views/ProfPicUpload";
+import Update from "../views/Update";
 import AuthLoading from "../views/AuthLoading";
 import Login from "../views/Login";
 import { Icon } from "native-base";
@@ -16,7 +17,7 @@ const TabNavigator = createBottomTabNavigator(
   {
     Home,
     Profile,
-    Upload,
+    Upload
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -28,7 +29,7 @@ const TabNavigator = createBottomTabNavigator(
         } else if (routeName === "Profile") {
           iconName = "person";
         } else if (routeName === "Upload") {
-            iconName = "cloud-upload"
+          iconName = "cloud-upload";
         }
 
         // You can return any component that you like here!
@@ -48,16 +49,31 @@ const StackNavigator = createStackNavigator(
       }
     },
     Single: {
-      screen: Single
+      screen: Single,
+      navigationOptions: {
+        header: null
+      }
     },
     Logout: {
       screen: Login
     },
-    MyFiles:{
-      screen: MyFiles
+    MyFiles: {
+      screen: MyFiles,
+      navigationOptions: {
+        header: null
+      }
     },
-    Update:{
-      screen: Update
+    Update: {
+      screen: Update,
+      navigationOptions: {
+        header: null
+      }
+    },
+    ProfPicUpload: {
+      screen: ProfPicUpload,
+      navigationOptions: {
+        header: null
+      }
     }
   }
 );
@@ -66,7 +82,7 @@ const Navigator = createSwitchNavigator(
   {
     AuthLoading: AuthLoading,
     App: StackNavigator,
-    Auth: Login,
+    Auth: Login
   },
   {
     initialRouteName: "AuthLoading"

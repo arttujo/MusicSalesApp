@@ -23,6 +23,9 @@ import {
   Input,
   Label,
   Body,
+  Title,
+  Left,
+  Icon,
   Card,
   CardItem
 } from "native-base";
@@ -33,6 +36,19 @@ const MyFiles = props => {
   const { navigation } = props;
 
   return (
+    <Container>
+        <Header>
+        <Left>
+            <Button transparent onPress={()=>{
+              props.navigation.goBack()
+            }}>
+              <Icon name='arrow-back' />
+            </Button>
+          </Left>
+        <Body>
+          <Title>My Files</Title>
+        </Body>
+      </Header>
     <BaseList
     dataArray={uMedia}
     renderRow={( item ) => (
@@ -40,6 +56,7 @@ const MyFiles = props => {
     )}
     keyExtractor={(item, index) => index.toString()}
   />
+  </Container>
   );
 };
 export default MyFiles;

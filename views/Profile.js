@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { AsyncStorage, Image } from "react-native";
+import { AsyncStorage, Image, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
+import * as ImagePicker from "expo-image-picker";
+import Constants from "expo-constants";
+import * as Permissions from "expo-permissions";
 import {
   Container,
   Header,
@@ -13,13 +16,14 @@ import {
   Icon,
   Left,
   Body,
+  Title,
   Right,
   Font
 } from "native-base";
 import mediaAPI from "../hooks/ApiHooks";
 
 const Profile = props => {
-  const { getAvatar } = mediaAPI();
+  const { getAvatar, uploadAvatar } = mediaAPI();
 
   const [user, setUser] = useState({});
   const getUser = async () => {
@@ -57,15 +61,24 @@ const Profile = props => {
   };
   const navMyFiles = () => {
     props.navigation.push("MyFiles");
-  }
+  };
+
   return (
+    <Container>
+    <Header><Body><Title>Profile</Title></Body></Header>
     <Card>
-      <CardItem header>
-        <Text>Profile</Text>
-      </CardItem>
       <CardItem>
         <Left>
-          <Image source={{ uri: avatar }} style={{ width: 100, height: 100 }} />
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.push("ProfPicUpload")
+            }}
+          >
+            <Image
+              source={{ uri: avatar }}
+              style={{ width: 100, height: 100 }}
+            />
+          </TouchableOpacity>
         </Left>
         <Body>
           <Text>Username: {user.username}</Text>
@@ -84,6 +97,7 @@ const Profile = props => {
         </Body>
       </CardItem>
     </Card>
+    </Container>
   );
 };
 
