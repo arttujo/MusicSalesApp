@@ -277,6 +277,21 @@ const mediaAPI = () => {
     }
   };
 
+  const getComments = file_id => {
+    return fetchGetUrl(apiUrl + "/comments/file/" + file_id).then(json => {
+      console.log("getComments", json);
+      return json;
+    });
+  };
+
+  const addComment = async (file_id, comment) => {
+    console.log('api post comment');
+    data = {'file_id': fileId, 'comment': comment};
+    const json = await fetchPostUrlUserData(apiUrl + 'comments/' + file_id, data);
+    console.log(json);
+    return json;
+  };
+
   return {
     getAllMedia,
     getThumbnail,
@@ -295,7 +310,9 @@ const mediaAPI = () => {
     addDefaultTag,
     addTag,
     getTags,
-    uploadAvatar
+    uploadAvatar,
+    addComment,
+    getComments
   };
 };
 

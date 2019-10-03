@@ -1,29 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Image } from "react-native";
-
+import { Image } from "react-native";
+import FormTextInput from "../components/FormTextInput";
 import {
   Container,
   Header,
   Content,
   Card,
   CardItem,
-  Thumbnail,
   Text,
   Button,
   Icon,
   Left,
   Body,
-  Right,Title,
+  Title,
+  Item
 } from "native-base";
 import mediaAPI from "../hooks/ApiHooks";
 import { Video } from "expo-av";
 const Single = props => {
-  const { fetchUser, getTags } = mediaAPI();
+  const { fetchUser, getTags, getComments } = mediaAPI();
   const [username, setUsername] = useState({});
   const [tags, setTags] = useState();
+  const [comments, setComments] = useState();
   const { navigation } = props;
+
   const file = navigation.state.params.file;
   console.log("single:", file);
+
+  const {
+    inputs,
+    handleCommentChange,
+    handleComment,
+    clearForm
+  } = useSingleHooks();
 
   useEffect(() => {
     fetchUser(file.user_id).then(json => {
@@ -39,11 +48,18 @@ const Single = props => {
     });
   }, []);
 
+  useEffect(() => {
+    getComments(file.file_id).then(json => {
+      console.log("comments object:", json[0]);
+      setComments(json[0]);
+    });
+  }, []);
+
   console.log("THIS IS TAGS STATE", tags);
 
   return (
     <Container>
-       <Header>
+      <Header>
         <Left>
           <Button
             transparent
@@ -55,12 +71,13 @@ const Single = props => {
           </Button>
         </Left>
         <Body>
-          <Title>{file.title} By: {username.username}</Title>
+          <Title>
+            {file.title} By: {username.username}
+          </Title>
         </Body>
       </Header>
       <Content>
         <Card>
-
           <CardItem>
             {file.media_type === "image" && (
               <Image
@@ -100,6 +117,16 @@ const Single = props => {
               <Text>{tags}</Text>
             </Body>
           </CardItem>
+          <Item>
+            <FormTextInput
+              autoCapitalize="none"
+              placeholder="add comment"
+              value={inputs.comment}
+            />
+          </Item>
+          <Button>
+            <Text>Post comment</Text>
+          </Button>
         </Card>
       </Content>
     </Container>
