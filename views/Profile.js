@@ -23,7 +23,7 @@ import {
 import mediaAPI from "../hooks/ApiHooks";
 
 const Profile = props => {
-  const { getAvatar, uploadAvatar } = mediaAPI();
+  const { getAvatar } = mediaAPI();
 
   const [user, setUser] = useState({});
   const getUser = async () => {

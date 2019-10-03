@@ -217,30 +217,29 @@ const mediaAPI = () => {
     console.log("get user avatar", user);
     let avatar;
     console.log("avatar", apiUrl + "tags/avatar_" + user.user_id);
+
     return fetchGetUrl(apiUrl + "tags/avatar_" + user.user_id).then(json => {
-      avatarUrl = apiUrl + "uploads/" + json[0].filename;
-      avatarId = json[0].file_id
-      console.log("Avatar:",avatarId)
-      const avatarData = {
-        url: avatarUrl,
-        id: avatarId
+      if (json.length === 0) {
+        console.log("there is no avatar!");
+        const defAvatar = {
+          url:
+            "https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png"
+        };
+        return defAvatar;
+      } else {
+        avatarUrl = apiUrl + "uploads/" + json[0].filename;
+        avatarId = json[0].file_id;
+        console.log("Avatar:", avatarId);
+        const avatarData = {
+          url: avatarUrl,
+          id: avatarId
+        };
+        return avatarData;
       }
-      return avatarData;
     });
   };
 
-  const uploadAvatar = data => {
-
-    uploadFile(data).then(json => {
-      const tagData = {
-        file_id: json.file_id,
-        tag: "avatar_" + json.file_id
-      };
-      addTag(tagData).then(json => {
-        console.log("uploadAvatar", json);
-      });
-    });
-  };
+  const uploadAvatar = data => {};
 
   const userToContext = async () => {
     // Call this when app starts (= Home.js)

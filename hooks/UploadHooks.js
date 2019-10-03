@@ -71,8 +71,10 @@ const useUploadHooks = props => {
       );
     });
   };
-  const handleAvatarChange = async avatarImg => {
-    const { uploadAvatar } = mediaAPI();
+  const handleAvatarChange = async (avatarImg) => {
+    const { uploadFile, addTag } = mediaAPI();
+    const match = /\.(\w+)$/.exec(filename);
+    const user = await AsyncStorage.getItem("user");
     const localUri = avatarImg.uri;
     const filename = localUri.split("/").pop();
     let type = "";
@@ -85,7 +87,13 @@ const useUploadHooks = props => {
     }
     const formData = new FormData();
     formData.append("file", { uri: localUri, name: filename, type });
-    uploadAvatar(formData)
+    uploadFile(formData).then(json => {
+      const tagData = {
+        file_id: json.file_id,
+        tag: "avatar_" + user.user_id
+      };
+      addTag(tagData)
+    });
   };
 
   return {
