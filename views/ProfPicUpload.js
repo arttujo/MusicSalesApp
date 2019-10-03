@@ -44,7 +44,7 @@ const ProfPicUpload = props => {
 
   const [avatar, setAvatar] = useState(undefined);
   getAvatar().then(result => {
-    console.log("getAvatar",result)
+    console.log("getAvatar", result);
     setAvatar(result.id);
   });
 
@@ -77,7 +77,6 @@ const ProfPicUpload = props => {
 
   const { inputs, clearForm } = useUploadHooks();
 
-
   const canSubmit = () => {
     const isEmpty = obj => {
       return Object.getOwnPropertyNames(obj).length >= 1;
@@ -91,11 +90,18 @@ const ProfPicUpload = props => {
 
   const isEnabled = canSubmit();
 
+  useEffect(() => {
 
-  const changeAvatar = (img) =>{
-    deleteFile(avatar)
-    handleAvatarChange(img)
-  }
+  }), [];
+
+  const changeAvatar = img => {
+    deleteFile(avatar);
+    handleAvatarChange(img);
+    setImage({})
+    alert("Avatar changed!")
+    props.navigation.goBack();
+
+  };
 
   return (
     <Container>

@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, Alert } from "react-native";
 import mediaAPI from "../hooks/ApiHooks";
 import { MediaContext } from "../contexts/MediaContext";
 
@@ -73,11 +73,13 @@ const useUploadHooks = props => {
   };
   const handleAvatarChange = async (avatarImg) => {
     const { uploadFile, addTag } = mediaAPI();
-    const match = /\.(\w+)$/.exec(filename);
-    const user = await AsyncStorage.getItem("user");
     const localUri = avatarImg.uri;
     const filename = localUri.split("/").pop();
+    const match = /\.(\w+)$/.exec(filename);
+    const user = await AsyncStorage.getItem("user");
+
     let type = "";
+
     if (avatarImg.type === "image") {
       type = match ? `image/${match[1]}` : `image`;
 
@@ -85,15 +87,18 @@ const useUploadHooks = props => {
     } else {
       type = match ? `video/${match[1]}` : `video`;
     }
+
     const formData = new FormData();
     formData.append("file", { uri: localUri, name: filename, type });
     uploadFile(formData).then(json => {
+    const uObj = JSON.parse(user)
       const tagData = {
         file_id: json.file_id,
-        tag: "avatar_" + user.user_id
+        tag: "avatar_" + uObj.user_id
       };
       addTag(tagData)
     });
+
   };
 
   return {
