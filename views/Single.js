@@ -24,7 +24,7 @@ const Single = props => {
   const { navigation } = props;
   const file = navigation.state.params.file;
   console.log("single:", file);
-
+  const parsedDesc=JSON.parse(file.description)
   useEffect(() => {
     fetchUser(file.user_id).then(json => {
       console.log("singleFetchUser", json);
@@ -94,8 +94,11 @@ const Single = props => {
 
           <CardItem>
             <Body>
+              <Text>Price: {parsedDesc.price}€</Text>
+            </Body>
+            <Body>
               <Text>Description:</Text>
-              <Text>{file.description}</Text>
+              <Text>{parsedDesc.description}</Text>
               <Text>Tags:</Text>
               <Text>{tags}</Text>
             </Body>

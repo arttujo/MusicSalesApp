@@ -23,22 +23,29 @@ const useUploadHooks = props => {
     }));
   };
 
+  const handlePriceChange = text =>{
+    setInputs(inputs =>({
+      ...inputs,
+      price: text
+    }))
+  }
+
   const clearForm = () => {
     setInputs("");
 
     console.log("inputs Cleared!");
   };
-
-  const handleUpload = async (result, title, description) => {
+  //result, title, description
+  const handleUpload = async (data) => {
     const { uploadFile, reloadAllMedia, addDefaultTag } = mediaAPI();
     // ImagePicker saves the taken photo to disk and returns a local URI to it
-    const localUri = result.uri;
+    const localUri = data.image.uri;
     const filename = localUri.split("/").pop();
 
     // Infer the type of the image
     const match = /\.(\w+)$/.exec(filename);
     let type = "";
-    if (result.type === "image") {
+    if (data.image.type === "image") {
       type = match ? `image/${match[1]}` : `image`;
       // fix jpg mimetype
       if (type === "image/jpg") type = "image/jpeg";
@@ -49,12 +56,12 @@ const useUploadHooks = props => {
     // Upload the image using the fetch and FormData APIs
     const formData = new FormData();
     const moreData = {
-      description: "This is the actual description",
-      someData: "Some other data I want to save"
+      description: data.description,
+      price: data.price
     };
     formData.append("file", { uri: localUri, name: filename, type });
-    formData.append("title", title);
-    formData.append("description", description);
+    formData.append("title", data.title);
+    formData.append("description", JSON.stringify(moreData));
 
     const userToken = await AsyncStorage.getItem("userToken");
     console.log("FORMDATA", formData);
@@ -108,7 +115,8 @@ const useUploadHooks = props => {
     handleUpload,
     inputs,
     clearForm,
-    handleAvatarChange
+    handleAvatarChange,
+    handlePriceChange
   };
 };
 export default useUploadHooks;

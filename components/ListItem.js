@@ -32,6 +32,10 @@ const ListItem = props => {
   const {navigation, singleMedia} = props;
   const tn = getThumbnail(singleMedia.file_id);
 
+
+  const allData = JSON.parse(singleMedia.description)
+
+
   return (
     <BaseListItem thumbnail>
       <Left>
@@ -44,8 +48,8 @@ const ListItem = props => {
       </Left>
       <Body>
         <Text>{singleMedia.title}</Text>
-        <Text note numberOfLines={1}>
-          {singleMedia.description}
+        <Text>
+          {allData.description}
         </Text>
       </Body>
       <Right >
