@@ -98,8 +98,11 @@ const ProfPicUpload = props => {
     deleteFile(avatar);
     handleAvatarChange(img);
     setImage({})
-    alert("Avatar changed!")
-    props.navigation.goBack();
+    props.navigation.navigate("Loading");
+    setTimeout(()=>{
+    props.navigation.navigate("Profile");
+      alert("Avatar Changed!")
+    },500)
 
   };
 

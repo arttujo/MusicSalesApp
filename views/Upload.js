@@ -118,7 +118,7 @@ const Upload = props => {
       clearForm();
       setImage();
       setMedia([]);
-
+      props.navigation.navigate("Loading")
       setTimeout(() => {
         reloadAllMedia(setMedia);
         //setLoading(false);

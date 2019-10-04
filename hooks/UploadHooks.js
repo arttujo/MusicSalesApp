@@ -90,6 +90,7 @@ const useUploadHooks = props => {
 
     const formData = new FormData();
     formData.append("file", { uri: localUri, name: filename, type });
+    formData.append("title", "profile_picture");
     uploadFile(formData).then(json => {
     const uObj = JSON.parse(user)
       const tagData = {

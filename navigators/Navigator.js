@@ -11,6 +11,7 @@ import ProfPicUpload from "../views/ProfPicUpload";
 import Update from "../views/Update";
 import AuthLoading from "../views/AuthLoading";
 import Login from "../views/Login";
+import Loading from '../views/Loading';
 import { Icon } from "native-base";
 
 const TabNavigator = createBottomTabNavigator(
@@ -74,7 +75,9 @@ const StackNavigator = createStackNavigator(
       navigationOptions: {
         header: null
       }
-    }
+    },
+
+
   }
 );
 
@@ -82,7 +85,13 @@ const Navigator = createSwitchNavigator(
   {
     AuthLoading: AuthLoading,
     App: StackNavigator,
-    Auth: Login
+    Auth: Login,
+    Loading: {
+      screen: Loading,
+      navigationOptions: {
+        header: null
+      }
+    }
   },
   {
     initialRouteName: "AuthLoading"

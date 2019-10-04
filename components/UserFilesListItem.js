@@ -56,7 +56,7 @@ const UserFilesListItem = props => {
       <Button
           onPress={() => {
             deleteFile(singleMedia.file_id);
-            props.navigation.goBack()
+            props.navigation.navigate("Loading")
             Alert.alert(
               "Success",
               "File Deleted!",
