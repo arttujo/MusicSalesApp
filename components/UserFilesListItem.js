@@ -1,6 +1,13 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, Text, View, Image, TouchableOpacity,Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Alert
+} from "react-native";
 import mediaAPI from "../hooks/ApiHooks";
 import {
   ListItem as BaseListItem,
@@ -10,15 +17,17 @@ import {
   Thumbnail,
   Content,
   Button,
-  List
+  Icon
 } from "native-base";
 
-const getThumbnail = (url) => {
- // console.log('urli', url);
+const getThumbnail = url => {
+  // console.log('urli', url);
   const [thumbnails, setThumbnails] = useState({});
   async function fetchUrl() {
-   // console.log('fetsurl');
-    const response = await fetch('http://media.mw.metropolia.fi/wbma/media/' + url);
+    // console.log('fetsurl');
+    const response = await fetch(
+      "http://media.mw.metropolia.fi/wbma/media/" + url
+    );
     const json = await response.json();
     //console.log('json tnail', json);
     setThumbnails(json.thumbnails);
@@ -29,11 +38,9 @@ const getThumbnail = (url) => {
   return thumbnails;
 };
 
-
-
 const UserFilesListItem = props => {
-  const {deleteFile,getUserMedia} = mediaAPI()
-  const {navigation, singleMedia} = props;
+  const { deleteFile, getUserMedia } = mediaAPI();
+  const { navigation, singleMedia } = props;
   const tn = getThumbnail(singleMedia.file_id);
 
   return (
@@ -42,8 +49,9 @@ const UserFilesListItem = props => {
         <Thumbnail
           circle
           large
-          source={{ uri:'http://media.mw.metropolia.fi/wbma/uploads/' + tn.w160 }}
-
+          source={{
+            uri: "http://media.mw.metropolia.fi/wbma/uploads/" + tn.w160
+          }}
         />
       </Left>
       <Body>
@@ -52,11 +60,18 @@ const UserFilesListItem = props => {
           {singleMedia.description}
         </Text>
       </Body>
-      <Right style={{flex:1,flexDirection:"row", justifyContent:"space-between"}}>
-      <Button
+      <Right
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "space-between"
+        }}
+      >
+        <Button
+          danger
           onPress={() => {
             deleteFile(singleMedia.file_id);
-            props.navigation.goBack()
+            props.navigation.goBack();
             Alert.alert(
               "Success",
               "File Deleted!",
@@ -65,22 +80,26 @@ const UserFilesListItem = props => {
             );
           }}
         >
-          <Text>Delete</Text>
+          {/*<Text>Delete</Text>*/}
+          <Icon name="trash" />
         </Button>
 
         <Button
+          dark
           onPress={() => {
-            props.navigation.push("Update",{file: singleMedia})
+            props.navigation.push("Update", { file: singleMedia });
           }}
         >
-          <Text>Update</Text>
+          {/*<Text>Update</Text>*/}
+          <Icon name="settings" />
         </Button>
         <Button
           onPress={() => {
             navigation.push("Single", { file: singleMedia });
           }}
         >
-          <Text>View</Text>
+          {/*<Text>View</Text>*/}
+          <Icon name="play" />
         </Button>
       </Right>
     </BaseListItem>

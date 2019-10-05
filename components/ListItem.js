@@ -9,7 +9,7 @@ import {
   Thumbnail,
   Content,
   Button,
-  List
+  Icon
 } from "native-base";
 
 const getThumbnail = (url) => {
@@ -54,6 +54,7 @@ const ListItem = props => {
             navigation.push("Single", { file: singleMedia });
           }}
         >
+          <Icon name="play" />
           <Text>View</Text>
         </Button>
       </Right>
