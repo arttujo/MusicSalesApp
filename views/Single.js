@@ -28,19 +28,11 @@ const Single = props => {
   const [username, setUsername] = useState({});
   const [comments, setComments] = useState({});
   const [tags, setTags] = useState();
-  const [comments, setComments] = useState({});
   const { navigation } = props;
 
   const file = navigation.state.params.file;
   console.log("single:", file);
   const parsedDesc = JSON.parse(file.description);
-  const {
-    inputs,
-    handleCommentChange,
-    handleComment,
-    clearForm
-  } = useSingleHooks();
-
 
   const {
     inputs,
