@@ -1,7 +1,9 @@
 import React from "react";
 import mediaAPI from "../hooks/ApiHooks";
 import { List as BaseList } from "native-base";
+import List from "../components/List";
 import UserFilesListItem from "../components/UserFilesListItem";
+
 import {
   Container,
   Header,
