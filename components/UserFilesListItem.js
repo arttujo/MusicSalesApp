@@ -42,6 +42,7 @@ const UserFilesListItem = props => {
   const { deleteFile, getUserMedia } = mediaAPI();
   const { navigation, singleMedia } = props;
   const tn = getThumbnail(singleMedia.file_id);
+  const allData = JSON.parse(singleMedia.description)
 
   return (
     <BaseListItem thumbnail>
@@ -57,7 +58,7 @@ const UserFilesListItem = props => {
       <Body>
         <Text>{singleMedia.title}</Text>
         <Text note numberOfLines={1}>
-          {singleMedia.description}
+          {allData.description}
         </Text>
       </Body>
       <Right
@@ -71,7 +72,7 @@ const UserFilesListItem = props => {
           danger
           onPress={() => {
             deleteFile(singleMedia.file_id);
-            props.navigation.goBack();
+            props.navigation.navigate("Home")
             Alert.alert(
               "Success",
               "File Deleted!",
@@ -80,8 +81,8 @@ const UserFilesListItem = props => {
             );
           }}
         >
-          {/*<Text>Delete</Text>*/}
-          <Icon name="trash" />
+
+        <Icon name="trash" />
         </Button>
 
         <Button
@@ -90,7 +91,6 @@ const UserFilesListItem = props => {
             props.navigation.push("Update", { file: singleMedia });
           }}
         >
-          {/*<Text>Update</Text>*/}
           <Icon name="settings" />
         </Button>
         <Button
@@ -98,7 +98,6 @@ const UserFilesListItem = props => {
             navigation.push("Single", { file: singleMedia });
           }}
         >
-          {/*<Text>View</Text>*/}
           <Icon name="play" />
         </Button>
       </Right>

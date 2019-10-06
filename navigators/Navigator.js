@@ -11,10 +11,9 @@ import ProfPicUpload from "../views/ProfPicUpload";
 import Update from "../views/Update";
 import AuthLoading from "../views/AuthLoading";
 import Login from "../views/Login";
+import Loading from "../views/Loading";
 import { Icon, Container } from "native-base";
-
-const iconBackgroundColor = 'royalblue';
-
+const iconBackgroundColor = "royalblue";
 const TabNavigator = createBottomTabNavigator(
   {
     Home,
@@ -55,7 +54,10 @@ const TabNavigator = createBottomTabNavigator(
               <Icon
                 name={iconName}
                 size={25}
-                style={{ backgroundColor: iconBackgroundColor, color: "lightgreen"}}
+                style={{
+                  backgroundColor: iconBackgroundColor,
+                  color: "lightgreen"
+                }}
               />
             )}
           </Container>
@@ -115,7 +117,13 @@ const Navigator = createSwitchNavigator(
   {
     AuthLoading: AuthLoading,
     App: StackNavigator,
-    Auth: Login
+    Auth: Login,
+    Loading: {
+      screen: Loading,
+      navigationOptions: {
+        header: null
+      }
+    }
   },
   {
     initialRouteName: "AuthLoading"

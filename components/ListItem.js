@@ -1,14 +1,19 @@
 import React,{useState,useEffect} from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, Text, View, Image, TouchableOpacity, } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity, } from "react-native";
 import {
   ListItem as BaseListItem,
   Left,
   Body,
+  Text,
   Right,
   Thumbnail,
   Content,
   Button,
+<<<<<<< HEAD
+=======
+  List,
+>>>>>>> arttu
   Icon
 } from "native-base";
 
@@ -32,6 +37,10 @@ const ListItem = props => {
   const {navigation, singleMedia} = props;
   const tn = getThumbnail(singleMedia.file_id);
 
+
+  const allData = JSON.parse(singleMedia.description)
+
+
   return (
     <BaseListItem thumbnail>
       <Left>
@@ -44,17 +53,25 @@ const ListItem = props => {
       </Left>
       <Body>
         <Text>{singleMedia.title}</Text>
-        <Text note numberOfLines={1}>
-          {singleMedia.description}
+        <Text>
+          {allData.description}
         </Text>
       </Body>
       <Right >
+<<<<<<< HEAD
+=======
+
+>>>>>>> arttu
         <Button
           onPress={() => {
             navigation.push("Single", { file: singleMedia });
           }}
         >
+<<<<<<< HEAD
           <Icon name="play" />
+=======
+          <Icon name = "play"/>
+>>>>>>> arttu
           <Text>View</Text>
         </Button>
       </Right>

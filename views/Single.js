@@ -1,38 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { Image } from "react-native";
-import FormTextInput from "../components/FormTextInput";
+import { StyleSheet, View, Image } from "react-native";
+
 import {
   Container,
   Header,
   Content,
   Card,
   CardItem,
+  Item,
+  Thumbnail,
   Text,
   Button,
   Icon,
   Left,
   Body,
-  Title,
-  Item
+  Right,
+  Title
 } from "native-base";
 import mediaAPI from "../hooks/ApiHooks";
 import { Video } from "expo-av";
 import useSingleHooks from "../hooks/SingleHooks";
 import { List as BaseList } from "native-base";
 import CommentListItem from "../components/CommentListItem";
-
+import FormTextInput from "../components/FormTextInput";
 
 const Single = props => {
-  const { fetchUser, getTags, getComments } = mediaAPI();
+  const { fetchUser, getTags, getComments, addComment } = mediaAPI();
   const [username, setUsername] = useState({});
-  const [tags, setTags] = useState();
   const [comments, setComments] = useState({});
+  const [tags, setTags] = useState();
   const { navigation } = props;
-
   const file = navigation.state.params.file;
   console.log("single:", file);
-
-
+  const parsedDesc = JSON.parse(file.description);
   const {
     inputs,
     handleCommentChange,
@@ -115,10 +115,14 @@ const Single = props => {
               />
             )}
           </CardItem>
+
           <CardItem>
             <Body>
+              <Text>Price: {parsedDesc.price}€</Text>
+            </Body>
+            <Body>
               <Text>Description:</Text>
-              <Text>{file.description}</Text>
+              <Text>{parsedDesc.description}</Text>
               <Text>Tags:</Text>
               <Text>{tags}</Text>
             </Body>
@@ -132,20 +136,23 @@ const Single = props => {
             />
           </Item>
           <Button
-          onPress={() => {
-            handleComment(file.file_id);
-          }}
+            onPress={() => {
+              handleComment(file.file_id);
+            }}
           >
             <Text>Post comment</Text>
           </Button>
         </Card>
-      <BaseList
-        dataArray={comments}
-        renderRow={item => (
-          <CommentListItem navigation={props.navigation} singleComment={item} />
-        )}
-        keyExtractor={(item, index) => index.toString()}
-      />
+        <BaseList
+          dataArray={comments}
+          renderRow={item => (
+            <CommentListItem
+              navigation={props.navigation}
+              singleComment={item}
+            />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </Content>
     </Container>
   );
