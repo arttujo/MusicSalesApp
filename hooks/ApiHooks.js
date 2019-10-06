@@ -94,7 +94,7 @@ const mediaAPI = () => {
   };
   const updateFile = (file_id, data) => {
     fetchPutUrl(apiUrl + "media/" + file_id, data).then(json => {
-      console.log(json);
+      console.log("updateFile",json);
     });
   };
 
@@ -151,9 +151,9 @@ const mediaAPI = () => {
   };
 
   const addComment = async (fileId, comment) => {
-    console.log('api post comment');
-    data = {'file_id': fileId, 'comment': comment};
-    const json = await fetchPostUrlUserData(apiUrl + 'comments', data);
+    console.log("api post comment");
+    data = { file_id: fileId, comment: comment };
+    const json = await fetchPostUrlUserData(apiUrl + "comments", data);
     return json;
   };
   const fetchUploadUrl = async (url, data) => {

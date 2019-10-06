@@ -77,7 +77,7 @@ const Upload = props => {
     };
 
     console.log(image);
-    if (inputs.description && inputs.title && isEmpty(image)) {
+    if (inputs.description && inputs.title && inputs.price && isEmpty(image)) {
       return true;
     }
   };
