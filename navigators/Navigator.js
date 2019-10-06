@@ -11,9 +11,9 @@ import ProfPicUpload from "../views/ProfPicUpload";
 import Update from "../views/Update";
 import AuthLoading from "../views/AuthLoading";
 import Login from "../views/Login";
-import Loading from '../views/Loading';
-import { Icon } from "native-base";
-
+import Loading from "../views/Loading";
+import { Icon, Container } from "native-base";
+const iconBackgroundColor = "royalblue";
 const TabNavigator = createBottomTabNavigator(
   {
     Home,
@@ -34,9 +34,43 @@ const TabNavigator = createBottomTabNavigator(
         }
 
         // You can return any component that you like here!
-        return <Icon name={iconName} size={25} />;
+        return (
+          <Container>
+            {routeName === "Home" && (
+              <Icon
+                name={iconName}
+                size={25}
+                style={{ backgroundColor: iconBackgroundColor, color: "grey" }}
+              />
+            )}
+            {routeName === "Profile" && (
+              <Icon
+                name={iconName}
+                size={25}
+                style={{ backgroundColor: iconBackgroundColor, color: "blue" }}
+              />
+            )}
+            {routeName === "Upload" && (
+              <Icon
+                name={iconName}
+                size={25}
+                style={{
+                  backgroundColor: iconBackgroundColor,
+                  color: "lightgreen"
+                }}
+              />
+            )}
+          </Container>
+        );
       }
-    })
+    }),
+    tabBarOptions: {
+      activeTintColor: "lime",
+      inactiveTintColor: "white",
+      style: {
+        backgroundColor: "royalblue"
+      }
+    }
   }
 );
 
@@ -75,9 +109,7 @@ const StackNavigator = createStackNavigator(
       navigationOptions: {
         header: null
       }
-    },
-
-
+    }
   }
 );
 

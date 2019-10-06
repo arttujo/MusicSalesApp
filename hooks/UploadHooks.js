@@ -94,10 +94,13 @@ const useUploadHooks = props => {
     } else {
       type = match ? `video/${match[1]}` : `video`;
     }
-
+    const moreData={
+      description: "User Profile Picture"
+    }
     const formData = new FormData();
     formData.append("file", { uri: localUri, name: filename, type });
-    formData.append("title", "profile_picture");
+    formData.append("title", "Profile Picture");
+    formData.append("description", JSON.stringify(moreData))
     uploadFile(formData).then(json => {
     const uObj = JSON.parse(user)
       const tagData = {

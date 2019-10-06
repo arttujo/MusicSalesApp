@@ -103,21 +103,23 @@ const Upload = props => {
       price: {
         presence: {
           message: "^You must give a price!"
-        }
+        },
       }
     };
     const titleError = validate({ title: inputs.title }, constraints);
-    const descError = validate({ description: inputs.description },constraints);
-    const priceError = validate({ price: inputs.price },constraints);
+    const descError = validate(
+      { description: inputs.description },
+      constraints
+    );
+    const priceError = validate({ price: inputs.price }, constraints);
 
     if (!titleError.title && !descError.description && !priceError.price) {
-
       const uploadData = {
         title: inputs.title,
         description: inputs.description,
         price: inputs.price,
-        image: image,
-      }
+        image: image
+      };
 
       handleUpload(uploadData);
       console.log();

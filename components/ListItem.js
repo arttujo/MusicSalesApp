@@ -1,15 +1,17 @@
 import React,{useState,useEffect} from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, Text, View, Image, TouchableOpacity, } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity, } from "react-native";
 import {
   ListItem as BaseListItem,
   Left,
   Body,
+  Text,
   Right,
   Thumbnail,
   Content,
   Button,
-  List
+  List,
+  Icon
 } from "native-base";
 
 const getThumbnail = (url) => {
@@ -59,6 +61,7 @@ const ListItem = props => {
             navigation.push("Single", { file: singleMedia });
           }}
         >
+          <Icon name = "play"/>
           <Text>View</Text>
         </Button>
       </Right>
