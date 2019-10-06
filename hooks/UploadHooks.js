@@ -28,7 +28,13 @@ const useUploadHooks = props => {
       ...inputs,
       price: text
     }))
-  }
+  };
+  const handleCategoryChange = (text) => {
+    setInputs(inputs => ({
+      ...inputs,
+      category: text,
+    }));
+  };
 
   const clearForm = () => {
     setInputs("");
@@ -37,7 +43,7 @@ const useUploadHooks = props => {
   };
   //result, title, description
   const handleUpload = async (data) => {
-    const { uploadFile, reloadAllMedia, addDefaultTag } = mediaAPI();
+    const { uploadFile, reloadAllMedia, addDefaultTag, addTag } = mediaAPI();
     // ImagePicker saves the taken photo to disk and returns a local URI to it
     const localUri = data.image.uri;
     const filename = localUri.split("/").pop();
@@ -76,6 +82,13 @@ const useUploadHooks = props => {
       addDefaultTag(defTag).then(json =>
         console.log("added default tag:", json)
       );
+      const tagData ={
+        file_id:json.file_id,
+        tag: "music-sales_"+data.category
+      }
+      addTag(tagData).then(json =>{
+        console.log("Added Tag",tagData.tag, json)
+      })
     });
   };
   const handleAvatarChange = async (avatarImg) => {
@@ -119,7 +132,8 @@ const useUploadHooks = props => {
     inputs,
     clearForm,
     handleAvatarChange,
-    handlePriceChange
+    handlePriceChange,
+    handleCategoryChange
   };
 };
 export default useUploadHooks;

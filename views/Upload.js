@@ -21,7 +21,9 @@ import {
   Title,
   Body,
   Card,
-  CardItem
+  CardItem,
+  Picker,
+  Icon
 } from "native-base";
 import useUploadHooks from "../hooks/UploadHooks";
 import List from "../components/List";
@@ -65,7 +67,8 @@ const Upload = props => {
     handleDescChange,
     handleUpload,
     clearForm,
-    handlePriceChange
+    handlePriceChange,
+    handleCategoryChange
   } = useUploadHooks();
 
   const canSubmit = () => {
@@ -103,7 +106,7 @@ const Upload = props => {
       price: {
         presence: {
           message: "^You must give a price!"
-        },
+        }
       }
     };
     const titleError = validate({ title: inputs.title }, constraints);
@@ -118,6 +121,7 @@ const Upload = props => {
         title: inputs.title,
         description: inputs.description,
         price: inputs.price,
+        category: inputs.category,
         image: image
       };
 
@@ -211,7 +215,24 @@ const Upload = props => {
               required
             />
           </Item>
-
+          <Item picker>
+            <Picker
+              mode="dropdown"
+              iosIcon={<Icon name="arrow-down" />}
+              style={{ width: undefined }}
+              placeholder="Select item category"
+              placeholderStyle={{ color: "#ffffff" }}
+              placeholderIconColor="#000000"
+              selectedValue={inputs.category}
+              onValueChange={handleCategoryChange}
+            >
+              <Picker.Item label="Guitars" value="music-sales_guitars" />
+              <Picker.Item label="Drums" value="music-sales_drums" />
+              <Picker.Item label="Amplifiers" value="music-sales_amplifiers" />
+              <Picker.Item label="Trombones" value="music-sales_trombones" />
+              <Picker.Item label="Equipment" value="music-sales_equipment" />
+            </Picker>
+          </Item>
           <Button
             disabled={!isEnabled}
             onPress={() => {
