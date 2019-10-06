@@ -1,15 +1,17 @@
 import React,{useState,useEffect} from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, Text, View, Image, TouchableOpacity, } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity, } from "react-native";
 import {
   ListItem as BaseListItem,
   Left,
   Body,
+  Text,
   Right,
   Thumbnail,
   Content,
   Button,
-  List
+  List,
+  Icon
 } from "native-base";
 
 const getThumbnail = (url) => {
@@ -32,6 +34,10 @@ const ListItem = props => {
   const {navigation, singleMedia} = props;
   const tn = getThumbnail(singleMedia.file_id);
 
+
+  const allData = JSON.parse(singleMedia.description)
+
+
   return (
     <BaseListItem thumbnail>
       <Left>
@@ -44,34 +50,18 @@ const ListItem = props => {
       </Left>
       <Body>
         <Text>{singleMedia.title}</Text>
-        <Text note numberOfLines={1}>
-          {singleMedia.description}
+        <Text>
+          {allData.description}
         </Text>
       </Body>
       <Right >
-      {/* style={{flex:1,flexDirection:"row", justifyContent:"space-between"}} */}
-      {/* <Button
-          onPress={() => {
-            deleteFile(file.file_id);
-          }}
-        >
-          <Text>Delete</Text>
-        </Button>
-
-        <Button
-          onPress={() => {
-            updateFile(file.file_id);
-          }}
-        >
-          <Text>Update</Text>
-        </Button> */}
-
 
         <Button
           onPress={() => {
             navigation.push("Single", { file: singleMedia });
           }}
         >
+          <Icon name = "play"/>
           <Text>View</Text>
         </Button>
       </Right>

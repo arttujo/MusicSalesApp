@@ -59,6 +59,9 @@ typings/
 
 # next.js build output
 .next
+<<<<<<< HEAD
 
 # expo ignore
+=======
+>>>>>>> 67db454c9564570b4e42d888ca4d7829ed3f1ac2
 .expo

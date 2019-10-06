@@ -15,8 +15,6 @@ import {
   Form,
   Item,
   Text,
-  Picker,
-  Icon,
   Button,
   Input,
   Label,
@@ -24,6 +22,8 @@ import {
   Body,
   Card,
   CardItem,
+  Picker,
+  Icon,
 } from 'native-base';
 import useUploadHooks from '../hooks/UploadHooks';
 import List from '../components/List';
@@ -41,7 +41,7 @@ const Upload = (props) => {
       aspect: [4, 3],
     });
 
-    //console.log('Picked Image:', result);
+    console.log('Picked Image:', result);
 
     if (!result.cancelled) {
       setImage(result);
@@ -66,8 +66,9 @@ const Upload = (props) => {
     inputs,
     handleDescChange,
     handleUpload,
-    handleCategoryChange,
     clearForm,
+    handlePriceChange,
+    handleCategoryChange,
   } = useUploadHooks();
 
   const canSubmit = () => {
@@ -102,19 +103,34 @@ const Upload = (props) => {
           message: '^Description must be atleast 10 characters',
         },
       },
+      price: {
+        presence: {
+          message: '^You must give a price!',
+        },
+      },
     };
     const titleError = validate({ title: inputs.title }, constraints);
     const descError = validate(
       { description: inputs.description },
       constraints
     );
-    if (!titleError.title && !descError.description) {
-      handleUpload(image, inputs.title, inputs.description, inputs.category);
+    const priceError = validate({ price: inputs.price }, constraints);
+
+    if (!titleError.title && !descError.description && !priceError.price) {
+      const uploadData = {
+        title: inputs.title,
+        description: inputs.description,
+        price: inputs.price,
+        category: inputs.category,
+        image: image,
+      };
+
+      handleUpload(uploadData);
       console.log();
       clearForm();
       setImage();
       setMedia([]);
-
+      props.navigation.navigate('Loading');
       setTimeout(() => {
         reloadAllMedia(setMedia);
         //setLoading(false);
@@ -171,37 +187,6 @@ const Upload = (props) => {
               </CardItem>
             )}
           </Card>
-          <Card>
-            <Form>
-              <Item picker>
-                <Picker
-                  mode='dropdown'
-                  iosIcon={<Icon name='arrow-down' />}
-                  style={{ width: undefined }}
-                  placeholder='Select item category'
-                  placeholderStyle={{ color: '#ffffff' }}
-                  placeholderIconColor='#000000'
-                  selectedValue={inputs.category}
-                  onValueChange={handleCategoryChange}
-                >
-                  <Picker.Item label='Guitars' value='music-sales_guitars' />
-                  <Picker.Item label='Drums' value='music-sales_drums' />
-                  <Picker.Item
-                    label='Amplifiers'
-                    value='music-sales_amplifiers'
-                  />
-                  <Picker.Item
-                    label='Trombones'
-                    value='music-sales_trombones'
-                  />
-                  <Picker.Item
-                    label='Equipment'
-                    value='music-sales_equipment'
-                  />
-                </Picker>
-              </Item>
-            </Form>
-          </Card>
 
           <Item>
             <FormTextInput
@@ -215,13 +200,44 @@ const Upload = (props) => {
           <Item>
             <FormTextInput
               autoCapitalize='none'
+              placeholder='price'
+              onChangeText={handlePriceChange}
+              value={inputs.price}
+              required
+            />
+          </Item>
+          <Item>
+            <FormTextInput
+              autoCapitalize='none'
               placeholder='Description'
               onChangeText={handleDescChange}
               value={inputs.description}
               required
             />
           </Item>
-
+          <Item picker>
+            <Picker
+              mode='dropdown'
+              iosIcon={<Icon name='arrow-down' />}
+              style={{ width: undefined }}
+              placeholder='Select category'
+              placeholderStyle={{ color: '#bfc6ea' }}
+              placeholderIconColor='#007aff'
+              selectedValue={inputs.category}
+              onValueChange={handleCategoryChange}
+            >
+              <Picker.Item
+                label='Select Category'
+                value=''
+                style={{ textDecorationLine: 'underline' }}
+              />
+              <Picker.Item label='Guitars' value='music-sales_guitars' />
+              <Picker.Item label='Drums' value='music-sales_drums' />
+              <Picker.Item label='Amplifiers' value='music-sales_amplifiers' />
+              <Picker.Item label='Trombones' value='music-sales_trombones' />
+              <Picker.Item label='Equipment' value='music-sales_equipment' />
+            </Picker>
+          </Item>
           <Button
             disabled={!isEnabled}
             onPress={() => {

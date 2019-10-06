@@ -79,9 +79,24 @@ const fetchPutUrl = async (url, data) => {
 };
 
 const mediaAPI = () => {
+  const handleMenuChange = (text) => {
+    setInputs((inputs) => ({
+      ...inputs,
+      pickedcategory: text,
+    }));
+  };
   const reloadAllMedia = (setMedia) => {
     fetchGetUrl('http://media.mw.metropolia.fi/wbma/tags/music-sales_').then(
       (json) => {
+        setMedia(json);
+      }
+    );
+  };
+
+  const reloadCategoryMedia = (tag) => {
+    fetchGetUrl('http://media.mw.metropolia.fi/wbma/tags/' + tag).then(
+      (json) => {
+        console.log('RELOADCATEGORYSTATE:', json);
         setMedia(json);
       }
     );
@@ -289,6 +304,7 @@ const mediaAPI = () => {
     addTag,
     getTags,
     uploadAvatar,
+    reloadCategoryMedia,
   };
 };
 

@@ -1,12 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import {
-  StyleSheet,
-  View,
-
-  AsyncStorage,
-  Alert,
-  Image
-} from "react-native";
+import { StyleSheet, View, AsyncStorage, Alert, Image } from "react-native";
 import FormTextInput from "../components/FormTextInput";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
@@ -37,8 +30,23 @@ import List from "../components/List";
 const ProfPicUpload = props => {
   const [image, setImage] = useState({});
   const [loading, setLoading] = useState(true);
-  const { reloadAllMedia, setDefaultTag } = mediaAPI();
+  const {
+    reloadAllMedia,
+    setDefaultTag,
+    uploadAvatar,
+    uploadFile,
+    addTag,
+    deleteFile,
+    getAvatar
+  } = mediaAPI();
   const { media, setMedia } = useContext(MediaContext);
+  const { handleAvatarChange } = useUploadHooks();
+
+  const [avatar, setAvatar] = useState(undefined);
+  getAvatar().then(result => {
+    console.log("getAvatar", result);
+    setAvatar(result.id);
+  });
 
   _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -75,13 +83,28 @@ const ProfPicUpload = props => {
     };
 
     console.log(image);
-    if (inputs.description && inputs.title && isEmpty(image)) {
+    if (isEmpty(image)) {
       return true;
     }
   };
+
   const isEnabled = canSubmit();
 
-  const changeAvatar = () =>{};
+  useEffect(() => {
+
+  }), [];
+
+  const changeAvatar = img => {
+    deleteFile(avatar);
+    handleAvatarChange(img);
+    setImage({})
+    props.navigation.navigate("Loading");
+    setTimeout(()=>{
+    props.navigation.navigate("Profile");
+      alert("Avatar Changed!")
+    },500)
+
+  };
 
   return (
     <Container>
@@ -108,11 +131,11 @@ const ProfPicUpload = props => {
                 onPress={() => {
                   _pickImage();
                 }}
-              ><Text>Pick Avatar</Text></Button>
+              >
+                <Text>Pick Avatar</Text>
+              </Button>
             </CardItem>
-            <CardItem>
-
-            </CardItem>
+            <CardItem></CardItem>
             {image && (
               <CardItem>
                 <Image
@@ -126,9 +149,14 @@ const ProfPicUpload = props => {
               </CardItem>
             )}
           </Card>
-          <Button  disabled={!isEnabled} onPress={() => {
-
-          }}><Text>Upload!</Text></Button>
+          <Button
+            disabled={!isEnabled}
+            onPress={() => {
+              changeAvatar(image);
+            }}
+          >
+            <Text>Upload!</Text>
+          </Button>
           <Button
             onPress={() => {
               clearForm();

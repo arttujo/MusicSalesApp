@@ -1,24 +1,21 @@
 import React, { useEffect } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Button,
-  AsyncStorage,
-  Alert,
-} from 'react-native';
+import { StyleSheet, View, AsyncStorage, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import FormTextInput from '../components/FormTextInput';
 import useSignUpForm from '../hooks/LoginHook';
 import mediaAPI from '../hooks/ApiHooks';
 
 const validate = require('validate.js');
+
 import {
   Container,
   Header,
   Content,
   Form,
   Item,
+  Title,
+  Button,
+  Text,
   Input,
   Label,
   Body,
@@ -116,42 +113,49 @@ const Login = (props) => {
       handleFullnameChange,
     } = useSignUpForm();
     return (
-      <Content>
-        <Form>
+      <Container>
+        <Header>
           <Body>
-            <Text>Login</Text>
+            <Title>Welcome</Title>
           </Body>
-          <Item>
-            <FormTextInput
-              autoCapitalize='none'
-              placeholder='username'
-              onChangeText={handleUsernameChange}
-              value={inputs.username}
-              required
-            />
-          </Item>
-          <Item>
-            <FormTextInput
-              autoCapitalize='none'
-              placeholder='password'
-              secureTextEntry={true}
-              onChangeText={handlePasswordChange}
-              value={inputs.password}
-              required
-            />
-          </Item>
-          <Button
-            title='Sign in!'
-            onPress={() => {
-              signInAsync(inputs, props);
-            }}
-          />
-          <Button
-            title='Sign up instead!'
-            onPress={() => handleFormChange(<RegisterForm />)}
-          />
-        </Form>
-      </Content>
+        </Header>
+        <Content>
+          <Form>
+            <Body>
+              <Text>Login</Text>
+            </Body>
+            <Item>
+              <FormTextInput
+                autoCapitalize='none'
+                placeholder='Username'
+                onChangeText={handleUsernameChange}
+                value={inputs.username}
+                required
+              />
+            </Item>
+            <Item>
+              <FormTextInput
+                autoCapitalize='none'
+                placeholder='Password'
+                secureTextEntry={true}
+                onChangeText={handlePasswordChange}
+                value={inputs.password}
+                required
+              />
+            </Item>
+            <Button
+              onPress={() => {
+                signInAsync(inputs, props);
+              }}
+            >
+              <Text>Login</Text>
+            </Button>
+            <Button onPress={() => handleFormChange(<RegisterForm />)}>
+              <Text>Register Instead!</Text>
+            </Button>
+          </Form>
+        </Content>
+      </Container>
     );
   };
 
@@ -166,83 +170,90 @@ const Login = (props) => {
     } = useSignUpForm();
 
     return (
-      <Content>
-        <Form>
+      <Container>
+        <Header>
           <Body>
-            <Text>Register!</Text>
+            <Title>Register</Title>
           </Body>
-          <Item>
-            <FormTextInput
-              autoCapitalize='none'
-              placeholder='username'
-              onChangeText={handleUsernameChange}
-              value={inputs.username}
-              required
-              onEndEditing={(evt) => {
-                const uname = evt.nativeEvent.text;
-                console.log('Uname in input', uname);
-                checkUser(uname);
+        </Header>
+        <Content>
+          <Form>
+            <Body>
+              <Text>Register!</Text>
+            </Body>
+            <Item>
+              <FormTextInput
+                autoCapitalize='none'
+                placeholder='Username'
+                onChangeText={handleUsernameChange}
+                value={inputs.username}
+                required
+                onEndEditing={(evt) => {
+                  const uname = evt.nativeEvent.text;
+                  console.log('Uname in input', uname);
+                  checkUser(uname);
+                }}
+              />
+            </Item>
+            <Item>
+              <FormTextInput
+                autoCapitalize='none'
+                placeholder='Password'
+                secureTextEntry={true}
+                onChangeText={handlePasswordChange}
+                value={inputs.password}
+                required
+                onEndEditing={(evt) => {
+                  const pwd = evt.nativeEvent.text;
+                }}
+              />
+            </Item>
+            <Item>
+              <FormTextInput
+                autoCapitalize='none'
+                placeholder='Confirm Password'
+                secureTextEntry={true}
+                onChangeText={handlePasswordConfirmChange}
+                value={inputs.confirmPassword}
+                required
+                onEndEditing={(evt) => {
+                  const validPwd = evt.nativeEvent.text;
+                }}
+              />
+            </Item>
+            <Item>
+              <FormTextInput
+                autoCapitalize='none'
+                placeholder='Email'
+                onChangeText={handleEmailChange}
+                value={inputs.email}
+                required
+                onEndEditing={(evt) => {
+                  const validEmail = evt.nativeEvent.text;
+                }}
+              />
+            </Item>
+            <Item>
+              <FormTextInput
+                autoCapitalize='none'
+                placeholder='Fullname (not required)'
+                onChangeText={handleFullnameChange}
+                value={inputs.fullname}
+              />
+            </Item>
+            <Button
+              onPress={() => {
+                regValidation(inputs, props);
               }}
-            />
-          </Item>
-          <Item>
-            <FormTextInput
-              autoCapitalize='none'
-              placeholder='password'
-              secureTextEntry={true}
-              onChangeText={handlePasswordChange}
-              value={inputs.password}
-              required
-              onEndEditing={(evt) => {
-                const pwd = evt.nativeEvent.text;
-              }}
-            />
-          </Item>
-          <Item>
-            <FormTextInput
-              autoCapitalize='none'
-              placeholder='confirm password'
-              secureTextEntry={true}
-              onChangeText={handlePasswordConfirmChange}
-              value={inputs.confirmPassword}
-              required
-              onEndEditing={(evt) => {
-                const validPwd = evt.nativeEvent.text;
-              }}
-            />
-          </Item>
-          <Item>
-            <FormTextInput
-              autoCapitalize='none'
-              placeholder='email'
-              onChangeText={handleEmailChange}
-              value={inputs.email}
-              required
-              onEndEditing={(evt) => {
-                const validEmail = evt.nativeEvent.text;
-              }}
-            />
-          </Item>
-          <Item>
-            <FormTextInput
-              autoCapitalize='none'
-              placeholder='fullname (not required)'
-              onChangeText={handleFullnameChange}
-              value={inputs.fullname}
-            />
-          </Item>
-          <Button
-            title='Register!'
-            onPress={() => {
-              regValidation(inputs, props);
-            }}
-          />
-          <Button
-            title='Login Instead!'
-            onPress={() => handleFormChange(<LoginForm />)}
-          />
-        </Form>
-      </Content>
+            >
+              <Text>Register!</Text>
+            </Button>
+            <Button onPress={() => handleFormChange(<LoginForm />)}>
+              <Text>Login Instead!</Text>
+            </Button>
+          </Form>
+        </Content>
+      </Container>
     );
   };
 

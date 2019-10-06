@@ -23,7 +23,7 @@ import {
 import mediaAPI from "../hooks/ApiHooks";
 
 const Profile = props => {
-  const { getAvatar, uploadAvatar } = mediaAPI();
+  const { getAvatar } = mediaAPI();
 
   const [user, setUser] = useState({});
   const getUser = async () => {
@@ -33,7 +33,8 @@ const Profile = props => {
 
   const [avatar, setAvatar] = useState(undefined);
   getAvatar().then(result => {
-    setAvatar(result);
+    console.log("getAvatar",result)
+    setAvatar(result.url);
   });
 
   const [email, setEMail] = useState({});

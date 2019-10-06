@@ -43,11 +43,10 @@ const List = (props) => {
   const { navigation } = props;
   const tagUrl = 'http://media.mw.metropolia.fi/wbma/tags/music-sales_';
   const [media] = fetchViaTag(tagUrl);
-  console.log('MEDIA ARRAY:', media);
 
   return (
     <BaseList
-      dataArray={media}
+      dataArray={media.reverse()}
       renderRow={(item) => (
         <ListItem navigation={props.navigation} singleMedia={item} />
       )}
