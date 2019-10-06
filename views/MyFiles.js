@@ -1,30 +1,21 @@
-import React, { useEffect, useState, useContext } from "react";
-
+import React from "react";
 import mediaAPI from "../hooks/ApiHooks";
-import ListItem from "../components/ListItem";
 import { List as BaseList } from "native-base";
-import List from "../components/List";
 import UserFilesListItem from "../components/UserFilesListItem";
 
 import {
   Container,
   Header,
   Button,
-  Content,
-  Form,
-  Item,
-  Input,
-  Label,
   Body,
   Title,
   Left,
-  Icon,
-  Card,
-  CardItem
+  Icon
 } from "native-base";
 
 const MyFiles = props => {
   const { getUserMedia } = mediaAPI();
+
   const uMedia = getUserMedia();
 
   console.log("uMedia", uMedia);
