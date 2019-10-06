@@ -216,22 +216,25 @@ const Upload = props => {
             />
           </Item>
           <Item picker>
+
             <Picker
               mode="dropdown"
               iosIcon={<Icon name="arrow-down" />}
               style={{ width: undefined }}
-              placeholder="Select item category"
-              placeholderStyle={{ color: "#ffffff" }}
-              placeholderIconColor="#000000"
+              placeholder="Select category"
+              placeholderStyle={{ color: "#bfc6ea" }}
+              placeholderIconColor="#007aff"
               selectedValue={inputs.category}
               onValueChange={handleCategoryChange}
             >
+              <Picker.Item label="Select Category" value="" style={{textDecorationLine:"underline"}}/>
               <Picker.Item label="Guitars" value="music-sales_guitars" />
               <Picker.Item label="Drums" value="music-sales_drums" />
               <Picker.Item label="Amplifiers" value="music-sales_amplifiers" />
               <Picker.Item label="Trombones" value="music-sales_trombones" />
               <Picker.Item label="Equipment" value="music-sales_equipment" />
             </Picker>
+
           </Item>
           <Button
             disabled={!isEnabled}

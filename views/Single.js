@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Image } from "react-native";
-
+import { Image } from "react-native"
 import {
   Container,
   Header,

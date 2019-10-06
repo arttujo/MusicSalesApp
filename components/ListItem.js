@@ -57,7 +57,7 @@ const ListItem = props => {
             navigation.push("Single", { file: singleMedia });
           }}
         >
-          <Icon name="play" />
+          <Icon name = "play"/>
           <Text>View</Text>
         </Button>
       </Right>
