@@ -144,6 +144,18 @@ const mediaAPI = () => {
     });
   };
 
+  const getComments = file_id => {
+    return fetchGetUrl(apiUrl + "comments/file/" + file_id).then(json => {
+      return json;
+    });
+  };
+
+  const addComment = async (fileId, comment) => {
+    console.log('api post comment');
+    data = {'file_id': fileId, 'comment': comment};
+    const json = await fetchPostUrlUserData(apiUrl + 'comments', data);
+    return json;
+  };
   const fetchUploadUrl = async (url, data) => {
     const userToken = await AsyncStorage.getItem("userToken");
     console.log("fetchUploadUrl", url, data, userToken);
@@ -295,7 +307,9 @@ const mediaAPI = () => {
     addDefaultTag,
     addTag,
     getTags,
-    uploadAvatar
+    uploadAvatar,
+    getComments,
+    addComment
   };
 };
 
