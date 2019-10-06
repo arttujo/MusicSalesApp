@@ -126,7 +126,6 @@ const Upload = (props) => {
       };
 
       handleUpload(uploadData);
-      console.log();
       clearForm();
       setImage();
       setMedia([]);

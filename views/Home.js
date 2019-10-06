@@ -23,12 +23,7 @@ import {
 import { MediaContext } from '../contexts/MediaContext';
 
 const Home = (props) => {
-  const {
-    userToContext,
-    reloadCategoryMedia,
-    handleMenuChange,
-    inputs,
-  } = mediaAPI();
+  const { userToContext } = mediaAPI();
 
   userToContext().then((user) => {
     console.log('usercontext', user);
@@ -36,33 +31,14 @@ const Home = (props) => {
 
   const { navigation } = props;
   const { getUserFromToken } = mediaAPI();
-  const { setMedia } = useContext(MediaContext);
+
   getUserFromToken();
-  setMedia({});
 
   return (
     <Container>
       <Header>
         <Body>
           <Title>Music Sales</Title>
-          <Item picker>
-            <Picker
-              mode='dropdown'
-              iosIcon={<Icon name='arrow-down' />}
-              style={{ width: 50 }}
-              placeholder='Select item category'
-              placeholderStyle={{ color: '#ffffff' }}
-              placeholderIconColor='#000000'
-              selectedValue={inputs.pickedcategory}
-              onValueChange={handleMenuChange}
-            >
-              <Picker.Item label='Guitars' value='music-sales_guitars' />
-              <Picker.Item label='Drums' value='music-sales_drums' />
-              <Picker.Item label='Amplifiers' value='music-sales_amplifiers' />
-              <Picker.Item label='Trombones' value='music-sales_trombones' />
-              <Picker.Item label='Equipment' value='music-sales_equipment' />
-            </Picker>
-          </Item>
         </Body>
       </Header>
       <Content>
