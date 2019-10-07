@@ -40,7 +40,9 @@ const useUploadHooks = props => {
     setInputs(inputs => ({
       ...inputs,
       category: text,
+
     }));
+    console.log(inputs.category)
   };
 
   const clearForm = () => {

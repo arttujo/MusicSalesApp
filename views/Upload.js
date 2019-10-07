@@ -239,11 +239,11 @@ const Upload = props => {
               onValueChange={handleCategoryChange}
             >
               <Picker.Item label="Select Category" value="" style={{textDecorationLine:"underline"}}/>
-              <Picker.Item label="Guitars" value="music-sales_guitars" />
-              <Picker.Item label="Drums" value="music-sales_drums" />
-              <Picker.Item label="Amplifiers" value="music-sales_amplifiers" />
-              <Picker.Item label="Trombones" value="music-sales_trombones" />
-              <Picker.Item label="Equipment" value="music-sales_equipment" />
+              <Picker.Item label="Guitars" value="guitars" />
+              <Picker.Item label="Drums" value="drums" />
+              <Picker.Item label="Amplifiers" value="amplifiers" />
+              <Picker.Item label="Trombones" value="trombones" />
+              <Picker.Item label="Equipment" value="equipment" />
             </Picker>
 
           </Item>
