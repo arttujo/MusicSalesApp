@@ -17,7 +17,7 @@ import {
   CardItem
 } from "native-base";
 import mediaAPI from "../hooks/ApiHooks";
-import { format, render, cancel, register } from 'timeago.js';
+import { format} from 'timeago.js';
 
 const getThumbnail = url => {
   // console.log('urli', url);
@@ -61,7 +61,7 @@ const ListItem = props => {
   const [commentAmount, setComments] = useState()
   getComments(singleMedia.file_id).then(json => {
    const total = json.reduce((a,obj)=>a+Object.keys(obj).length,0)
-   setComments(total)
+   setComments(total/5)
   })
 
   return (
@@ -103,8 +103,8 @@ const ListItem = props => {
               </Body>
             </Left>
             <Body>
-            <Icon active name="chatbubbles" />
-              <Text>{commentAmount}</Text>
+            <Icon name="chatbubbles" />
+              <Text>{commentAmount} Comments</Text>
             </Body>
             <Right>
               <Text>
