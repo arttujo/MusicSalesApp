@@ -46,7 +46,7 @@ const ListItem = props => {
 
   const [avatar, setAvatar] = useState(undefined);
   getOtherUserAvatar(singleMedia.user_id).then(result => {
-    console.log("getAvatar", result);
+    //console.log("getAvatar", result);
     setAvatar(result.url);
   });
 

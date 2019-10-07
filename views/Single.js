@@ -143,6 +143,12 @@ const Single = props => {
             <Button
               onPress={() => {
                 handleComment(file.file_id);
+                setTimeout(() => {
+                  setComments("");
+                  getComments(file.file_id).then(json => {
+                    setComments(json.reverse());
+                  });
+                }, 500);
               }}
             >
               <Text>Post comment</Text>

@@ -28,7 +28,7 @@ import {
 const Home = props => {
   const { userToContext } = mediaAPI();
   userToContext().then(user => {
-    console.log("usercontext", user);
+   // console.log("usercontext", user);
   });
 
   const { navigation } = props;
