@@ -16,6 +16,13 @@ const useUploadHooks = props => {
     }));
   };
 
+  const handleInfoChange = text => {
+    setInputs(inputs => ({
+      ...inputs,
+      contactInfo: text
+    }));
+  };
+
   const handleDescChange = text => {
     setInputs(inputs => ({
       ...inputs,
@@ -63,7 +70,8 @@ const useUploadHooks = props => {
     const formData = new FormData();
     const moreData = {
       description: data.description,
-      price: data.price
+      price: data.price,
+      contactInfo: data.contactInfo
     };
     formData.append("file", { uri: localUri, name: filename, type });
     formData.append("title", data.title);
@@ -133,6 +141,7 @@ const useUploadHooks = props => {
     clearForm,
     handleAvatarChange,
     handlePriceChange,
+    handleInfoChange,
     handleCategoryChange
   };
 };

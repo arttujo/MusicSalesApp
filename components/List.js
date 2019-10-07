@@ -30,7 +30,7 @@ const fetchViaTag = url => {
   const fetchUrl = async () => {
     const response = await fetch(url);
     const json = await response.json();
-    setMedia(json);
+    setMedia(json.reverse());
   };
   useEffect(() => {
     fetchUrl();
@@ -46,7 +46,7 @@ const List = props => {
 
   return (
     <BaseList
-      dataArray={media.reverse()}
+      dataArray={media}
       renderRow={item => (
         <ListItem navigation={props.navigation} singleMedia={item} />
       )}

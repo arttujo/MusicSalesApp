@@ -42,7 +42,7 @@ const ListItem = props => {
   const tn = getThumbnail(singleMedia.file_id);
 
   const allData = JSON.parse(singleMedia.description);
-  const { getOtherUserAvatar, getUserInfo } = mediaAPI();
+  const { getOtherUserAvatar, getUserInfo,getComments } = mediaAPI();
 
   const [avatar, setAvatar] = useState(undefined);
   getOtherUserAvatar(singleMedia.user_id).then(result => {
@@ -56,6 +56,14 @@ const ListItem = props => {
   });
 
   const time = format(singleMedia.time_added)
+
+
+  const [commentAmount, setComments] = useState()
+  getComments(singleMedia.file_id).then(json => {
+   const total = json.reduce((a,obj)=>a+Object.keys(obj).length,0)
+   setComments(total)
+  })
+
   return (
     <BaseListItem>
       <Card style={{ flex: 1 }}>
@@ -95,7 +103,8 @@ const ListItem = props => {
               </Body>
             </Left>
             <Body>
-              <Text>Test</Text>
+            <Icon active name="chatbubbles" />
+              <Text>{commentAmount}</Text>
             </Body>
             <Right>
               <Text>

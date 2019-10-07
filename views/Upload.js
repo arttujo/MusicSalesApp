@@ -68,6 +68,7 @@ const Upload = props => {
     handleUpload,
     clearForm,
     handlePriceChange,
+    handleInfoChange,
     handleCategoryChange
   } = useUploadHooks();
 
@@ -122,7 +123,8 @@ const Upload = props => {
         description: inputs.description,
         price: inputs.price,
         category: inputs.category,
-        image: image
+        image: image,
+        contactInfo: inputs.contactInfo
       };
 
       handleUpload(uploadData);
@@ -212,6 +214,15 @@ const Upload = props => {
               placeholder="Description"
               onChangeText={handleDescChange}
               value={inputs.description}
+              required
+            />
+          </Item>
+          <Item>
+            <FormTextInput
+              autoCapitalize="none"
+              placeholder="Contact Info"
+              onChangeText={handleInfoChange}
+              value={inputs.contactInfo}
               required
             />
           </Item>
