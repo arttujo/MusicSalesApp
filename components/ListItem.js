@@ -45,54 +45,63 @@ const ListItem = props => {
 
   const [avatar, setAvatar] = useState(undefined);
   getOtherUserAvatar(singleMedia.user_id).then(result => {
-    console.log("getAvatar",result)
+    console.log("getAvatar", result);
     setAvatar(result.url);
   });
 
-  const [username, setUsename] = useState()
+  const [username, setUsename] = useState();
   getUserInfo(singleMedia.user_id).then(result => {
-    setUsename(result.username)
-  })
+    setUsename(result.username);
+  });
 
   return (
-
-        <BaseListItem>
-        <Card style ={{flex:1}}>
+    <BaseListItem>
+      <Card style={{ flex: 1 }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.push("Single", { file: singleMedia });
+          }}
+        >
           <CardItem>
-          <Left>
-            <Thumbnail
-              source={{
-                uri: avatar
-              }}
-              style={{ width: 70, height: 70 }}
-            />
-            <Body>
-              <Text>{singleMedia.title}</Text>
-              <Text note>{username}</Text>
-            </Body>
-          </Left>
+            <Left>
+              <Thumbnail
+                source={{
+                  uri: avatar
+                }}
+                style={{ width: 70, height: 70 }}
+              />
+              <Body>
+                <Text>{singleMedia.title}</Text>
+                <Text note>{username}</Text>
+              </Body>
+            </Left>
           </CardItem>
           <CardItem cardBody>
-            <Image source={{uri:"http://media.mw.metropolia.fi/wbma/uploads/"+singleMedia.filename}} style={{height: 200, width: null, flex: 1}}/>
+            <Image
+              source={{
+                uri:
+                  "http://media.mw.metropolia.fi/wbma/uploads/" +
+                  singleMedia.filename
+              }}
+              style={{ height: 200, width: null, flex: 1 }}
+            />
           </CardItem>
           <CardItem>
-          <Left>
-            <Button
-              onPress={() => {
-                navigation.push("Single", { file: singleMedia });
-              }}
-            >
-              <Icon name="play" />
-              <Text>View</Text>
-            </Button>
-          </Left>
-          <Body><Text>Test</Text></Body>
-          <Right><Text>Test</Text></Right>
+            <Left>
+              <Body>
+                <Text>Test</Text>
+              </Body>
+            </Left>
+            <Body>
+              <Text>Test</Text>
+            </Body>
+            <Right>
+              <Text>Test</Text>
+            </Right>
           </CardItem>
-          </Card>
-        </BaseListItem>
-
-
+        </TouchableOpacity>
+      </Card>
+    </BaseListItem>
   );
 };
 
