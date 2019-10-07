@@ -79,6 +79,12 @@ const fetchPutUrl = async (url, data) => {
 };
 
 const mediaAPI = () => {
+  const getUserInfo = user_id => {
+    return fetchGetUrl(regUrl + user_id).then(json => {
+      return json;
+    });
+  };
+
   const reloadAllMedia = setMedia => {
     fetchGetUrl("http://media.mw.metropolia.fi/wbma/tags/music-sales_").then(
       json => {
@@ -94,7 +100,7 @@ const mediaAPI = () => {
   };
   const updateFile = (file_id, data) => {
     fetchPutUrl(apiUrl + "media/" + file_id, data).then(json => {
-      console.log("updateFile",json);
+      console.log("updateFile", json);
     });
   };
 
@@ -251,6 +257,29 @@ const mediaAPI = () => {
     });
   };
 
+  const getOtherUserAvatar = user_id => {
+    console.log("avatar", apiUrl + "tags/avatar_" + user_id);
+    return fetchGetUrl(apiUrl + "tags/avatar_" + user_id).then(json => {
+      if (json.length === 0) {
+        console.log("there is no avatar!");
+        const defAvatar = {
+          url:
+            "https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png"
+        };
+        return defAvatar;
+      } else {
+        avatarUrl = apiUrl + "uploads/" + json[0].filename;
+        avatarId = json[0].file_id;
+        console.log("Avatar:", avatarId);
+        const avatarData = {
+          url: avatarUrl,
+          id: avatarId
+        };
+        return avatarData;
+      }
+    });
+  };
+
   const uploadAvatar = data => {};
 
   const userToContext = async () => {
@@ -309,7 +338,9 @@ const mediaAPI = () => {
     getTags,
     uploadAvatar,
     getComments,
-    addComment
+    addComment,
+    getOtherUserAvatar,
+    getUserInfo
   };
 };
 

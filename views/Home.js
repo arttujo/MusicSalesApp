@@ -23,6 +23,8 @@ import {
   Picker
 } from "native-base";
 
+
+
 const Home = props => {
   const { userToContext } = mediaAPI();
   userToContext().then(user => {
@@ -39,25 +41,6 @@ const Home = props => {
         <Body>
           <Title>Music Sales</Title>
         </Body>
-        <Right>
-          <Form>
-            <Picker note mode="dropdown" style={{ width: 120 }} >
-              <Picker.Item label="Home" value="key0" />
-              <Picker.Item label="ATM Card" value="key1" />
-              <Picker.Item label="Debit Card" value="key2" />
-              <Picker.Item label="Credit Card" value="key3" />
-              <Picker.Item label="Net Banking" value="key4" />
-            </Picker>
-          </Form>
-          {/* <Button
-            transparent
-            onPress={() => {
-              console.log("test");
-            }}
-          >
-            <Icon name="menu"></Icon>
-          </Button> */}
-        </Right>
       </Header>
 
       <Content>
