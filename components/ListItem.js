@@ -17,6 +17,7 @@ import {
   CardItem
 } from "native-base";
 import mediaAPI from "../hooks/ApiHooks";
+import { format, render, cancel, register } from 'timeago.js';
 
 const getThumbnail = url => {
   // console.log('urli', url);
@@ -54,6 +55,7 @@ const ListItem = props => {
     setUsename(result.username);
   });
 
+  const time = format(singleMedia.time_added)
   return (
     <BaseListItem>
       <Card style={{ flex: 1 }}>
@@ -96,7 +98,9 @@ const ListItem = props => {
               <Text>Test</Text>
             </Body>
             <Right>
-              <Text>Test</Text>
+              <Text>
+                {time}
+              </Text>
             </Right>
           </CardItem>
         </TouchableOpacity>
