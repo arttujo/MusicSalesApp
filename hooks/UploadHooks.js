@@ -84,7 +84,7 @@ const useUploadHooks = (props) => {
       );
       const tagData = {
         file_id: json.file_id,
-        tag: 'music-sales_' + data.category,
+        tag: data.category,
       };
       addTag(tagData).then((json) => {
         console.log('Added Tag', tagData.tag, json);

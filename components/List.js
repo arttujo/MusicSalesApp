@@ -1,10 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  keyExtractor,
-  StyleSheet,
-  useState,
-} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ListItem from './ListItem';
 import { MediaContext } from '../contexts/MediaContext';
@@ -12,28 +6,15 @@ import { List as BaseList, Container, Item, Icon, Picker } from 'native-base';
 import mediaAPI from '../hooks/ApiHooks';
 import useListHooks from '../hooks/ListHooks';
 
-const reloadCategoryMedia = (tag) => {
-  const { media, setMedia } = useContext(MediaContext);
-  const fetchUrl = async () => {
-    const response = await fetch(tag);
-    const json = await response.json();
-    console.log(json);
-    setMedia(json);
-  };
-  useEffect(() => {
-    fetchUrl();
-  }, []);
-  return [media];
-};
+const tagUrl = 'http://media.mw.metropolia.fi/wbma/tags/';
 
 const List = (props) => {
-  const { inputs, handleMenuChange } = useListHooks();
+  const { handleMenuChange, inputs } = useListHooks();
+  const { getViaTag } = mediaAPI();
 
-  const tagUrl = 'http://media.mw.metropolia.fi/wbma/tags/';
-  const [media] = reloadCategoryMedia(tagUrl + inputs.pickedcategory);
-  console.log('MEDIA ARRAY: ', media);
-  console.log(tagUrl + inputs.pickedcategory);
-  console.log([media]);
+  const [media] = getViaTag(inputs.pickedcategory);
+
+  console.log('MEDIA ARRAY: ', [media]);
 
   return (
     <Container>
