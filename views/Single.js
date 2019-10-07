@@ -56,7 +56,7 @@ const Single = props => {
   useEffect(() => {
     getComments(file.file_id).then(json => {
       console.log("get comments", json);
-      setComments(json);
+      setComments(json.reverse());
       console.log("current comments", comments);
     });
   }, []);
@@ -117,7 +117,7 @@ const Single = props => {
 
           <CardItem>
             <Body>
-              <Text>Price: {parsedDesc.price}€</Text>
+              <Text>€: {parsedDesc.price}</Text>
             </Body>
             <Body>
               <Text>Description:</Text>
@@ -126,22 +126,35 @@ const Single = props => {
               <Text>{tags}</Text>
             </Body>
           </CardItem>
-          <Item>
-            <FormTextInput
-              autoCapitalize="none"
-              placeholder="add comment"
-              value={inputs.comment}
-              onChangeText={handleCommentChange}
-            />
-          </Item>
-          <Button
-            onPress={() => {
-              handleComment(file.file_id);
-            }}
-          >
-            <Text>Post comment</Text>
-          </Button>
         </Card>
+        <Card>
+          <CardItem>
+            <Item>
+              <FormTextInput
+                autoCapitalize="none"
+                placeholder="add comment"
+                value={inputs.comment}
+                onChangeText={handleCommentChange}
+              />
+            </Item>
+          </CardItem>
+          <CardItem>
+            <Button
+              onPress={() => {
+                handleComment(file.file_id);
+                setTimeout(() => {
+                  setComments("");
+                  getComments(file.file_id).then(json => {
+                    setComments(json.reverse());
+                  });
+                }, 500);
+              }}
+            >
+              <Text>Post comment</Text>
+            </Button>
+          </CardItem>
+        </Card>
+
         <BaseList
           dataArray={comments}
           renderRow={item => (

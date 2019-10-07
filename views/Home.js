@@ -19,13 +19,16 @@ import {
   Title,
   Right,
   Icon,
-  Button
+  Button,
+  Picker
 } from "native-base";
+
+
 
 const Home = props => {
   const { userToContext } = mediaAPI();
   userToContext().then(user => {
-    console.log("usercontext", user);
+   // console.log("usercontext", user);
   });
 
   const { navigation } = props;
@@ -38,16 +41,6 @@ const Home = props => {
         <Body>
           <Title>Music Sales</Title>
         </Body>
-        <Right>
-          <Button
-            transparent
-            onPress={() => {
-              console.log("test");
-            }}
-          >
-            <Icon name="menu"></Icon>
-          </Button>
-        </Right>
       </Header>
 
       <Content>
