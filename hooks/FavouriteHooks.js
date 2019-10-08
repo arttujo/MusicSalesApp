@@ -28,7 +28,7 @@ const fetchGetUrl = async url => {
     }
   });
   const json = await response.json();
-  console.log("fetchUrl json", json);
+  //console.log("fetchUrl json", json);
   return json;
 };
 const fetchDeleteUrl = async url => {
@@ -53,20 +53,30 @@ const fetchGetUrlNoToken = async url => {
 
 const favouriteHooks = () => {
 
+  const loadFavourites = async () => {
+    const firstArray = await getOwnFavourites();
+    console.log('first array', firstArray);
+    const secondArray = await loopArray(firstArray);
+    console.log('load favourites', secondArray);
+    return secondArray;
+  };
+
   const getOwnFavourites = async () => {
-    return fetchGetUrl(apiUrl + "favourites").then(json => {
-      //console.log("getOwnFavourites", json)
-      const favouriteArray = [];
-      for(const i of json) {
-        console.log('current iterable', i);
-        fetchGetUrlNoToken(apiUrl + "media/" + i.file_id).then(json => {
-          favouriteArray.push(json);
-          console.log('fetched favourite file', json);
-          //console.log('current array', favouriteArray);
-        });
-      };
-      return favouriteArray;
-    });
+    return await fetchGetUrl(apiUrl + "favourites")
+  };
+
+  const loopArray = async (array) => {
+    const favouriteArray = [];
+    for(const i of array) {
+      //console.log('current iterable', i);
+      await fetchGetUrlNoToken(apiUrl + "media/" + i.file_id).then(json => {
+        favouriteArray.push(json);
+        //console.log('fetched favourite file', json);
+        //console.log('current array', favouriteArray);
+      })//.then(() => console.log('-------', favouriteArray));
+    };
+    //console.log('favourite array', favouriteArray);
+    return favouriteArray;
   };
 
   /*const getFavouriteFiles = async() => {
@@ -119,7 +129,9 @@ const favouriteHooks = () => {
     favourite,
     removeFavourite,
     getPeopleWhoFavourited,
+    loadFavourites
     //getFavouriteFiles
+
   };
 };
 export default favouriteHooks;

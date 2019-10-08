@@ -192,8 +192,8 @@ const Upload = props => {
 
           <Item>
             <FormTextInput
-              autoCapitalize="none"
-              placeholder="title"
+              autoCapitalize='none'
+              placeholder='title'
               onChangeText={handleTitleChange}
               value={inputs.title}
               required
@@ -201,8 +201,8 @@ const Upload = props => {
           </Item>
           <Item>
             <FormTextInput
-              autoCapitalize="none"
-              placeholder="price"
+              autoCapitalize='none'
+              placeholder='price'
               onChangeText={handlePriceChange}
               value={inputs.price}
               required
@@ -210,8 +210,8 @@ const Upload = props => {
           </Item>
           <Item>
             <FormTextInput
-              autoCapitalize="none"
-              placeholder="Description"
+              autoCapitalize='none'
+              placeholder='Description'
               onChangeText={handleDescChange}
               value={inputs.description}
               required
@@ -219,33 +219,35 @@ const Upload = props => {
           </Item>
           <Item>
             <FormTextInput
-              autoCapitalize="none"
-              placeholder="Contact Info"
+              autoCapitalize='none'
+              placeholder='Contact Info'
               onChangeText={handleInfoChange}
               value={inputs.contactInfo}
               required
             />
           </Item>
           <Item picker>
-
             <Picker
-              mode="dropdown"
-              iosIcon={<Icon name="arrow-down" />}
+              mode='dropdown'
+              iosIcon={<Icon name='arrow-down' />}
               style={{ width: undefined }}
-              placeholder="Select category"
+              placeholder='Select category'
               placeholderStyle={{ color: "#bfc6ea" }}
-              placeholderIconColor="#007aff"
+              placeholderIconColor='#007aff'
               selectedValue={inputs.category}
               onValueChange={handleCategoryChange}
             >
-              <Picker.Item label="Select Category" value="" style={{textDecorationLine:"underline"}}/>
-              <Picker.Item label="Guitars" value="guitars" />
-              <Picker.Item label="Drums" value="drums" />
-              <Picker.Item label="Amplifiers" value="amplifiers" />
-              <Picker.Item label="Trombones" value="trombones" />
-              <Picker.Item label="Equipment" value="equipment" />
+              <Picker.Item
+                label='Select Category'
+                value=''
+                style={{ textDecorationLine: "underline" }}
+              />
+              <Picker.Item label='Guitars' value='guitars' />
+              <Picker.Item label='Drums' value='drums' />
+              <Picker.Item label='Amplifiers' value='amplifiers' />
+              <Picker.Item label='Trombones' value='trombones' />
+              <Picker.Item label='Equipment' value='equipment' />
             </Picker>
-
           </Item>
           <Button
             disabled={!isEnabled}

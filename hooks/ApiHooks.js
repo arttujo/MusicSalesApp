@@ -153,7 +153,7 @@ const mediaAPI = () => {
     const [media, setMedia] = useState();
     useEffect(() => {
       fetchGetUrlNoToken(tagUrl).then(json => {
-        console.log("get via tag", json);
+        //console.log("get via tag", json);
         setMedia(json.reverse());
       });
     }, []);
@@ -341,7 +341,7 @@ const mediaAPI = () => {
     }
   };
 
- 
+
 
   return {
     getAllMedia,

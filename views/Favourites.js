@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import mediaAPI from "../hooks/ApiHooks";
 import { List as BaseList } from "native-base";
 import FavouritesListItem from "../components/FavouritesListItem";
@@ -15,15 +15,12 @@ import {
 import favouriteHooks from "../hooks/FavouriteHooks";
 
 const Favourites = props => {
-  const {getOwnFavourites} = favouriteHooks();
-  const [media, setMedia] = useState({});
+  const { getOwnFavourites } = favouriteHooks();
 
-  useEffect(() => {
-    setMedia(getOwnFavourites);
-  }, []);
-  console.log("favourite Media", media);
 
   const { navigation } = props;
+  const media = navigation.state.params.media
+  console.log('navigation array', media);
 
   return (
     <Container>
@@ -35,7 +32,7 @@ const Favourites = props => {
               props.navigation.goBack();
             }}
           >
-            <Icon name="arrow-back" />
+            <Icon name='arrow-back' />
           </Button>
         </Left>
         <Body>
@@ -45,7 +42,10 @@ const Favourites = props => {
       <BaseList
         dataArray={media}
         renderRow={item => (
-          <FavouritesListItem navigation={props.navigation} singleMedia={item} />
+          <FavouritesListItem
+            navigation={props.navigation}
+            singleMedia={item}
+          />
         )}
         keyExtractor={(item, index) => index.toString()}
       />

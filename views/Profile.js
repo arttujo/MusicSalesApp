@@ -25,7 +25,7 @@ import favouriteHooks from "../hooks/FavouriteHooks";
 
 const Profile = props => {
   const { getAvatar } = mediaAPI();
-  const {getOwnFavourites} = favouriteHooks();
+  const {getOwnFavourites, loadFavourites} = favouriteHooks();
   const [user, setUser] = useState({});
   const getUser = async () => {
     const user = await AsyncStorage.getItem("user");
@@ -61,13 +61,14 @@ const Profile = props => {
     await AsyncStorage.clear();
     props.navigation.navigate("Auth");
   };
-  const navMyFiles = () => {
-    const array = getOwnFavourites();
-    props.navigation.push("MyFiles");
+  const navMyFavs = async () => {
+    const array = await loadFavourites()
+    console.log('array', array);
+    props.navigation.push("Favourites", {media: array});
   };
 
-  const navMyFavs = () => {
-    props.navigation.push("Favourites");
+  const navMyFiles = () => {
+    props.navigation.push("MyFiles");
   };
 
   return (
