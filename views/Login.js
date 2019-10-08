@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { StyleSheet, View, AsyncStorage, Alert } from "react-native";
-import PropTypes from "prop-types";
-import FormTextInput from "../components/FormTextInput";
-import useSignUpForm from "../hooks/LoginHook";
-import mediaAPI from "../hooks/ApiHooks";
+import React, { useEffect } from 'react';
+import { StyleSheet, View, AsyncStorage, Alert } from 'react-native';
+import PropTypes from 'prop-types';
+import FormTextInput from '../components/FormTextInput';
+import useSignUpForm from '../hooks/LoginHook';
+import mediaAPI from '../hooks/ApiHooks';
 
-const validate = require("validate.js");
+const validate = require('validate.js');
 
 import {
   Container,
@@ -18,10 +18,10 @@ import {
   Text,
   Input,
   Label,
-  Body
-} from "native-base";
+  Body,
+} from 'native-base';
 
-const Login = props => {
+const Login = (props) => {
   const { signInAsync, registerAsync, checkUser } = mediaAPI();
   const {
     handleUsernameChange,
@@ -30,39 +30,39 @@ const Login = props => {
     inputs,
     handleEmailChange,
     handleFullnameChange,
-    handleFormChange
+    handleFormChange,
   } = useSignUpForm();
 
   const regValidation = (inputs, props) => {
     const constraints = {
       email: {
         presence: {
-          message: "^Please enter an Email address"
+          message: '^Please enter an Email address'
         },
         email: {
-          message: "^Please enter a valid email address"
+          message: '^Please enter a valid email address'
         }
       },
       password: {
         presence: {
-          message: "^You must enter a password!"
+          message: '^You must enter a password!'
         },
         length: {
           minimum: 5,
-          message: "^Password must be atleast 5 characters"
+          message: '^Password must be atleast 5 characters'
         }
       },
       confirmPassword: {
-        equality: "password"
+        equality: 'password'
       },
       username: {
         presence: {
-          message: "^You must enter an username"
+          message: '^You must enter an username'
         },
         length: {
           minimum: 3,
           maximum: 20,
-          message: "^Please enter a valid username"
+          message: '^Please enter a valid username'
         }
       }
     };
@@ -84,7 +84,7 @@ const Login = props => {
       !usernameError.username
     ) {
       registerAsync(inputs, props);
-      console.log("Reg Done!");
+      console.log('Reg Done!');
     } else {
       const errorArray = [
         usernameError.username,
@@ -97,7 +97,7 @@ const Login = props => {
       for (let i = 0; i < errorArray.length; i++) {
         //console.log("Array item:", errorArray[i][0]);
         if (errorArray[i]) {
-          console.log("alert:", errorArray[i][0]);
+          console.log('alert:', errorArray[i][0]);
           alert(errorArray[i][0]);
         }
       }
@@ -110,7 +110,7 @@ const Login = props => {
       handlePasswordChange,
       inputs,
       handleEmailChange,
-      handleFullnameChange
+      handleFullnameChange,
     } = useSignUpForm();
     return (
       <Container>
@@ -126,8 +126,8 @@ const Login = props => {
             </Body>
             <Item>
               <FormTextInput
-                autoCapitalize="none"
-                placeholder="Username"
+                autoCapitalize='none'
+                placeholder='Username'
                 onChangeText={handleUsernameChange}
                 value={inputs.username}
                 required
@@ -135,8 +135,8 @@ const Login = props => {
             </Item>
             <Item>
               <FormTextInput
-                autoCapitalize="none"
-                placeholder="Password"
+                autoCapitalize='none'
+                placeholder='Password'
                 secureTextEntry={true}
                 onChangeText={handlePasswordChange}
                 value={inputs.password}
@@ -166,7 +166,7 @@ const Login = props => {
       inputs,
       handleEmailChange,
       handleFullnameChange,
-      handlePasswordConfirmChange
+      handlePasswordConfirmChange,
     } = useSignUpForm();
 
     return (
@@ -183,60 +183,60 @@ const Login = props => {
             </Body>
             <Item>
               <FormTextInput
-                autoCapitalize="none"
-                placeholder="Username"
+                autoCapitalize='none'
+                placeholder='Username'
                 onChangeText={handleUsernameChange}
                 value={inputs.username}
                 required
-                onEndEditing={evt => {
+                onEndEditing={(evt) => {
                   const uname = evt.nativeEvent.text;
-                  console.log("Uname in input", uname);
+                  console.log('Uname in input', uname);
                   checkUser(uname);
                 }}
               />
             </Item>
             <Item>
               <FormTextInput
-                autoCapitalize="none"
-                placeholder="Password"
+                autoCapitalize='none'
+                placeholder='Password'
                 secureTextEntry={true}
                 onChangeText={handlePasswordChange}
                 value={inputs.password}
                 required
-                onEndEditing={evt => {
+                onEndEditing={(evt) => {
                   const pwd = evt.nativeEvent.text;
                 }}
               />
             </Item>
             <Item>
               <FormTextInput
-                autoCapitalize="none"
-                placeholder="Confirm Password"
+                autoCapitalize='none'
+                placeholder='Confirm Password'
                 secureTextEntry={true}
                 onChangeText={handlePasswordConfirmChange}
                 value={inputs.confirmPassword}
                 required
-                onEndEditing={evt => {
+                onEndEditing={(evt) => {
                   const validPwd = evt.nativeEvent.text;
                 }}
               />
             </Item>
             <Item>
               <FormTextInput
-                autoCapitalize="none"
-                placeholder="Email"
+                autoCapitalize='none'
+                placeholder='Email'
                 onChangeText={handleEmailChange}
                 value={inputs.email}
                 required
-                onEndEditing={evt => {
+                onEndEditing={(evt) => {
                   const validEmail = evt.nativeEvent.text;
                 }}
               />
             </Item>
             <Item>
               <FormTextInput
-                autoCapitalize="none"
-                placeholder="Fullname (not required)"
+                autoCapitalize='none'
+                placeholder='Fullname (not required)'
                 onChangeText={handleFullnameChange}
                 value={inputs.fullname}
               />

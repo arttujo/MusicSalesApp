@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useContext } from "react";
-import { StyleSheet, View, AsyncStorage, Alert, Image } from "react-native";
-import FormTextInput from "../components/FormTextInput";
-import * as ImagePicker from "expo-image-picker";
-import Constants from "expo-constants";
-import * as Permissions from "expo-permissions";
-import mediaAPI from "../hooks/ApiHooks";
-import { MediaContext } from "../contexts/MediaContext";
+import React, { useEffect, useState, useContext } from 'react';
+import { StyleSheet, View, AsyncStorage, Alert, Image } from 'react-native';
+import FormTextInput from '../components/FormTextInput';
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
+import mediaAPI from '../hooks/ApiHooks';
+import { MediaContext } from '../contexts/MediaContext';
 import {
   Container,
   Header,
@@ -23,9 +23,9 @@ import {
   Card,
   Title,
   CardItem
-} from "native-base";
-import useUploadHooks from "../hooks/UploadHooks";
-import List from "../components/List";
+} from 'native-base';
+import useUploadHooks from '../hooks/UploadHooks';
+import List from '../components/List';
 
 const ProfPicUpload = props => {
   const [image, setImage] = useState({});
@@ -44,7 +44,7 @@ const ProfPicUpload = props => {
 
   const [avatar, setAvatar] = useState(undefined);
   getAvatar().then(result => {
-    console.log("getAvatar", result);
+    console.log('getAvatar', result);
     setAvatar(result.id);
   });
 
@@ -55,7 +55,7 @@ const ProfPicUpload = props => {
       aspect: [4, 3]
     });
 
-    console.log("Picked Image:", result);
+    console.log('Picked Image:', result);
 
     if (!result.cancelled) {
       setImage(result);
@@ -65,8 +65,8 @@ const ProfPicUpload = props => {
   getPermissionAsync = async () => {
     if (Constants.platform.ios) {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      if (status !== "granted") {
-        alert("Sorry, we need camera roll permissions to make this work!");
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
       }
     }
   };
@@ -90,20 +90,17 @@ const ProfPicUpload = props => {
 
   const isEnabled = canSubmit();
 
-  useEffect(() => {
-
-  }), [];
+  useEffect(() => {}), [];
 
   const changeAvatar = img => {
     deleteFile(avatar);
     handleAvatarChange(img);
-    setImage({})
-    props.navigation.navigate("Loading");
-    setTimeout(()=>{
-    props.navigation.navigate("Profile");
-      alert("Avatar Changed!")
-    },500)
-
+    setImage({});
+    props.navigation.navigate('Loading');
+    setTimeout(() => {
+      props.navigation.navigate('Profile');
+      alert('Avatar Changed!');
+    }, 500);
   };
 
   return (
@@ -116,7 +113,7 @@ const ProfPicUpload = props => {
               props.navigation.goBack();
             }}
           >
-            <Icon name="arrow-back" />
+            <Icon name='arrow-back' />
           </Button>
         </Left>
         <Body>

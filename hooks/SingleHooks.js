@@ -1,25 +1,25 @@
-import { useState, useContext } from "react";
-import mediaAPI from "./ApiHooks";
-import { AsyncStorage, Alert } from "react-native";
-const useSingleHooks = props => {
+import { useState, useContext } from 'react';
+import mediaAPI from './ApiHooks';
+import { AsyncStorage, Alert } from 'react-native';
+const useSingleHooks = (props) => {
   const [inputs, setInputs] = useState({});
 
-  const handleCommentChange = text => {
-    setInputs(inputs => ({
+  const handleCommentChange = (text) => {
+    setInputs((inputs) => ({
       ...inputs,
-      comment: text
+      comment: text,
     }));
   };
 
   const clearForm = () => {
-    setInputs("");
-    console.log("inputs Cleared!");
+    setInputs('');
+    console.log('inputs Cleared!');
   };
 
-  const handleComment = async fileId => {
+  const handleComment = async (fileId) => {
     const { addComment, getComments } = mediaAPI();
 
-    addComment(fileId, inputs.comment).then(json => {
+    addComment(fileId, inputs.comment).then((json) => {
       clearForm();
 
       alert(json.message);
@@ -30,7 +30,7 @@ const useSingleHooks = props => {
     inputs,
     clearForm,
     handleComment,
-    handleCommentChange
+    handleCommentChange,
   };
 };
 

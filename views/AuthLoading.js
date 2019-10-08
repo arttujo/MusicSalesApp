@@ -1,13 +1,13 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   ActivityIndicator,
   AsyncStorage,
   StatusBar,
   View,
-  Text,
+  Text
 } from 'react-native';
 
-const bootstrapAsync = async (props) => {
+const bootstrapAsync = async props => {
   async function getToken() {
     const userToken = await AsyncStorage.getItem('userToken');
 
@@ -21,12 +21,12 @@ const bootstrapAsync = async (props) => {
   }, []);
 };
 
-const AuthLoading = (props) => {
+const AuthLoading = props => {
   bootstrapAsync(props);
   return (
     <View>
       <ActivityIndicator />
-      <StatusBar barStyle="default" />
+      <StatusBar barStyle='default' />
     </View>
   );
 };

@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
-import { StyleSheet, View, AsyncStorage, Alert, Image } from "react-native";
-import FormTextInput from "../components/FormTextInput";
-import * as ImagePicker from "expo-image-picker";
-import Constants from "expo-constants";
-import * as Permissions from "expo-permissions";
-import mediaAPI from "../hooks/ApiHooks";
-const validate = require("validate.js");
-import { MediaContext } from "../contexts/MediaContext";
+import React, { useEffect, useState, useContext } from 'react';
+import { StyleSheet, View, AsyncStorage, Alert, Image } from 'react-native';
+import FormTextInput from '../components/FormTextInput';
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
+import mediaAPI from '../hooks/ApiHooks';
+const validate = require('validate.js');
+import { MediaContext } from '../contexts/MediaContext';
 
 import {
   Container,
@@ -23,25 +23,26 @@ import {
   Card,
   CardItem,
   Picker,
-  Icon
-} from "native-base";
-import useUploadHooks from "../hooks/UploadHooks";
-import List from "../components/List";
+  Icon,
+} from 'native-base';
+import useUploadHooks from '../hooks/UploadHooks';
+import List from '../components/List';
 
-const Upload = props => {
+const Upload = (props) => {
   const [image, setImage] = useState({});
-  const [loading, setLoading] = useState(true);
-  const { reloadAllMedia, setDefaultTag } = mediaAPI();
-  const { media, setMedia } = useContext(MediaContext);
+  const { setMedia } = useContext(MediaContext);
 
   _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
+      exif: true,
       allowsEditing: true,
-      aspect: [4, 3]
+      aspect: [4, 4]
     });
 
-    console.log("Picked Image:", result);
+    console.log('Picked Image:', result);
+    console.log('Longitude:', result.exif.GPSLongitude);
+    console.log('Latitude:', result.exif.GPSLatitude);
 
     if (!result.cancelled) {
       setImage(result);
@@ -51,8 +52,8 @@ const Upload = props => {
   getPermissionAsync = async () => {
     if (Constants.platform.ios) {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      if (status !== "granted") {
-        alert("Sorry, we need camera roll permissions to make this work!");
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
       }
     }
   };
@@ -69,16 +70,22 @@ const Upload = props => {
     clearForm,
     handlePriceChange,
     handleInfoChange,
-    handleCategoryChange
+    handleCategoryChange,
   } = useUploadHooks();
 
   const canSubmit = () => {
-    const isEmpty = obj => {
+    const isEmpty = (obj) => {
       return Object.getOwnPropertyNames(obj).length >= 1;
     };
 
     console.log(image);
-    if (inputs.description && inputs.title && inputs.price && isEmpty(image)) {
+    if (
+      inputs.description &&
+      inputs.title &&
+      inputs.price &&
+      isEmpty(image) &&
+      inputs.category
+    ) {
       return true;
     }
   };
@@ -88,27 +95,27 @@ const Upload = props => {
     const constraints = {
       title: {
         presence: {
-          message: "^You must enter a title!"
+          message: '^You must enter a title!'
         },
         length: {
           minimum: 5,
-          message: "^title must be atleast 5 characters"
+          message: '^title must be atleast 5 characters'
         }
       },
       description: {
         presence: {
-          message: "^You must give a description of your image!"
+          message: '^You must give a description of your image!'
         },
         length: {
           minimum: 10,
-          message: "^Description must be atleast 10 characters"
-        }
+          message: '^Description must be atleast 10 characters',
+        },
       },
       price: {
         presence: {
-          message: "^You must give a price!"
-        }
-      }
+          message: '^You must give a price!',
+        },
+      },
     };
     const titleError = validate({ title: inputs.title }, constraints);
     const descError = validate(
@@ -117,14 +124,21 @@ const Upload = props => {
     );
     const priceError = validate({ price: inputs.price }, constraints);
 
-    if (!titleError.title && !descError.description && !priceError.price) {
+    if (
+      !titleError.title &&
+      !descError.description &&
+      !priceError.price
+
+    ) {
       const uploadData = {
         title: inputs.title,
         description: inputs.description,
         price: inputs.price,
         category: inputs.category,
         image: image,
-        contactInfo: inputs.contactInfo
+        contactInfo: inputs.contactInfo,
+        Longitude: image.exif.GPSLongitude,
+        Latitude: image.exif.GPSLatitude
       };
 
       handleUpload(uploadData);
@@ -132,20 +146,19 @@ const Upload = props => {
       clearForm();
       setImage();
       setMedia([]);
-      props.navigation.navigate("Loading");
+      props.navigation.navigate('Loading');
       setTimeout(() => {
-        reloadAllMedia(setMedia);
         //setLoading(false);
-        props.navigation.navigate("Home");
-        console.log("Upload Done!");
-        alert("Upload Done!");
+        props.navigation.navigate('Home');
+        console.log('Upload Done!');
+        alert('Upload Done!');
       }, 2000);
     } else {
       const errorArray = [titleError.title, descError.description];
 
       for (let i = 0; i < errorArray.length; i++) {
         if (errorArray[i]) {
-          console.log("alert:", errorArray[i][0]);
+          console.log('alert:', errorArray[i][0]);
           alert(errorArray[i][0]);
         }
       }
@@ -183,7 +196,7 @@ const Upload = props => {
                   style={{
                     flex: 1,
                     width: null,
-                    height: 350
+                    height: 350,
                   }}
                 />
               </CardItem>
@@ -232,7 +245,7 @@ const Upload = props => {
               iosIcon={<Icon name='arrow-down' />}
               style={{ width: undefined }}
               placeholder='Select category'
-              placeholderStyle={{ color: "#bfc6ea" }}
+              placeholderStyle={{ color: '#bfc6ea' }}
               placeholderIconColor='#007aff'
               selectedValue={inputs.category}
               onValueChange={handleCategoryChange}
@@ -240,7 +253,7 @@ const Upload = props => {
               <Picker.Item
                 label='Select Category'
                 value=''
-                style={{ textDecorationLine: "underline" }}
+                style={{ textDecorationLine: 'underline' }}
               />
               <Picker.Item label='Guitars' value='guitars' />
               <Picker.Item label='Drums' value='drums' />
