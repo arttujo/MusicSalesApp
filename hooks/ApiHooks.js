@@ -91,13 +91,6 @@ const mediaAPI = () => {
       return json;
     });
   };
-  const reloadAllMedia = (setMedia) => {
-    fetchGetUrl('http://media.mw.metropolia.fi/wbma/tags/music-sales_').then(
-      (json) => {
-        setMedia(json);
-      }
-    );
-  };
 
   const deleteFile = (file_id) => {
     fetchDeleteUrl(apiUrl + 'media/' + file_id).then((json) => {
@@ -329,23 +322,46 @@ const mediaAPI = () => {
       );
     }
   };
-
-  const getViaTag = (tag, props) => {
-    const { fetchGetUrl } = mediaAPI();
-    const { media, setMedia } = useContext(MediaContext);
-    const [loading, setLoading] = useState(true);
-
-    console.log('TAG:' + tag);
+  const reloadAllMedia = (setMedia) => {
     useEffect(() => {
       setMedia([]);
-      fetchGetUrl(tagsUrl + tag).then((json) => {
-        console.log('get via tag', json);
-
-        setMedia(json);
-        setLoading(false);
-      });
-    }, [tag]);
+      fetchGetUrl('http://media.mw.metropolia.fi/wbma/tags/music-sales_').then(
+        (json) => {
+          console.log('get all media by music-sales_', json);
+          setMedia(json);
+          setLoading(false);
+        }
+      );
+    }, []);
     return [media, loading];
+  };
+  const getViaTag = (tag) => {
+    const { fetchGetUrl } = mediaAPI();
+    const { media, setMedia } = useContext(MediaContext);
+
+    console.log('TAG:' + tag);
+
+    if (tag === undefined) {
+      useEffect(() => {
+        setMedia([]);
+        fetchGetUrl(tagUrl).then((json) => {
+          console.log('get via tag', json);
+
+          setMedia(json);
+        });
+      }, [tag]);
+    } else {
+      useEffect(() => {
+        setMedia([]);
+        fetchGetUrl(tagsUrl + tag).then((json) => {
+          console.log('get via tag', json);
+
+          setMedia(json);
+        });
+      }, [tag]);
+    }
+
+    return [media];
   };
 
   return {
