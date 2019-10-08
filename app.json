@@ -2,6 +2,14 @@
   "expo": {
     "name": "MusicSalesApp",
     "slug": "ReactProject",
+    "android":{
+      "config": {
+
+        "googleMaps":{
+          "apiKey":"AIzaSyBQS5vJPTHx4uMx177F41J4jC22FAmvHDw"
+        }
+      }
+    },
     "privacy": "public",
     "sdkVersion": "34.0.0",
     "platforms": [
@@ -31,4 +39,5 @@
     }
 
   }
+
 }

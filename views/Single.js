@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import { StyleSheet, View, Image } from "react-native";
-
+import { MapView } from "expo";
 import {
   Container,
   Header,
@@ -33,6 +33,7 @@ const Single = props => {
   const file = navigation.state.params.file;
   console.log("single:", file);
   const parsedDesc = JSON.parse(file.description);
+
   const {
     inputs,
     handleCommentChange,
@@ -126,6 +127,16 @@ const Single = props => {
               <Text>Tags:</Text>
               <Text>{tags}</Text>
             </Body>
+            <Body>
+              <Text note>{parsedDesc.Longitude}</Text>
+              <Text note>{parsedDesc.Latitude}</Text>
+            </Body>
+          </CardItem>
+
+          <CardItem>
+          <Button onPress={()=>{
+            navigation.push("Kartta",{ gpsData : file.description})
+          }}><Text>See Location</Text></Button>
           </CardItem>
         </Card>
         <Card>
@@ -170,5 +181,4 @@ const Single = props => {
     </Container>
   );
 };
-
 export default Single;

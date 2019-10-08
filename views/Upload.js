@@ -37,11 +37,14 @@ const Upload = props => {
   _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
+      exif: true,
       allowsEditing: true,
-      aspect: [4, 3]
+      aspect: [4, 4]
     });
 
     console.log("Picked Image:", result);
+    console.log("Longitude:",result.exif.GPSLongitude)
+    console.log("Latitude:",result.exif.GPSLatitude)
 
     if (!result.cancelled) {
       setImage(result);
@@ -124,7 +127,9 @@ const Upload = props => {
         price: inputs.price,
         category: inputs.category,
         image: image,
-        contactInfo: inputs.contactInfo
+        contactInfo: inputs.contactInfo,
+        Longitude: image.exif.GPSLongitude,
+        Latitude: image.exif.GPSLatitude
       };
 
       handleUpload(uploadData);

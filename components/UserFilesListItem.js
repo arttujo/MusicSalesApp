@@ -60,7 +60,9 @@ const UserFilesListItem = props => {
             Alert.alert(
               "Warning",
               "Are you sure you want to delete this post?",
-              [{text: "Ok", onPress: ()=> {deleteFile(singleMedia.file_id),props.navigation.navigate("Loading") ,setTimeout(()=>{ props.navigation.push("MyFiles")},500) } }],
+              [{text: "Ok", onPress: ()=> {deleteFile(singleMedia.file_id),props.navigation.navigate("Loading") ,setTimeout(()=>{ props.navigation.push("MyFiles")},500) } },
+              {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},],
+
               {cancelable: true}
             )
 

@@ -12,6 +12,7 @@ import Update from "../views/Update";
 import AuthLoading from "../views/AuthLoading";
 import Login from "../views/Login";
 import Loading from "../views/Loading";
+import Kartta from "../views/Map"
 import { Icon, Container } from "native-base";
 const iconBackgroundColor = "royalblue";
 const TabNavigator = createBottomTabNavigator(
@@ -106,6 +107,12 @@ const StackNavigator = createStackNavigator(
     },
     ProfPicUpload: {
       screen: ProfPicUpload,
+      navigationOptions: {
+        header: null
+      }
+    },
+    Kartta: {
+      screen: Kartta,
       navigationOptions: {
         header: null
       }
