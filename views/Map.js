@@ -1,7 +1,7 @@
-import React, { useState, useEffect, Component } from "react";
-import { StyleSheet, View, Image } from "react-native";
-import PropTypes from "prop-types";
-import MapView, { Marker,Circle } from "react-native-maps";
+import React, { useState, useEffect, Component } from 'react';
+import { StyleSheet, View, Image } from 'react-native';
+import PropTypes from 'prop-types';
+import MapView, { Marker, Circle } from 'react-native-maps';
 import {
   Container,
   Header,
@@ -17,24 +17,24 @@ import {
   Body,
   Right,
   Title
-} from "native-base";
-import mediaAPI from "../hooks/ApiHooks";
+} from 'native-base';
+import mediaAPI from '../hooks/ApiHooks';
 
-const Kartta = (props) => {
+const Kartta = props => {
   const { navigation } = props;
   const data = navigation.state.params.gpsData;
-  console.log("navi",data)
-  const parsed = JSON.parse(data)
+  console.log('navi', data);
+  const parsed = JSON.parse(data);
 
   const marker = {
     latlng: {
       latitude: parsed.Latitude,
-      longitude: parsed.Longitude,
+      longitude: parsed.Longitude
     },
-    title:"TEST",
-    description: "TEST"
-  }
-  console.log(marker)
+    title: 'TEST',
+    description: 'TEST'
+  };
+  console.log(marker);
   return (
     <Container>
       <Header>
@@ -45,13 +45,11 @@ const Kartta = (props) => {
               props.navigation.goBack();
             }}
           >
-            <Icon name="arrow-back" />
+            <Icon name='arrow-back' />
           </Button>
         </Left>
         <Body>
-          <Title>
-            Location
-          </Title>
+          <Title>Location</Title>
         </Body>
       </Header>
       <Content>
@@ -70,7 +68,7 @@ const Kartta = (props) => {
             title={marker.title}
             description={marker.description}
             radius={1500}
-            fillColor="rgba(255, 28, 72,0.2)"
+            fillColor='rgba(255, 28, 72,0.2)'
           />
         </MapView>
       </Content>

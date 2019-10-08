@@ -1,6 +1,6 @@
-import React, { useState, useEffect, Component } from "react";
-import { StyleSheet, View, Image } from "react-native";
-import { MapView } from "expo";
+import React, { useState, useEffect, Component } from 'react';
+import { StyleSheet, View, Image } from 'react-native';
+import { MapView } from 'expo';
 import {
   Container,
   Header,
@@ -16,13 +16,13 @@ import {
   Body,
   Right,
   Title
-} from "native-base";
-import mediaAPI from "../hooks/ApiHooks";
-import { Video } from "expo-av";
-import useSingleHooks from "../hooks/SingleHooks";
-import { List as BaseList } from "native-base";
-import CommentListItem from "../components/CommentListItem";
-import FormTextInput from "../components/FormTextInput";
+} from 'native-base';
+import mediaAPI from '../hooks/ApiHooks';
+import { Video } from 'expo-av';
+import useSingleHooks from '../hooks/SingleHooks';
+import { List as BaseList } from 'native-base';
+import CommentListItem from '../components/CommentListItem';
+import FormTextInput from '../components/FormTextInput';
 
 const Single = props => {
   const { fetchUser, getTags, getComments, addComment } = mediaAPI();
@@ -31,7 +31,7 @@ const Single = props => {
   const [tags, setTags] = useState();
   const { navigation } = props;
   const file = navigation.state.params.file;
-  console.log("single:", file);
+  console.log('single:', file);
   const parsedDesc = JSON.parse(file.description);
 
   const {
@@ -43,27 +43,27 @@ const Single = props => {
 
   useEffect(() => {
     fetchUser(file.user_id).then(json => {
-      console.log("singleFetchUser", json);
+      console.log('singleFetchUser', json);
       setUsername(json);
     });
   }, []);
 
   useEffect(() => {
     getTags(file.file_id).then(json => {
-      console.log("tags object:", json[0].tag);
+      console.log('tags object:', json[0].tag);
       setTags(json[0].tag);
     });
   }, []);
 
   useEffect(() => {
     getComments(file.file_id).then(json => {
-      console.log("get comments", json);
+      console.log('get comments', json);
       setComments(json.reverse());
-      console.log("current comments", comments);
+      console.log('current comments', comments);
     });
   }, []);
 
-  console.log("THIS IS TAGS STATE", tags);
+  console.log('THIS IS TAGS STATE', tags);
 
   return (
     <Container>
@@ -75,7 +75,7 @@ const Single = props => {
               props.navigation.goBack();
             }}
           >
-            <Icon name="arrow-back" />
+            <Icon name='arrow-back' />
           </Button>
         </Left>
         <Body>
@@ -87,11 +87,11 @@ const Single = props => {
       <Content>
         <Card>
           <CardItem>
-            {file.media_type === "image" && (
+            {file.media_type === 'image' && (
               <Image
                 source={{
                   uri:
-                    "http://media.mw.metropolia.fi/wbma/uploads/" +
+                    'http://media.mw.metropolia.fi/wbma/uploads/' +
                     file.filename
                 }}
                 style={{
@@ -101,15 +101,15 @@ const Single = props => {
                 }}
               />
             )}
-            {file.media_type === "video" && (
+            {file.media_type === 'video' && (
               <Video
                 source={{
                   uri:
-                    "http://media.mw.metropolia.fi/wbma/uploads/" +
+                    'http://media.mw.metropolia.fi/wbma/uploads/' +
                     file.filename
                 }}
                 style={{
-                  width: "100%",
+                  width: '100%',
                   height: 500
                 }}
                 useNativeControls={true}
@@ -134,17 +134,21 @@ const Single = props => {
           </CardItem>
 
           <CardItem>
-          <Button onPress={()=>{
-            navigation.push("Kartta",{ gpsData : file.description})
-          }}><Text>See Location</Text></Button>
+            <Button
+              onPress={() => {
+                navigation.push('Kartta', { gpsData: file.description });
+              }}
+            >
+              <Text>See Location</Text>
+            </Button>
           </CardItem>
         </Card>
         <Card>
           <CardItem>
             <Item>
               <FormTextInput
-                autoCapitalize="none"
-                placeholder="add comment"
+                autoCapitalize='none'
+                placeholder='add comment'
                 value={inputs.comment}
                 onChangeText={handleCommentChange}
               />
@@ -155,7 +159,7 @@ const Single = props => {
               onPress={() => {
                 handleComment(file.file_id);
                 setTimeout(() => {
-                  setComments("");
+                  setComments('');
                   getComments(file.file_id).then(json => {
                     setComments(json.reverse());
                   });

@@ -1,9 +1,9 @@
-import React from "react";
-import { StyleSheet, View, ToolbarAndroid, Image, Text } from "react-native";
-import List from "../components/List";
-import { MediaProvider } from "../contexts/MediaContext";
-import PropTypes from "prop-types";
-import mediaAPI from "../hooks/ApiHooks";
+import React from 'react';
+import { StyleSheet, View, ToolbarAndroid, Image, Text } from 'react-native';
+import List from '../components/List';
+import { MediaProvider } from '../contexts/MediaContext';
+import PropTypes from 'prop-types';
+import mediaAPI from '../hooks/ApiHooks';
 import {
   Container,
   Header,
@@ -21,14 +21,12 @@ import {
   Icon,
   Button,
   Picker
-} from "native-base";
-
-
+} from 'native-base';
 
 const Home = props => {
   const { userToContext } = mediaAPI();
   userToContext().then(user => {
-   // console.log("usercontext", user);
+    // console.log("usercontext", user);
   });
 
   const { navigation } = props;

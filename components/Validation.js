@@ -1,30 +1,29 @@
-
 const constraints = {
-  'email': {
+  email: {
     presence: true,
     email: true,
-    message: '^Please enter a valid email address',
+    message: '^Please enter a valid email address'
   },
-  'password': {
+  password: {
     presence: true,
     length: {
-      minimum: 5,
+      minimum: 5
     },
-    message: '^Password must be atleast 5 characters',
+    message: '^Password must be atleast 5 characters'
   },
   'confirm-password': {
     presence: true,
     equality: 'password',
-    message: '^Passwords do not match',
+    message: '^Passwords do not match'
   },
-  'username': {
+  username: {
     presence: true,
     message: '^Please enter a valid username',
     length: {
       minimum: 3,
-      maximum: 20,
-    },
-  },
+      maximum: 20
+    }
+  }
 };
 
 export default Validation;

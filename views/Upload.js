@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useContext } from "react";
-import { StyleSheet, View, AsyncStorage, Alert, Image } from "react-native";
-import FormTextInput from "../components/FormTextInput";
-import * as ImagePicker from "expo-image-picker";
-import Constants from "expo-constants";
-import * as Permissions from "expo-permissions";
-import mediaAPI from "../hooks/ApiHooks";
-const validate = require("validate.js");
-import { MediaContext } from "../contexts/MediaContext";
+import React, { useEffect, useState, useContext } from 'react';
+import { StyleSheet, View, AsyncStorage, Alert, Image } from 'react-native';
+import FormTextInput from '../components/FormTextInput';
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
+import mediaAPI from '../hooks/ApiHooks';
+const validate = require('validate.js');
+import { MediaContext } from '../contexts/MediaContext';
 
 import {
   Container,
@@ -24,9 +24,9 @@ import {
   CardItem,
   Picker,
   Icon
-} from "native-base";
-import useUploadHooks from "../hooks/UploadHooks";
-import List from "../components/List";
+} from 'native-base';
+import useUploadHooks from '../hooks/UploadHooks';
+import List from '../components/List';
 
 const Upload = props => {
   const [image, setImage] = useState({});
@@ -42,9 +42,9 @@ const Upload = props => {
       aspect: [4, 4]
     });
 
-    console.log("Picked Image:", result);
-    console.log("Longitude:",result.exif.GPSLongitude)
-    console.log("Latitude:",result.exif.GPSLatitude)
+    console.log('Picked Image:', result);
+    console.log('Longitude:', result.exif.GPSLongitude);
+    console.log('Latitude:', result.exif.GPSLatitude);
 
     if (!result.cancelled) {
       setImage(result);
@@ -54,8 +54,8 @@ const Upload = props => {
   getPermissionAsync = async () => {
     if (Constants.platform.ios) {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      if (status !== "granted") {
-        alert("Sorry, we need camera roll permissions to make this work!");
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
       }
     }
   };
@@ -81,7 +81,13 @@ const Upload = props => {
     };
 
     console.log(image);
-    if (inputs.description && inputs.title && inputs.price && isEmpty(image)&& inputs.category) {
+    if (
+      inputs.description &&
+      inputs.title &&
+      inputs.price &&
+      isEmpty(image) &&
+      inputs.category
+    ) {
       return true;
     }
   };
@@ -91,25 +97,25 @@ const Upload = props => {
     const constraints = {
       title: {
         presence: {
-          message: "^You must enter a title!"
+          message: '^You must enter a title!'
         },
         length: {
           minimum: 5,
-          message: "^title must be atleast 5 characters"
+          message: '^title must be atleast 5 characters'
         }
       },
       description: {
         presence: {
-          message: "^You must give a description of your image!"
+          message: '^You must give a description of your image!'
         },
         length: {
           minimum: 10,
-          message: "^Description must be atleast 10 characters"
+          message: '^Description must be atleast 10 characters'
         }
       },
       price: {
         presence: {
-          message: "^You must give a price!"
+          message: '^You must give a price!'
         }
       }
     };
@@ -120,7 +126,12 @@ const Upload = props => {
     );
     const priceError = validate({ price: inputs.price }, constraints);
 
-    if (!titleError.title && !descError.description && !priceError.price && inputs.category==="") {
+    if (
+      !titleError.title &&
+      !descError.description &&
+      !priceError.price &&
+      inputs.category === ''
+    ) {
       const uploadData = {
         title: inputs.title,
         description: inputs.description,
@@ -137,20 +148,20 @@ const Upload = props => {
       clearForm();
       setImage();
       setMedia([]);
-      props.navigation.navigate("Loading");
+      props.navigation.navigate('Loading');
       setTimeout(() => {
         reloadAllMedia(setMedia);
         //setLoading(false);
-        props.navigation.navigate("Home");
-        console.log("Upload Done!");
-        alert("Upload Done!");
+        props.navigation.navigate('Home');
+        console.log('Upload Done!');
+        alert('Upload Done!');
       }, 2000);
     } else {
       const errorArray = [titleError.title, descError.description];
 
       for (let i = 0; i < errorArray.length; i++) {
         if (errorArray[i]) {
-          console.log("alert:", errorArray[i][0]);
+          console.log('alert:', errorArray[i][0]);
           alert(errorArray[i][0]);
         }
       }
@@ -197,8 +208,8 @@ const Upload = props => {
 
           <Item>
             <FormTextInput
-              autoCapitalize="none"
-              placeholder="title"
+              autoCapitalize='none'
+              placeholder='title'
               onChangeText={handleTitleChange}
               value={inputs.title}
               required
@@ -206,8 +217,8 @@ const Upload = props => {
           </Item>
           <Item>
             <FormTextInput
-              autoCapitalize="none"
-              placeholder="price"
+              autoCapitalize='none'
+              placeholder='price'
               onChangeText={handlePriceChange}
               value={inputs.price}
               required
@@ -215,8 +226,8 @@ const Upload = props => {
           </Item>
           <Item>
             <FormTextInput
-              autoCapitalize="none"
-              placeholder="Description"
+              autoCapitalize='none'
+              placeholder='Description'
               onChangeText={handleDescChange}
               value={inputs.description}
               required
@@ -224,33 +235,35 @@ const Upload = props => {
           </Item>
           <Item>
             <FormTextInput
-              autoCapitalize="none"
-              placeholder="Contact Info"
+              autoCapitalize='none'
+              placeholder='Contact Info'
               onChangeText={handleInfoChange}
               value={inputs.contactInfo}
               required
             />
           </Item>
           <Item picker>
-
             <Picker
-              mode="dropdown"
-              iosIcon={<Icon name="arrow-down" />}
+              mode='dropdown'
+              iosIcon={<Icon name='arrow-down' />}
               style={{ width: undefined }}
-              placeholder="Select category"
-              placeholderStyle={{ color: "#bfc6ea" }}
-              placeholderIconColor="#007aff"
+              placeholder='Select category'
+              placeholderStyle={{ color: '#bfc6ea' }}
+              placeholderIconColor='#007aff'
               selectedValue={inputs.category}
               onValueChange={handleCategoryChange}
             >
-              <Picker.Item label="Select Category" value = "" style={{textDecorationLine:"underline"}}/>
-              <Picker.Item label="Guitars" value="guitars" />
-              <Picker.Item label="Drums" value="drums" />
-              <Picker.Item label="Amplifiers" value="amplifiers" />
-              <Picker.Item label="Trombones" value="trombones" />
-              <Picker.Item label="Equipment" value="equipment" />
+              <Picker.Item
+                label='Select Category'
+                value=''
+                style={{ textDecorationLine: 'underline' }}
+              />
+              <Picker.Item label='Guitars' value='guitars' />
+              <Picker.Item label='Drums' value='drums' />
+              <Picker.Item label='Amplifiers' value='amplifiers' />
+              <Picker.Item label='Trombones' value='trombones' />
+              <Picker.Item label='Equipment' value='equipment' />
             </Picker>
-
           </Item>
           <Button
             disabled={!isEnabled}

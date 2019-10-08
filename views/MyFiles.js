@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from 'react';
 
-import mediaAPI from "../hooks/ApiHooks";
-import ListItem from "../components/ListItem";
-import { List as BaseList } from "native-base";
-import List from "../components/List";
-import UserFilesListItem from "../components/UserFilesListItem";
+import mediaAPI from '../hooks/ApiHooks';
+import ListItem from '../components/ListItem';
+import { List as BaseList } from 'native-base';
+import List from '../components/List';
+import UserFilesListItem from '../components/UserFilesListItem';
 
 import {
   Container,
@@ -21,13 +21,13 @@ import {
   Icon,
   Card,
   CardItem
-} from "native-base";
+} from 'native-base';
 
 const MyFiles = props => {
   const { getUserMedia } = mediaAPI();
   const uMedia = getUserMedia();
 
-  console.log("uMedia", uMedia);
+  console.log('uMedia', uMedia);
 
   const { navigation } = props;
 
@@ -41,7 +41,7 @@ const MyFiles = props => {
               props.navigation.goBack();
             }}
           >
-            <Icon name="arrow-back" />
+            <Icon name='arrow-back' />
           </Button>
         </Left>
         <Body>

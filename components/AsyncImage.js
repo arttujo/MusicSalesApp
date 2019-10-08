@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import {View, Image, ActivityIndicator} from 'react-native';
+import React, { useState } from 'react';
+import { View, Image, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 
-const AImage = (props) => {
+const AImage = props => {
   console.log('Asimage props', props);
   const [loaded, setLoaded] = useState(false);
   const onLoad = () => {
@@ -12,11 +12,7 @@ const AImage = (props) => {
       setLoaded(true);
     }, 1000);
   };
-  const {
-    spinnerColor,
-    style,
-    source,
-  } = props;
+  const { spinnerColor, style, source } = props;
   return (
     <View style={style}>
       <Image
@@ -26,20 +22,23 @@ const AImage = (props) => {
           style,
           {
             position: 'absolute',
-            resizeMode: 'contain',
-          },
+            resizeMode: 'contain'
+          }
         ]}
-        onLoad={onLoad} />
+        onLoad={onLoad}
+      />
 
-      {!loaded &&
-            <View style={{
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-              <ActivityIndicator size="large" color={spinnerColor}/>
-            </View>
-      }
+      {!loaded && (
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <ActivityIndicator size='large' color={spinnerColor} />
+        </View>
+      )}
     </View>
   );
 };
@@ -47,7 +46,7 @@ const AImage = (props) => {
 AImage.propTypes = {
   spinnerColor: PropTypes.string,
   style: PropTypes.object,
-  source: PropTypes.object,
+  source: PropTypes.object
 };
 
 export default AImage;

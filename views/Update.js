@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useContext } from "react";
-import { StyleSheet, View, AsyncStorage, Alert, Image } from "react-native";
-import FormTextInput from "../components/FormTextInput";
-import * as ImagePicker from "expo-image-picker";
-import Constants from "expo-constants";
-import * as Permissions from "expo-permissions";
-import mediaAPI from "../hooks/ApiHooks";
-const validate = require("validate.js");
-import { MediaContext } from "../contexts/MediaContext";
-import { Video } from "expo-av";
+import React, { useEffect, useState, useContext } from 'react';
+import { StyleSheet, View, AsyncStorage, Alert, Image } from 'react-native';
+import FormTextInput from '../components/FormTextInput';
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
+import mediaAPI from '../hooks/ApiHooks';
+const validate = require('validate.js');
+import { MediaContext } from '../contexts/MediaContext';
+import { Video } from 'expo-av';
 
 import {
   Container,
@@ -25,17 +25,16 @@ import {
   CardItem,
   Icon,
   Title
-} from "native-base";
-import useUploadHooks from "../hooks/UploadHooks";
-import List from "../components/List";
-
+} from 'native-base';
+import useUploadHooks from '../hooks/UploadHooks';
+import List from '../components/List';
 
 const Update = props => {
   const {
     handleTitleChange,
     inputs,
     handleDescChange,
-    handlePriceChange,
+    handlePriceChange
   } = useUploadHooks();
 
   const [image, setImage] = useState({});
@@ -56,25 +55,25 @@ const Update = props => {
     const constraints = {
       title: {
         presence: {
-          message: "^You must enter a title!"
+          message: '^You must enter a title!'
         },
         length: {
           minimum: 5,
-          message: "^title must be atleast 5 characters"
+          message: '^title must be atleast 5 characters'
         }
       },
       description: {
         presence: {
-          message: "^You must give a description of your image!"
+          message: '^You must give a description of your image!'
         },
         length: {
           minimum: 10,
-          message: "^Description must be atleast 10 characters"
+          message: '^Description must be atleast 10 characters'
         }
       },
       price: {
         presence: {
-          message: "^You must give a price!"
+          message: '^You must give a price!'
         }
       }
     };
@@ -98,13 +97,13 @@ const Update = props => {
         description: stringify
       };
       console.log(data);
-      props.navigation.navigate("Loading")
+      props.navigation.navigate('Loading');
       updateFile(file.file_id, data);
 
       Alert.alert(
-        "Success",
-        "File Updated!",
-        [{ text: "OK", onPress: () => props.navigation.navigate("MyFiles") }],
+        'Success',
+        'File Updated!',
+        [{ text: 'OK', onPress: () => props.navigation.navigate('MyFiles') }],
         { cancelable: false }
       );
     } else {
@@ -116,7 +115,7 @@ const Update = props => {
 
       for (let i = 0; i < errorArray.length; i++) {
         if (errorArray[i]) {
-          console.log("alert:", errorArray[i][0]);
+          console.log('alert:', errorArray[i][0]);
           alert(errorArray[i][0]);
         }
       }
@@ -133,7 +132,7 @@ const Update = props => {
               props.navigation.goBack();
             }}
           >
-            <Icon name="arrow-back" />
+            <Icon name='arrow-back' />
           </Button>
         </Left>
         <Body>
@@ -153,7 +152,7 @@ const Update = props => {
                 <Image
                   source={{
                     uri:
-                      "http://media.mw.metropolia.fi/wbma/uploads/" +
+                      'http://media.mw.metropolia.fi/wbma/uploads/' +
                       file.filename
                   }}
                   style={{
@@ -168,8 +167,8 @@ const Update = props => {
 
           <Item>
             <FormTextInput
-              autoCapitalize="none"
-              placeholder="Title"
+              autoCapitalize='none'
+              placeholder='Title'
               onChangeText={handleTitleChange}
               value={inputs.title}
               required
@@ -177,8 +176,8 @@ const Update = props => {
           </Item>
           <Item>
             <FormTextInput
-              autoCapitalize="none"
-              placeholder="Price"
+              autoCapitalize='none'
+              placeholder='Price'
               onChangeText={handlePriceChange}
               value={inputs.price}
               required
@@ -186,8 +185,8 @@ const Update = props => {
           </Item>
           <Item>
             <FormTextInput
-              autoCapitalize="none"
-              placeholder="Description"
+              autoCapitalize='none'
+              placeholder='Description'
               onChangeText={handleDescChange}
               value={inputs.description}
               required
@@ -198,7 +197,7 @@ const Update = props => {
             disabled={!isEnabled}
             onPress={() => {
               validateInputs(inputs, props);
-              console.log("pressed");
+              console.log('pressed');
             }}
           >
             <Text>Update!</Text>

@@ -4,11 +4,11 @@ import React, {
   keyExtractor,
   StyleSheet,
   useState
-} from "react";
-import PropTypes from "prop-types";
-import ListItem from "./ListItem";
-import { MediaContext } from "../contexts/MediaContext";
-import { List as BaseList } from "native-base";
+} from 'react';
+import PropTypes from 'prop-types';
+import ListItem from './ListItem';
+import { MediaContext } from '../contexts/MediaContext';
+import { List as BaseList } from 'native-base';
 
 const useFetch = url => {
   const { media, setMedia } = useContext(MediaContext);
@@ -41,7 +41,7 @@ const fetchViaTag = url => {
 const List = props => {
   const { navigation } = props;
   const [media] = fetchViaTag(
-    "http://media.mw.metropolia.fi/wbma/tags/music-sales_"
+    'http://media.mw.metropolia.fi/wbma/tags/music-sales_'
   );
 
   return (
