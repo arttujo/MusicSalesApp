@@ -57,14 +57,13 @@ const UserFilesListItem = props => {
       <Right style={{flex:1,flexDirection:"row", justifyContent:"space-between"}}>
       <Button
           onPress={() => {
-            deleteFile(singleMedia.file_id);
-            props.navigation.navigate("Home")
             Alert.alert(
-              "Success",
-              "File Deleted!",
-              [{ text: "OK", onPress: () => props.navigation.push("MyFiles") }],
-              { cancelable: false }
-            );
+              "Warning",
+              "Are you sure you want to delete this post?",
+              [{text: "Ok", onPress: ()=> {deleteFile(singleMedia.file_id),props.navigation.navigate("Loading") ,setTimeout(()=>{ props.navigation.push("MyFiles")},500) } }],
+              {cancelable: true}
+            )
+
           }}
         >
 
