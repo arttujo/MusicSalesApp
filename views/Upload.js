@@ -28,11 +28,9 @@ import {
 import useUploadHooks from '../hooks/UploadHooks';
 import List from '../components/List';
 
-const Upload = props => {
+const Upload = (props) => {
   const [image, setImage] = useState({});
-  const [loading, setLoading] = useState(true);
-  const { reloadAllMedia, setDefaultTag } = mediaAPI();
-  const { media, setMedia } = useContext(MediaContext);
+  const { setMedia } = useContext(MediaContext);
 
   _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -76,7 +74,7 @@ const Upload = props => {
   } = useUploadHooks();
 
   const canSubmit = () => {
-    const isEmpty = obj => {
+    const isEmpty = (obj) => {
       return Object.getOwnPropertyNames(obj).length >= 1;
     };
 
@@ -129,8 +127,8 @@ const Upload = props => {
     if (
       !titleError.title &&
       !descError.description &&
-      !priceError.price &&
-      inputs.category === ''
+      !priceError.price
+
     ) {
       const uploadData = {
         title: inputs.title,
@@ -150,7 +148,6 @@ const Upload = props => {
       setMedia([]);
       props.navigation.navigate('Loading');
       setTimeout(() => {
-        reloadAllMedia(setMedia);
         //setLoading(false);
         props.navigation.navigate('Home');
         console.log('Upload Done!');

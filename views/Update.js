@@ -75,6 +75,11 @@ const Update = props => {
         presence: {
           message: '^You must give a price!'
         }
+      },
+      price: {
+        presence: {
+          message: "^You must give a price!"
+        }
       }
     };
     const titleError = validate({ title: inputs.title }, constraints);

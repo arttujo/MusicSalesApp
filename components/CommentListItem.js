@@ -5,18 +5,18 @@ import {
   Body,
   CardItem,
   Card,
-  Text
+  Text,
 } from 'native-base';
 import mediaAPI from '../hooks/ApiHooks';
 import { format } from 'timeago.js';
 
-const CommentListItem = props => {
+const CommentListItem = (props) => {
   const { navigation, singleComment } = props;
   const { fetchUser } = mediaAPI();
   const [userInfo, setUserInfo] = useState({});
   const time = format(singleComment.time_added);
   useEffect(() => {
-    fetchUser(singleComment.user_id).then(json => {
+    fetchUser(singleComment.user_id).then((json) => {
       console.log('singleFetchUser', json);
       setUserInfo(json);
     });
@@ -40,7 +40,7 @@ const CommentListItem = props => {
 };
 
 CommentListItem.propTypes = {
-  singleMedia: PropTypes.object
+  singleMedia: PropTypes.object,
 };
 
 export default CommentListItem;

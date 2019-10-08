@@ -18,10 +18,10 @@ import {
   Text,
   Input,
   Label,
-  Body
+  Body,
 } from 'native-base';
 
-const Login = props => {
+const Login = (props) => {
   const { signInAsync, registerAsync, checkUser } = mediaAPI();
   const {
     handleUsernameChange,
@@ -30,7 +30,7 @@ const Login = props => {
     inputs,
     handleEmailChange,
     handleFullnameChange,
-    handleFormChange
+    handleFormChange,
   } = useSignUpForm();
 
   const regValidation = (inputs, props) => {
@@ -110,7 +110,7 @@ const Login = props => {
       handlePasswordChange,
       inputs,
       handleEmailChange,
-      handleFullnameChange
+      handleFullnameChange,
     } = useSignUpForm();
     return (
       <Container>
@@ -166,7 +166,7 @@ const Login = props => {
       inputs,
       handleEmailChange,
       handleFullnameChange,
-      handlePasswordConfirmChange
+      handlePasswordConfirmChange,
     } = useSignUpForm();
 
     return (
@@ -188,7 +188,7 @@ const Login = props => {
                 onChangeText={handleUsernameChange}
                 value={inputs.username}
                 required
-                onEndEditing={evt => {
+                onEndEditing={(evt) => {
                   const uname = evt.nativeEvent.text;
                   console.log('Uname in input', uname);
                   checkUser(uname);
@@ -203,7 +203,7 @@ const Login = props => {
                 onChangeText={handlePasswordChange}
                 value={inputs.password}
                 required
-                onEndEditing={evt => {
+                onEndEditing={(evt) => {
                   const pwd = evt.nativeEvent.text;
                 }}
               />
@@ -216,7 +216,7 @@ const Login = props => {
                 onChangeText={handlePasswordConfirmChange}
                 value={inputs.confirmPassword}
                 required
-                onEndEditing={evt => {
+                onEndEditing={(evt) => {
                   const validPwd = evt.nativeEvent.text;
                 }}
               />
@@ -228,7 +228,7 @@ const Login = props => {
                 onChangeText={handleEmailChange}
                 value={inputs.email}
                 required
-                onEndEditing={evt => {
+                onEndEditing={(evt) => {
                   const validEmail = evt.nativeEvent.text;
                 }}
               />

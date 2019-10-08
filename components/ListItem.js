@@ -8,18 +8,14 @@ import {
   Text,
   Right,
   Thumbnail,
-  Content,
-  Button,
-  List,
   Icon,
-  Container,
   Card,
-  CardItem
+  CardItem,
 } from 'native-base';
 import mediaAPI from '../hooks/ApiHooks';
 import { format } from 'timeago.js';
 
-const getThumbnail = url => {
+const getThumbnail = (url) => {
   // console.log('urli', url);
   const [thumbnails, setThumbnails] = useState({});
   async function fetchUrl() {
@@ -37,7 +33,7 @@ const getThumbnail = url => {
   return thumbnails;
 };
 
-const ListItem = props => {
+const ListItem = (props) => {
   const { navigation, singleMedia } = props;
   const tn = getThumbnail(singleMedia.file_id);
 
@@ -45,20 +41,20 @@ const ListItem = props => {
   const { getOtherUserAvatar, getUserInfo, getComments } = mediaAPI();
 
   const [avatar, setAvatar] = useState(undefined);
-  getOtherUserAvatar(singleMedia.user_id).then(result => {
+  getOtherUserAvatar(singleMedia.user_id).then((result) => {
     //console.log("getAvatar", result);
     setAvatar(result.url);
   });
 
   const [username, setUsename] = useState();
-  getUserInfo(singleMedia.user_id).then(result => {
+  getUserInfo(singleMedia.user_id).then((result) => {
     setUsename(result.username);
   });
 
   const time = format(singleMedia.time_added);
 
   const [commentAmount, setComments] = useState();
-  getComments(singleMedia.file_id).then(json => {
+  getComments(singleMedia.file_id).then((json) => {
     const total = json.reduce((a, obj) => a + Object.keys(obj).length, 0);
     setComments(total / 5);
   });
@@ -75,7 +71,7 @@ const ListItem = props => {
             <Left>
               <Thumbnail
                 source={{
-                  uri: avatar
+                  uri: avatar,
                 }}
                 style={{ width: 70, height: 70 }}
               />
@@ -90,7 +86,7 @@ const ListItem = props => {
               source={{
                 uri:
                   'http://media.mw.metropolia.fi/wbma/uploads/' +
-                  singleMedia.filename
+                  singleMedia.filename,
               }}
               style={{ height: 200, width: null, flex: 1 }}
             />
@@ -116,7 +112,7 @@ const ListItem = props => {
 };
 
 ListItem.propTypes = {
-  singleMedia: PropTypes.object
+  singleMedia: PropTypes.object,
 };
 
 export default ListItem;

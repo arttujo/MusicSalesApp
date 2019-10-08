@@ -6,7 +6,7 @@ import {
   View,
   Image,
   TouchableOpacity,
-  Alert
+  Alert,
 } from 'react-native';
 import mediaAPI from '../hooks/ApiHooks';
 import {
@@ -18,10 +18,10 @@ import {
   Content,
   Button,
   List,
-  Icon
+  Icon,
 } from 'native-base';
 
-const getThumbnail = url => {
+const getThumbnail = (url) => {
   // console.log('urli', url);
   const [thumbnails, setThumbnails] = useState({});
   async function fetchUrl() {
@@ -39,7 +39,7 @@ const getThumbnail = url => {
   return thumbnails;
 };
 
-const UserFilesListItem = props => {
+const UserFilesListItem = (props) => {
   const { deleteFile, getUserMedia } = mediaAPI();
   const { navigation, singleMedia } = props;
   const tn = getThumbnail(singleMedia.file_id);
@@ -52,7 +52,7 @@ const UserFilesListItem = props => {
           circle
           large
           source={{
-            uri: 'http://media.mw.metropolia.fi/wbma/uploads/' + tn.w160
+            uri: 'http://media.mw.metropolia.fi/wbma/uploads/' + tn.w160,
           }}
         />
       </Left>
@@ -66,7 +66,7 @@ const UserFilesListItem = props => {
         style={{
           flex: 1,
           flexDirection: 'row',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
         }}
       >
         <Button
@@ -119,7 +119,7 @@ const UserFilesListItem = props => {
 };
 
 UserFilesListItem.propTypes = {
-  singleMedia: PropTypes.object
+  singleMedia: PropTypes.object,
 };
 
 export default UserFilesListItem;

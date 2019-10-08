@@ -33,7 +33,6 @@ const Single = props => {
   const file = navigation.state.params.file;
   console.log('single:', file);
   const parsedDesc = JSON.parse(file.description);
-
   const {
     inputs,
     handleCommentChange,
@@ -97,7 +96,7 @@ const Single = props => {
                 style={{
                   flex: 1,
                   width: null,
-                  height: 350
+                  height: 350,
                 }}
               />
             )}
@@ -143,6 +142,7 @@ const Single = props => {
             </Button>
           </CardItem>
         </Card>
+
         <Card>
           <CardItem>
             <Item>
@@ -160,7 +160,7 @@ const Single = props => {
                 handleComment(file.file_id);
                 setTimeout(() => {
                   setComments('');
-                  getComments(file.file_id).then(json => {
+                  getComments(file.file_id).then((json) => {
                     setComments(json.reverse());
                   });
                 }, 500);

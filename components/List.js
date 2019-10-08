@@ -1,62 +1,53 @@
-import React, {
-  useContext,
-  useEffect,
-  keyExtractor,
-  StyleSheet,
-  useState
-} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ListItem from './ListItem';
 import { MediaContext } from '../contexts/MediaContext';
-import { List as BaseList } from 'native-base';
+import { List as BaseList, Container, Item, Icon, Picker, Content } from 'native-base';
+import mediaAPI from '../hooks/ApiHooks';
+import useListHooks from '../hooks/ListHooks';
 
-const useFetch = url => {
-  const { media, setMedia } = useContext(MediaContext);
-  const [loading, setLoading] = useState(true);
-  const fetchUrl = async () => {
-    const response = await fetch(url);
-    const json = await response.json();
-    setMedia(json);
-    setLoading(false);
-  };
-  useEffect(() => {
-    fetchUrl();
-  }, []);
-  return [media, loading];
-};
+const List = (props) => {
+  const { handleMenuChange, inputs } = useListHooks();
+  const { getViaTag } = mediaAPI();
 
-const fetchViaTag = url => {
-  const { media, setMedia } = useContext(MediaContext);
-  const fetchUrl = async () => {
-    const response = await fetch(url);
-    const json = await response.json();
-    setMedia(json.reverse());
-  };
-  useEffect(() => {
-    fetchUrl();
-  }, []);
-  return [media];
-};
+  const [media] = getViaTag(inputs.pickedcategory);
 
-const List = props => {
-  const { navigation } = props;
-  const [media] = fetchViaTag(
-    'http://media.mw.metropolia.fi/wbma/tags/music-sales_'
-  );
+  console.log('MEDIA ARRAY: ', [media]);
 
   return (
-    <BaseList
-      dataArray={media}
-      renderRow={item => (
-        <ListItem navigation={props.navigation} singleMedia={item} />
-      )}
-      keyExtractor={(item, index) => index.toString()}
-    />
+    <Content>
+      <Item picker>
+        <Picker
+          mode='dropdown'
+          iosIcon={<Icon name='arrow-down' />}
+          style={{ width: 50 }}
+          placeholder='Select item category'
+          placeholderStyle={{ color: '#ffffff' }}
+          placeholderIconColor='#000000'
+          selectedValue={inputs.pickedcategory}
+          onValueChange={handleMenuChange}
+        >
+          <Picker.Item label='All items' value='music-sales_' />
+          <Picker.Item label='Guitars' value='music-sales_guitars' />
+          <Picker.Item label='Drums' value='music-sales_drums' />
+          <Picker.Item label='Amplifiers' value='music-sales_amplifiers' />
+          <Picker.Item label='Trombones' value='music-sales_trombones' />
+          <Picker.Item label='Equipment' value='music-sales_equipment' />
+        </Picker>
+      </Item>
+      <BaseList
+        dataArray={media.reverse()}
+        renderRow={(item) => (
+          <ListItem navigation={props.navigation} singleMedia={item} />
+        )}
+        keyExtractor={(item, index) => index.toString()}
+      />
+    </Content>
   );
 };
 
 List.propTypes = {
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
 };
 
 export default List;

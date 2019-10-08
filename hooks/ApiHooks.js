@@ -5,29 +5,36 @@ import { MediaContext } from '../contexts/MediaContext';
 const apiUrl = 'http://media.mw.metropolia.fi/wbma/';
 const regUrl = 'http://media.mw.metropolia.fi/wbma/users/';
 const userUrl = 'http://media.mw.metropolia.fi/wbma/media/user/';
+const tagUrl = 'http://media.mw.metropolia.fi/wbma/tags/music-sales_';
+const tagsUrl = 'http://media.mw.metropolia.fi/wbma/tags/';
 
-const fetchGetUrl = async url => {
+const fetchGetUrl = async (url) => {
   const userToken = await AsyncStorage.getItem('userToken');
   //console.log("fetchGetUrl", url);
   const response = await fetch(url, {
     headers: {
-      'x-access-token': userToken
-    }
+      'x-access-token': userToken,
+    },
   });
   const json = await response.json();
   //console.log("fetchUrl json", json);
   return json;
 };
-
+const fetchGetUrlNoToken = async (url) => {
+  const response = await fetch(url);
+  const json = await response.json();
+  //console.log(json);
+  return json;
+};
 const fetchPostUrl = async (url, data) => {
   //console.log("fetchPostUrl", url);
   //console.log("fetchPostUrl data", data);
   const response = await fetch(url, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   });
   const json = await response.json();
   //console.log("fetchPostUrl json", json);
@@ -40,23 +47,23 @@ const fetchPostUrlUserData = async (url, data) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-access-token': userToken
+      'x-access-token': userToken,
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   });
   const json = await response.json();
   console.log('fetchPostUrl json', json);
   return json;
 };
 
-const fetchDeleteUrl = async url => {
+const fetchDeleteUrl = async (url) => {
   const userToken = await AsyncStorage.getItem('userToken');
   console.log('fetchDeleteUrl', url);
   const response = await fetch(url, {
     method: 'DELETE',
     headers: {
-      'x-access-token': userToken
-    }
+      'x-access-token': userToken,
+    },
   });
   const json = await response.json();
   return json;
@@ -70,55 +77,47 @@ const fetchPutUrl = async (url, data) => {
     method: 'PUT',
     headers: {
       'x-access-token': userToken,
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   });
   const json = await response.json();
   return json;
 };
 
 const mediaAPI = () => {
-  const getUserInfo = user_id => {
-    return fetchGetUrl(regUrl + user_id).then(json => {
+  const getUserInfo = (user_id) => {
+    return fetchGetUrl(regUrl + user_id).then((json) => {
       return json;
     });
   };
 
-  const reloadAllMedia = setMedia => {
-    fetchGetUrl('http://media.mw.metropolia.fi/wbma/tags/music-sales_').then(
-      json => {
-        setMedia(json);
-      }
-    );
-  };
-
-  const deleteFile = file_id => {
-    fetchDeleteUrl(apiUrl + 'media/' + file_id).then(json => {
+  const deleteFile = (file_id) => {
+    fetchDeleteUrl(apiUrl + 'media/' + file_id).then((json) => {
       console.log(json);
     });
   };
   const updateFile = (file_id, data) => {
-    fetchPutUrl(apiUrl + 'media/' + file_id, data).then(json => {
-      console.log('updateFile', json);
+    fetchPutUrl(apiUrl + 'media/' + file_id, data).then((json) => {
+      console.log(json);
     });
   };
 
-  const addDefaultTag = data => {
-    return fetchPostUrlUserData(apiUrl + 'tags/', data).then(json => {
+  const addDefaultTag = (data) => {
+    return fetchPostUrlUserData(apiUrl + 'tags/', data).then((json) => {
       console.log('addDefaultTag', json);
       return json;
     });
   };
-  const addTag = data => {
-    return fetchPostUrlUserData(apiUrl + 'tags/', data).then(json => {
+  const addTag = (data) => {
+    return fetchPostUrlUserData(apiUrl + 'tags/', data).then((json) => {
       console.log('addTag', json);
       return json;
     });
   };
 
-  const getTags = file_id => {
-    return fetchGetUrl(apiUrl + 'tags/file/' + file_id).then(json => {
+  const getTags = (file_id) => {
+    return fetchGetUrl(apiUrl + 'tags/file/' + file_id).then((json) => {
       console.log('getTags', json);
       return json;
     });
@@ -127,31 +126,37 @@ const mediaAPI = () => {
   const getUserMedia = () => {
     const [media, setMedia] = useState();
     const { user } = useContext(MediaContext);
-    console.log('uID', user.user_id);
+    let returnArray = [];
     useEffect(() => {
-      fetchGetUrl(userUrl + user.user_id).then(json => {
-        console.log('fetchusermedia', json);
-        setMedia(json);
+      fetchGetUrlNoToken(tagUrl).then((json) => {
+        //console.log("get via tag", json);
+        for (const item of json) {
+          if (item.user_id === user.user_id) {
+            returnArray.push(item);
+          }
+        }
+        console.log(returnArray);
+        setMedia(returnArray.reverse());
       });
     }, []);
-
     return media;
   };
 
-  const fetchUser = async id => {
-    return fetchGetUrl(regUrl + id).then(json => {
+  const fetchUser = async (id) => {
+    return fetchGetUrl(regUrl + id).then((json) => {
       console.log('fetchuser', json);
       return json;
     });
   };
-  const uploadFile = async formData => {
-    return fetchUploadUrl('media', formData).then(json => {
+
+  const uploadFile = async (formData) => {
+    return fetchUploadUrl('media', formData).then((json) => {
       return json;
     });
   };
 
-  const getComments = file_id => {
-    return fetchGetUrl(apiUrl + 'comments/file/' + file_id).then(json => {
+  const getComments = (file_id) => {
+    return fetchGetUrl(apiUrl + 'comments/file/' + file_id).then((json) => {
       return json;
     });
   };
@@ -171,7 +176,7 @@ const mediaAPI = () => {
         'content-type': 'multipart/form-data',
         'x-access-token': userToken
       },
-      body: data
+      body: data,
     });
     let json = { error: 'oops' };
     if (response.ok) {
@@ -185,17 +190,17 @@ const mediaAPI = () => {
     const { media, setMedia } = useContext(MediaContext);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-      fetchGetUrl(apiUrl + 'media').then(json => {
+      fetchGetUrl(apiUrl + 'media').then((json) => {
         setMedia(json);
         setLoading(false);
       });
     }, []);
     return [media, loading];
   };
-  const getThumbnail = url => {
+  const getThumbnail = (url) => {
     const [thumbnails, setThumbnails] = useState({});
     useEffect(() => {
-      fetchGetUrl(apiUrl + 'media/' + url).then(json => {
+      fetchGetUrl(apiUrl + 'media/' + url).then((json) => {
         setThumbnails(json.thumbnails);
       });
     }, []);
@@ -204,7 +209,7 @@ const mediaAPI = () => {
   const signInAsync = async (inputs, props) => {
     const data = {
       username: inputs.username,
-      password: inputs.password
+      password: inputs.password,
     };
     const json = await fetchPostUrl(apiUrl + 'login', data);
     await AsyncStorage.setItem('userToken', json.token);
@@ -216,7 +221,7 @@ const mediaAPI = () => {
       username: inputs.username,
       password: inputs.password,
       email: inputs.email,
-      full_name: inputs.full_name
+      full_name: inputs.full_name,
     };
     const json = await fetchPostUrl(apiUrl + 'users', data);
     if (!json.error) {
@@ -225,7 +230,7 @@ const mediaAPI = () => {
   };
 
   const getUserFromToken = async () => {
-    fetchGetUrl(apiUrl + 'users/user').then(json => {
+    fetchGetUrl(apiUrl + 'users/user').then((json) => {
       //console.log("getUserToken", json);
       AsyncStorage.setItem('user', JSON.stringify(json));
     });
@@ -236,12 +241,12 @@ const mediaAPI = () => {
     let avatar;
     // console.log("avatar", apiUrl + "tags/avatar_" + user.user_id);
 
-    return fetchGetUrl(apiUrl + 'tags/avatar_' + user.user_id).then(json => {
+    return fetchGetUrl(apiUrl + 'tags/avatar_' + user.user_id).then((json) => {
       if (json.length === 0) {
         console.log('there is no avatar!');
         const defAvatar = {
           url:
-            'https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png'
+            'https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png',
         };
         return defAvatar;
       } else {
@@ -250,21 +255,21 @@ const mediaAPI = () => {
         //console.log("Avatar:", avatarId);
         const avatarData = {
           url: avatarUrl,
-          id: avatarId
+          id: avatarId,
         };
         return avatarData;
       }
     });
   };
 
-  const getOtherUserAvatar = user_id => {
+  const getOtherUserAvatar = (user_id) => {
     //console.log("avatar", apiUrl + "tags/avatar_" + user_id);
-    return fetchGetUrl(apiUrl + 'tags/avatar_' + user_id).then(json => {
+    return fetchGetUrl(apiUrl + 'tags/avatar_' + user_id).then((json) => {
       if (json.length === 0) {
         // console.log("there is no avatar!");
         const defAvatar = {
           url:
-            'https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png'
+            'https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png',
         };
         return defAvatar;
       } else {
@@ -273,14 +278,14 @@ const mediaAPI = () => {
         // console.log("Avatar:", avatarId);
         const avatarData = {
           url: avatarUrl,
-          id: avatarId
+          id: avatarId,
         };
         return avatarData;
       }
     });
   };
 
-  const uploadAvatar = data => {};
+  const uploadAvatar = (data) => {};
 
   const userToContext = async () => {
     // Call this when app starts (= Home.js)
@@ -296,13 +301,13 @@ const mediaAPI = () => {
     return [user];
   };
 
-  const checkUser = async uname => {
+  const checkUser = async (uname) => {
     const response = await fetch(regUrl + '/username/' + uname, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    }).catch(error => {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    }).catch((error) => {
       console.error(error);
     });
     const result = await response.json();
@@ -316,6 +321,40 @@ const mediaAPI = () => {
         { cancelable: false }
       );
     }
+  };
+  const reloadAllMedia = (setMedia) => {
+    useEffect(() => {
+      setMedia([]);
+      fetchGetUrl('http://media.mw.metropolia.fi/wbma/tags/music-sales_').then(
+        (json) => {
+          console.log('get all media by music-sales_', json);
+          setMedia(json);
+          setLoading(false);
+        }
+      );
+    }, []);
+    return [media, loading];
+  };
+  const getViaTag = (tag) => {
+    const { fetchGetUrl } = mediaAPI();
+    const { media, setMedia } = useContext(MediaContext);
+
+    console.log('TAG:' + tag);
+    useEffect(() => {
+      setMedia([]);
+      if (tag === undefined) {
+        fetchGetUrl(tagUrl).then((json) => {
+          console.log('get all media', json);
+          setMedia(json);
+        });
+      } else {
+        fetchGetUrl(tagsUrl + tag).then((json) => {
+          console.log('get via tag', json);
+          setMedia(json);
+        });
+      }
+    }, [tag]);
+    return [media];
   };
 
   return {
@@ -340,7 +379,10 @@ const mediaAPI = () => {
     getComments,
     addComment,
     getOtherUserAvatar,
-    getUserInfo
+    getUserInfo,
+    getViaTag,
+    fetchGetUrl,
+    fetchGetUrlNoToken,
   };
 };
 
