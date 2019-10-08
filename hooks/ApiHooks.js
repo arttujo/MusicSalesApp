@@ -340,27 +340,19 @@ const mediaAPI = () => {
     const { media, setMedia } = useContext(MediaContext);
 
     console.log('TAG:' + tag);
-
-    if (tag === undefined) {
-      useEffect(() => {
-        setMedia([]);
+    useEffect(() => {
+      if (tag === undefined) {
         fetchGetUrl(tagUrl).then((json) => {
-          console.log('get via tag', json);
-
+          console.log('get all media', json);
           setMedia(json);
         });
-      }, [tag]);
-    } else {
-      useEffect(() => {
-        setMedia([]);
+      } else {
         fetchGetUrl(tagsUrl + tag).then((json) => {
           console.log('get via tag', json);
-
           setMedia(json);
         });
-      }, [tag]);
-    }
-
+      }
+    }, []);
     return [media];
   };
 
