@@ -6,11 +6,8 @@ import { List as BaseList, Container, Item, Icon, Picker, Content } from 'native
 import mediaAPI from '../hooks/ApiHooks';
 import useListHooks from '../hooks/ListHooks';
 
-const List = props => {
-  const { navigation } = props;
-  const {getViaTag} = mediaAPI();
-  const media = getViaTag();
 const List = (props) => {
+  const { navigation } = props;
   const { handleMenuChange, inputs } = useListHooks();
   const { getViaTag } = mediaAPI();
 
