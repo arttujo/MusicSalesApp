@@ -72,6 +72,8 @@ const useUploadHooks = (props) => {
       description: data.description,
       price: data.price,
       contactInfo: data.contactInfo,
+      Longitude: data.Longitude,
+      Latitude: data.Latitude
     };
     formData.append('file', { uri: localUri, name: filename, type });
     formData.append('title', data.title);
@@ -130,7 +132,6 @@ const useUploadHooks = (props) => {
       };
       addTag(tagData);
     });
-
   };
 
   return {

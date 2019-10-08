@@ -1,14 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-
 const MediaContext = React.createContext({});
-const MediaProvider = (props) => {
-  const {
-    media: initialMedia,
-    user: initialUser,
-    children
-  } = props;
+const MediaProvider = props => {
+  const { media: initialMedia, user: initialUser, children } = props;
   const [media, setMedia] = useState(initialMedia);
   const [user, setUser] = useState(initialUser);
 
@@ -16,21 +11,18 @@ const MediaProvider = (props) => {
     user,
     setUser,
     media,
-    setMedia,
+    setMedia
   };
 
   return (
-
-    <MediaContext.Provider value={appContext}>
-      {children}
-    </MediaContext.Provider>
+    <MediaContext.Provider value={appContext}>{children}</MediaContext.Provider>
   );
 };
 
 MediaProvider.propTypes = {
   media: PropTypes.array,
   user: PropTypes.object,
-  children: PropTypes.node,
+  children: PropTypes.node
 };
 
 MediaProvider.defaultProps = {
@@ -38,4 +30,4 @@ MediaProvider.defaultProps = {
   user: {}
 };
 
-export {MediaContext, MediaProvider};
+export { MediaContext, MediaProvider };

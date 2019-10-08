@@ -35,11 +35,14 @@ const Upload = (props) => {
   _pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
+      exif: true,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [4, 4]
     });
 
     console.log('Picked Image:', result);
+    console.log('Longitude:', result.exif.GPSLongitude);
+    console.log('Latitude:', result.exif.GPSLatitude);
 
     if (!result.cancelled) {
       setImage(result);
@@ -76,7 +79,13 @@ const Upload = (props) => {
     };
 
     console.log(image);
-    if (inputs.description && inputs.title && inputs.price && isEmpty(image)) {
+    if (
+      inputs.description &&
+      inputs.title &&
+      inputs.price &&
+      isEmpty(image) &&
+      inputs.category
+    ) {
       return true;
     }
   };
@@ -86,16 +95,16 @@ const Upload = (props) => {
     const constraints = {
       title: {
         presence: {
-          message: '^You must enter a title!',
+          message: '^You must enter a title!'
         },
         length: {
           minimum: 5,
-          message: '^title must be atleast 5 characters',
-        },
+          message: '^title must be atleast 5 characters'
+        }
       },
       description: {
         presence: {
-          message: '^You must give a description of your image!',
+          message: '^You must give a description of your image!'
         },
         length: {
           minimum: 10,
@@ -115,7 +124,12 @@ const Upload = (props) => {
     );
     const priceError = validate({ price: inputs.price }, constraints);
 
-    if (!titleError.title && !descError.description && !priceError.price) {
+    if (
+      !titleError.title &&
+      !descError.description &&
+      !priceError.price
+
+    ) {
       const uploadData = {
         title: inputs.title,
         description: inputs.description,
@@ -123,6 +137,8 @@ const Upload = (props) => {
         category: inputs.category,
         image: image,
         contactInfo: inputs.contactInfo,
+        Longitude: image.exif.GPSLongitude,
+        Latitude: image.exif.GPSLatitude
       };
 
       handleUpload(uploadData);

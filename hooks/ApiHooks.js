@@ -174,7 +174,7 @@ const mediaAPI = () => {
       method: 'POST',
       headers: {
         'content-type': 'multipart/form-data',
-        'x-access-token': userToken,
+        'x-access-token': userToken
       },
       body: data,
     });

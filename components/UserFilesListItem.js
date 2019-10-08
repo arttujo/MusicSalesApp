@@ -83,9 +83,15 @@ const UserFilesListItem = (props) => {
                       setTimeout(() => {
                         props.navigation.push('MyFiles');
                       }, 500);
-                  },
+                  }
                 },
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('Cancel Pressed'),
+                  style: 'cancel'
+                }
               ],
+
               { cancelable: true }
             );
           }}

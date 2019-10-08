@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import {
   ListItem as BaseListItem,
   Left,
@@ -13,15 +13,13 @@ import {
   List,
   Spinner,
   Header
-} from "native-base";
+} from 'native-base';
 
 const Loading = props => {
   return (
     <Container>
       <Content>
-        <Spinner
-          color="blue"
-        />
+        <Spinner color='blue' />
       </Content>
     </Container>
   );

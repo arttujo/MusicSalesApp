@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ListItem from './ListItem';
 import { MediaContext } from '../contexts/MediaContext';
-import { List as BaseList, Container, Item, Icon, Picker } from 'native-base';
+import { List as BaseList, Container, Item, Icon, Picker, Content } from 'native-base';
 import mediaAPI from '../hooks/ApiHooks';
 import useListHooks from '../hooks/ListHooks';
 
@@ -15,7 +15,7 @@ const List = (props) => {
   console.log('MEDIA ARRAY: ', [media]);
 
   return (
-    <Container>
+    <Content>
       <Item picker>
         <Picker
           mode='dropdown'
@@ -42,7 +42,7 @@ const List = (props) => {
         )}
         keyExtractor={(item, index) => index.toString()}
       />
-    </Container>
+    </Content>
   );
 };
 

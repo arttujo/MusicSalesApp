@@ -1,19 +1,20 @@
-import React from "react";
-import { createAppContainer, createSwitchNavigator } from "react-navigation";
-import { createBottomTabNavigator } from "react-navigation-tabs";
-import { createStackNavigator } from "react-navigation-stack";
-import Home from "../views/Home";
-import Profile from "../views/Profile";
-import Single from "../views/Single";
-import Upload from "../views/Upload";
-import MyFiles from "../views/MyFiles";
-import ProfPicUpload from "../views/ProfPicUpload";
-import Update from "../views/Update";
-import AuthLoading from "../views/AuthLoading";
-import Login from "../views/Login";
-import Loading from "../views/Loading";
-import { Icon, Container } from "native-base";
-const iconBackgroundColor = "royalblue";
+import React from 'react';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createStackNavigator } from 'react-navigation-stack';
+import Home from '../views/Home';
+import Profile from '../views/Profile';
+import Single from '../views/Single';
+import Upload from '../views/Upload';
+import MyFiles from '../views/MyFiles';
+import ProfPicUpload from '../views/ProfPicUpload';
+import Update from '../views/Update';
+import AuthLoading from '../views/AuthLoading';
+import Login from '../views/Login';
+import Loading from '../views/Loading';
+import Kartta from '../views/Map';
+import { Icon, Container } from 'native-base';
+const iconBackgroundColor = 'royalblue';
 const TabNavigator = createBottomTabNavigator(
   {
     Home,
@@ -25,38 +26,38 @@ const TabNavigator = createBottomTabNavigator(
       tabBarIcon: () => {
         const { routeName } = navigation.state;
         let iconName;
-        if (routeName === "Home") {
-          iconName = "home";
-        } else if (routeName === "Profile") {
-          iconName = "person";
-        } else if (routeName === "Upload") {
-          iconName = "cloud-upload";
+        if (routeName === 'Home') {
+          iconName = 'home';
+        } else if (routeName === 'Profile') {
+          iconName = 'person';
+        } else if (routeName === 'Upload') {
+          iconName = 'cloud-upload';
         }
 
         // You can return any component that you like here!
         return (
           <Container>
-            {routeName === "Home" && (
+            {routeName === 'Home' && (
               <Icon
                 name={iconName}
                 size={25}
-                style={{ backgroundColor: iconBackgroundColor, color: "grey" }}
+                style={{ backgroundColor: iconBackgroundColor, color: 'grey' }}
               />
             )}
-            {routeName === "Profile" && (
+            {routeName === 'Profile' && (
               <Icon
                 name={iconName}
                 size={25}
-                style={{ backgroundColor: iconBackgroundColor, color: "blue" }}
+                style={{ backgroundColor: iconBackgroundColor, color: 'blue' }}
               />
             )}
-            {routeName === "Upload" && (
+            {routeName === 'Upload' && (
               <Icon
                 name={iconName}
                 size={25}
                 style={{
                   backgroundColor: iconBackgroundColor,
-                  color: "lightgreen"
+                  color: 'lightgreen'
                 }}
               />
             )}
@@ -65,10 +66,10 @@ const TabNavigator = createBottomTabNavigator(
       }
     }),
     tabBarOptions: {
-      activeTintColor: "lime",
-      inactiveTintColor: "white",
+      activeTintColor: 'lime',
+      inactiveTintColor: 'white',
       style: {
-        backgroundColor: "royalblue"
+        backgroundColor: 'royalblue'
       }
     }
   }
@@ -109,6 +110,12 @@ const StackNavigator = createStackNavigator(
       navigationOptions: {
         header: null
       }
+    },
+    Kartta: {
+      screen: Kartta,
+      navigationOptions: {
+        header: null
+      }
     }
   }
 );
@@ -126,7 +133,7 @@ const Navigator = createSwitchNavigator(
     }
   },
   {
-    initialRouteName: "AuthLoading"
+    initialRouteName: 'AuthLoading'
   }
 );
 

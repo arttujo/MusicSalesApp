@@ -16,13 +16,11 @@ const FormTextInput = (props) => {
 };
 
 const styles = StyleSheet.create({
-  textInput: {
-
-  },
+  textInput: {}
 });
 
 FormTextInput.propTypes = {
-  style: PropTypes.object,
+  style: PropTypes.object
 };
 
 export default FormTextInput;

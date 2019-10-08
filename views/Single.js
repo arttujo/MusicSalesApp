@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
-
+import { MapView } from 'expo';
 import {
   Container,
   Header,
@@ -15,6 +15,7 @@ import {
   Left,
   Body,
   Right,
+  Title
   Title,
 } from 'native-base';
 import mediaAPI from '../hooks/ApiHooks';
@@ -41,21 +42,21 @@ const Single = (props) => {
   } = useSingleHooks();
 
   useEffect(() => {
-    fetchUser(file.user_id).then((json) => {
+    fetchUser(file.user_id).then(json => {
       console.log('singleFetchUser', json);
       setUsername(json);
     });
   }, []);
 
   useEffect(() => {
-    getTags(file.file_id).then((json) => {
+    getTags(file.file_id).then(json => {
       console.log('tags object:', json[0].tag);
       setTags(json[0].tag);
     });
   }, []);
 
   useEffect(() => {
-    getComments(file.file_id).then((json) => {
+    getComments(file.file_id).then(json => {
       console.log('get comments', json);
       setComments(json.reverse());
       console.log('current comments', comments);
@@ -91,7 +92,7 @@ const Single = (props) => {
                 source={{
                   uri:
                     'http://media.mw.metropolia.fi/wbma/uploads/' +
-                    file.filename,
+                    file.filename
                 }}
                 style={{
                   flex: 1,
@@ -105,11 +106,11 @@ const Single = (props) => {
                 source={{
                   uri:
                     'http://media.mw.metropolia.fi/wbma/uploads/' +
-                    file.filename,
+                    file.filename
                 }}
                 style={{
                   width: '100%',
-                  height: 500,
+                  height: 500
                 }}
                 useNativeControls={true}
               />
@@ -126,23 +127,23 @@ const Single = (props) => {
               <Text>Tags:</Text>
               <Text>{tags}</Text>
             </Body>
+            <Body>
+              <Text note>{parsedDesc.Longitude}</Text>
+              <Text note>{parsedDesc.Latitude}</Text>
+            </Body>
           </CardItem>
-          <Item>
-            <FormTextInput
-              autoCapitalize='none'
-              placeholder='add comment'
-              value={inputs.comment}
-              onChangeText={handleCommentChange}
-            />
-          </Item>
-          <Button
-            onPress={() => {
-              handleComment(file.file_id);
-            }}
-          >
-            <Text>Post comment</Text>
-          </Button>
+
+          <CardItem>
+            <Button
+              onPress={() => {
+                navigation.push('Kartta', { gpsData: file.description });
+              }}
+            >
+              <Text>See Location</Text>
+            </Button>
+          </CardItem>
         </Card>
+
         <Card>
           <CardItem>
             <Item>
@@ -185,5 +186,4 @@ const Single = (props) => {
     </Container>
   );
 };
-
 export default Single;

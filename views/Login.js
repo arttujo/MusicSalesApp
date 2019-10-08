@@ -37,34 +37,34 @@ const Login = (props) => {
     const constraints = {
       email: {
         presence: {
-          message: '^Please enter an Email address',
+          message: '^Please enter an Email address'
         },
         email: {
-          message: '^Please enter a valid email address',
-        },
+          message: '^Please enter a valid email address'
+        }
       },
       password: {
         presence: {
-          message: '^You must enter a password!',
+          message: '^You must enter a password!'
         },
         length: {
           minimum: 5,
-          message: '^Password must be atleast 5 characters',
-        },
+          message: '^Password must be atleast 5 characters'
+        }
       },
       confirmPassword: {
-        equality: 'password',
+        equality: 'password'
       },
       username: {
         presence: {
-          message: '^You must enter an username',
+          message: '^You must enter an username'
         },
         length: {
           minimum: 3,
           maximum: 20,
-          message: '^Please enter a valid username',
-        },
-      },
+          message: '^Please enter a valid username'
+        }
+      }
     };
 
     const emailError = validate({ email: inputs.email }, constraints);
