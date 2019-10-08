@@ -15,7 +15,6 @@ import {
   Left,
   Body,
   Right,
-  Title
   Title,
 } from 'native-base';
 import mediaAPI from '../hooks/ApiHooks';
