@@ -68,6 +68,7 @@ const Upload = (props) => {
     handleUpload,
     clearForm,
     handlePriceChange,
+    handleInfoChange,
     handleCategoryChange,
   } = useUploadHooks();
 
@@ -77,7 +78,7 @@ const Upload = (props) => {
     };
 
     console.log(image);
-    if (inputs.description && inputs.title && isEmpty(image)) {
+    if (inputs.description && inputs.title && inputs.price && isEmpty(image)) {
       return true;
     }
   };
@@ -123,9 +124,11 @@ const Upload = (props) => {
         price: inputs.price,
         category: inputs.category,
         image: image,
+        contactInfo: inputs.contactInfo,
       };
 
       handleUpload(uploadData);
+      console.log();
       clearForm();
       setImage();
       setMedia([]);
@@ -214,6 +217,15 @@ const Upload = (props) => {
               required
             />
           </Item>
+          <Item>
+            <FormTextInput
+              autoCapitalize='none'
+              placeholder='Contact Info'
+              onChangeText={handleInfoChange}
+              value={inputs.contactInfo}
+              required
+            />
+          </Item>
           <Item picker>
             <Picker
               mode='dropdown'
@@ -230,11 +242,11 @@ const Upload = (props) => {
                 value=''
                 style={{ textDecorationLine: 'underline' }}
               />
-              <Picker.Item label='Guitars' value='music-sales_guitars' />
-              <Picker.Item label='Drums' value='music-sales_drums' />
-              <Picker.Item label='Amplifiers' value='music-sales_amplifiers' />
-              <Picker.Item label='Trombones' value='music-sales_trombones' />
-              <Picker.Item label='Equipment' value='music-sales_equipment' />
+              <Picker.Item label='Guitars' value='guitars' />
+              <Picker.Item label='Drums' value='drums' />
+              <Picker.Item label='Amplifiers' value='amplifiers' />
+              <Picker.Item label='Trombones' value='trombones' />
+              <Picker.Item label='Equipment' value='equipment' />
             </Picker>
           </Item>
           <Button

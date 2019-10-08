@@ -17,20 +17,18 @@ const fetchGetUrl = async (url) => {
     },
   });
   const json = await response.json();
-  console.log('fetchUrl json', json);
+  //console.log("fetchUrl json", json);
   return json;
 };
-
 const fetchGetUrlNoToken = async (url) => {
   const response = await fetch(url);
   const json = await response.json();
   //console.log(json);
   return json;
 };
-
 const fetchPostUrl = async (url, data) => {
-  console.log('fetchPostUrl', url);
-  console.log('fetchPostUrl data', data);
+  //console.log("fetchPostUrl", url);
+  //console.log("fetchPostUrl data", data);
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -39,7 +37,7 @@ const fetchPostUrl = async (url, data) => {
     body: JSON.stringify(data),
   });
   const json = await response.json();
-  console.log('fetchPostUrl json', json);
+  //console.log("fetchPostUrl json", json);
   return json;
 };
 
@@ -88,6 +86,11 @@ const fetchPutUrl = async (url, data) => {
 };
 
 const mediaAPI = () => {
+  const getUserInfo = (user_id) => {
+    return fetchGetUrl(regUrl + user_id).then((json) => {
+      return json;
+    });
+  };
   const reloadAllMedia = (setMedia) => {
     fetchGetUrl('http://media.mw.metropolia.fi/wbma/tags/music-sales_').then(
       (json) => {
@@ -159,6 +162,18 @@ const mediaAPI = () => {
     });
   };
 
+  const getComments = (file_id) => {
+    return fetchGetUrl(apiUrl + 'comments/file/' + file_id).then((json) => {
+      return json;
+    });
+  };
+
+  const addComment = async (fileId, comment) => {
+    console.log('api post comment');
+    data = { file_id: fileId, comment: comment };
+    const json = await fetchPostUrlUserData(apiUrl + 'comments', data);
+    return json;
+  };
   const fetchUploadUrl = async (url, data) => {
     const userToken = await AsyncStorage.getItem('userToken');
     console.log('fetchUploadUrl', url, data, userToken);
@@ -229,9 +244,9 @@ const mediaAPI = () => {
   };
   const getAvatar = () => {
     const { user } = useContext(MediaContext);
-    console.log('get user avatar', user);
+    //console.log("get user avatar", user);
     let avatar;
-    console.log('avatar', apiUrl + 'tags/avatar_' + user.user_id);
+    // console.log("avatar", apiUrl + "tags/avatar_" + user.user_id);
 
     return fetchGetUrl(apiUrl + 'tags/avatar_' + user.user_id).then((json) => {
       if (json.length === 0) {
@@ -244,7 +259,30 @@ const mediaAPI = () => {
       } else {
         avatarUrl = apiUrl + 'uploads/' + json[0].filename;
         avatarId = json[0].file_id;
-        console.log('Avatar:', avatarId);
+        //console.log("Avatar:", avatarId);
+        const avatarData = {
+          url: avatarUrl,
+          id: avatarId,
+        };
+        return avatarData;
+      }
+    });
+  };
+
+  const getOtherUserAvatar = (user_id) => {
+    //console.log("avatar", apiUrl + "tags/avatar_" + user_id);
+    return fetchGetUrl(apiUrl + 'tags/avatar_' + user_id).then((json) => {
+      if (json.length === 0) {
+        // console.log("there is no avatar!");
+        const defAvatar = {
+          url:
+            'https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png',
+        };
+        return defAvatar;
+      } else {
+        avatarUrl = apiUrl + 'uploads/' + json[0].filename;
+        avatarId = json[0].file_id;
+        // console.log("Avatar:", avatarId);
         const avatarData = {
           url: avatarUrl,
           id: avatarId,
@@ -261,7 +299,7 @@ const mediaAPI = () => {
     const { user, setUser } = useContext(MediaContext);
     const getFromStorage = async () => {
       const storageUser = JSON.parse(await AsyncStorage.getItem('user'));
-      console.log('storage', storageUser);
+      //console.log("storage", storageUser);
       setUser(storageUser);
     };
     useEffect(() => {
@@ -292,12 +330,6 @@ const mediaAPI = () => {
     }
   };
 
-  const getComments = (file_id) => {
-    return fetchGetUrl(apiUrl + 'comments/file/' + file_id).then((json) => {
-      return json;
-    });
-  };
-
   const getViaTag = (tag, props) => {
     const { fetchGetUrl } = mediaAPI();
     const { media, setMedia } = useContext(MediaContext);
@@ -314,13 +346,6 @@ const mediaAPI = () => {
       });
     }, [tag]);
     return [media, loading];
-  };
-
-  const addComment = async (fileId, comment) => {
-    console.log('api post comment');
-    data = { file_id: fileId, comment: comment };
-    const json = await fetchPostUrlUserData(apiUrl + 'comments', data);
-    return json;
   };
 
   return {
@@ -342,10 +367,13 @@ const mediaAPI = () => {
     addTag,
     getTags,
     uploadAvatar,
-    addComment,
     getComments,
-    fetchGetUrl,
+    addComment,
+    getOtherUserAvatar,
+    getUserInfo,
     getViaTag,
+    fetchGetUrl,
+    fetchGetUrlNoToken,
   };
 };
 

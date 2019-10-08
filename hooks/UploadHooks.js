@@ -16,6 +16,13 @@ const useUploadHooks = (props) => {
     }));
   };
 
+  const handleInfoChange = (text) => {
+    setInputs((inputs) => ({
+      ...inputs,
+      contactInfo: text,
+    }));
+  };
+
   const handleDescChange = (text) => {
     setInputs((inputs) => ({
       ...inputs,
@@ -64,6 +71,7 @@ const useUploadHooks = (props) => {
     const moreData = {
       description: data.description,
       price: data.price,
+      contactInfo: data.contactInfo,
     };
     formData.append('file', { uri: localUri, name: filename, type });
     formData.append('title', data.title);
@@ -84,7 +92,7 @@ const useUploadHooks = (props) => {
       );
       const tagData = {
         file_id: json.file_id,
-        tag: data.category,
+        tag: 'music-sales_' + data.category,
       };
       addTag(tagData).then((json) => {
         console.log('Added Tag', tagData.tag, json);
@@ -132,6 +140,7 @@ const useUploadHooks = (props) => {
     clearForm,
     handleAvatarChange,
     handlePriceChange,
+    handleInfoChange,
     handleCategoryChange,
   };
 };
