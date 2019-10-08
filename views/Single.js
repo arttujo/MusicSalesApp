@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image } from "react-native"
+import { Image } from "react-native";
 import {
   Container,
   Header,
@@ -22,6 +22,7 @@ import useSingleHooks from "../hooks/SingleHooks";
 import { List as BaseList } from "native-base";
 import CommentListItem from "../components/CommentListItem";
 import FormTextInput from "../components/FormTextInput";
+import favouriteHooks from "../hooks/FavouriteHooks";
 
 const Single = props => {
   const { fetchUser, getTags, getComments, addComment } = mediaAPI();
@@ -38,6 +39,23 @@ const Single = props => {
     handleComment,
     clearForm
   } = useSingleHooks();
+  const { favourite, getPeopleWhoFavourited } = favouriteHooks();
+  const [favourites, setFavourites] = useState({});
+
+  const updateFavourites = () => {
+    setFavourites("");
+    getPeopleWhoFavourited(file.file_id).then(json => {
+      console.log("like info update", json.length);
+      setFavourites(json);
+    });
+  };
+
+  useEffect(() => {
+    getPeopleWhoFavourited(file.file_id).then(json => {
+      console.log("like info", json.length);
+      setFavourites(json);
+    });
+  }, []);
 
   useEffect(() => {
     fetchUser(file.user_id).then(json => {
@@ -125,6 +143,21 @@ const Single = props => {
               <Text>Tags:</Text>
               <Text>{tags}</Text>
             </Body>
+          </CardItem>
+          <CardItem>
+            <Left>
+              <Button
+                onPress={() => {
+                  favourite(file.file_id);
+                  setTimeout(() => {
+                    updateFavourites();
+                  }, 500);
+                }}
+              >
+                <Text>{favourites.length}</Text>
+                <Icon name="snow" />
+              </Button>
+            </Left>
           </CardItem>
         </Card>
         <Card>

@@ -64,6 +64,10 @@ const Profile = props => {
     props.navigation.push("MyFiles");
   };
 
+  const navMyFavs = () => {
+    props.navigation.push("Favourites");
+  };
+
   return (
     <Container>
     <Header><Body><Title>Profile</Title></Body></Header>
@@ -91,6 +95,9 @@ const Profile = props => {
         <Body>
           <Button onPress={navMyFiles}>
             <Text>View my files</Text>
+          </Button>
+          <Button onPress={navMyFavs}>
+            <Text>View my favourites</Text>
           </Button>
           <Button onPress={signOutAsync}>
             <Text>Log Out</Text>
