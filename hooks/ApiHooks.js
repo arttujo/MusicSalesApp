@@ -341,6 +341,7 @@ const mediaAPI = () => {
 
     console.log('TAG:' + tag);
     useEffect(() => {
+      setMedia([]);
       if (tag === undefined) {
         fetchGetUrl(tagUrl).then((json) => {
           console.log('get all media', json);
@@ -352,7 +353,7 @@ const mediaAPI = () => {
           setMedia(json);
         });
       }
-    }, []);
+    }, [tag]);
     return [media];
   };
 
