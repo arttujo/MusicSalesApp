@@ -6,8 +6,6 @@ import { List as BaseList, Container, Item, Icon, Picker } from 'native-base';
 import mediaAPI from '../hooks/ApiHooks';
 import useListHooks from '../hooks/ListHooks';
 
-const tagUrl = 'http://media.mw.metropolia.fi/wbma/tags/';
-
 const List = (props) => {
   const { handleMenuChange, inputs } = useListHooks();
   const { getViaTag } = mediaAPI();

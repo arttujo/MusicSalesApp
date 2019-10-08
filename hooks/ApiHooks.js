@@ -298,18 +298,22 @@ const mediaAPI = () => {
     });
   };
 
-  const getViaTag = (tag) => {
+  const getViaTag = (tag, props) => {
     const { fetchGetUrl } = mediaAPI();
     const { media, setMedia } = useContext(MediaContext);
+    const [loading, setLoading] = useState(true);
 
     console.log('TAG:' + tag);
     useEffect(() => {
-      fetchGetUrl(tagUrl + tag).then((json) => {
+      setMedia([]);
+      fetchGetUrl(tagsUrl + tag).then((json) => {
         console.log('get via tag', json);
+
         setMedia(json);
+        setLoading(false);
       });
     }, [tag]);
-    return [media];
+    return [media, loading];
   };
 
   const addComment = async (fileId, comment) => {
