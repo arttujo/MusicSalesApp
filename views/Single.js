@@ -15,14 +15,15 @@ import {
   Left,
   Body,
   Right,
-  Title,
-} from 'native-base';
-import mediaAPI from '../hooks/ApiHooks';
-import { Video } from 'expo-av';
-import useSingleHooks from '../hooks/SingleHooks';
-import { List as BaseList } from 'native-base';
-import CommentListItem from '../components/CommentListItem';
-import FormTextInput from '../components/FormTextInput';
+  Title
+} from "native-base";
+import mediaAPI from "../hooks/ApiHooks";
+import { Video } from "expo-av";
+import useSingleHooks from "../hooks/SingleHooks";
+import { List as BaseList } from "native-base";
+import CommentListItem from "../components/CommentListItem";
+import FormTextInput from "../components/FormTextInput";
+import favouriteHooks from "../hooks/FavouriteHooks";
 
 const Single = (props) => {
   const { fetchUser, getTags, getComments, addComment } = mediaAPI();
@@ -39,6 +40,23 @@ const Single = (props) => {
     handleComment,
     clearForm,
   } = useSingleHooks();
+  const { favourite, getPeopleWhoFavourited } = favouriteHooks();
+  const [favourites, setFavourites] = useState({});
+
+  const updateFavourites = () => {
+    setFavourites("");
+    getPeopleWhoFavourited(file.file_id).then(json => {
+      console.log("like info update", json.length);
+      setFavourites(json);
+    });
+  };
+
+  useEffect(() => {
+    getPeopleWhoFavourited(file.file_id).then(json => {
+      console.log("like info", json.length);
+      setFavourites(json);
+    });
+  }, []);
 
   useEffect(() => {
     fetchUser(file.user_id).then(json => {
@@ -140,6 +158,21 @@ const Single = (props) => {
             >
               <Text>See Location</Text>
             </Button>
+          </CardItem>
+          <CardItem>
+            <Left>
+              <Button
+                onPress={() => {
+                  favourite(file.file_id);
+                  setTimeout(() => {
+                    updateFavourites();
+                  }, 500);
+                }}
+              >
+                <Text>{favourites.length}</Text>
+                <Icon name="snow" />
+              </Button>
+            </Left>
           </CardItem>
         </Card>
 

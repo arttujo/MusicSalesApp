@@ -28,7 +28,7 @@ const fetchGetUrl = async url => {
     }
   });
   const json = await response.json();
-  console.log("fetchUrl json", json);
+  //console.log("fetchUrl json", json);
   return json;
 };
 const fetchDeleteUrl = async url => {
@@ -43,13 +43,62 @@ const fetchDeleteUrl = async url => {
   const json = await response.json();
   return json;
 };
-const commentHooks = () => {
-  const getOwnFavourites = () => {
-    return fetchGetUrl(apiUrl + "favourites").then(json => {
-      console.log("getOwnFavourites", json);
-      return json;
-    });
+
+const fetchGetUrlNoToken = async url => {
+  const response = await fetch(url);
+  const json = await response.json();
+  //console.log(json);
+  return json;
+};
+
+const favouriteHooks = () => {
+
+  const loadFavourites = async () => {
+    const firstArray = await getOwnFavourites();
+    console.log('first array', firstArray);
+    const secondArray = await loopArray(firstArray);
+    console.log('load favourites', secondArray);
+    return secondArray;
   };
+
+  const getOwnFavourites = async () => {
+    return await fetchGetUrl(apiUrl + "favourites")
+  };
+
+  const loopArray = async (array) => {
+    const favouriteArray = [];
+    for(const i of array) {
+      //console.log('current iterable', i);
+      await fetchGetUrlNoToken(apiUrl + "media/" + i.file_id).then(json => {
+        favouriteArray.push(json);
+        //console.log('fetched favourite file', json);
+        //console.log('current array', favouriteArray);
+      })//.then(() => console.log('-------', favouriteArray));
+    };
+    //console.log('favourite array', favouriteArray);
+    return favouriteArray;
+  };
+
+  /*const getFavouriteFiles = async() => {
+    const array = await getOwnFavourites();
+    const [media, setMedia] = useState();
+    console.log('array', array);
+
+    const favouriteArray = [];
+    useEffect(() => {
+      for(const i of array) {
+        console.log('current iterable', i);
+        fetchGetUrlNoToken(apiUrl + "media/" + i.file_id).then(json => {
+          favouriteArray.push(json);
+          console.log('fetched favourite file', json);
+          console.log('current array', favouriteArray);
+        });
+      };
+      setMedia(favouriteArray);
+    }, []);
+
+    return media;
+  };*/
 
   const favourite = id => {
     const data = {
@@ -79,7 +128,10 @@ const commentHooks = () => {
     getOwnFavourites,
     favourite,
     removeFavourite,
-    getPeopleWhoFavourited
+    getPeopleWhoFavourited,
+    loadFavourites
+    //getFavouriteFiles
+
   };
 };
-export default commentHooks;
+export default favouriteHooks;

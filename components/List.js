@@ -7,6 +7,7 @@ import mediaAPI from '../hooks/ApiHooks';
 import useListHooks from '../hooks/ListHooks';
 
 const List = (props) => {
+  const { navigation } = props;
   const { handleMenuChange, inputs } = useListHooks();
   const { getViaTag } = mediaAPI();
 

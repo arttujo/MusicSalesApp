@@ -13,6 +13,7 @@ import AuthLoading from '../views/AuthLoading';
 import Login from '../views/Login';
 import Loading from '../views/Loading';
 import Kartta from '../views/Map';
+import Favourites from "../views/Favourites";
 import { Icon, Container } from 'native-base';
 const iconBackgroundColor = 'royalblue';
 const TabNavigator = createBottomTabNavigator(
@@ -95,6 +96,12 @@ const StackNavigator = createStackNavigator(
     },
     MyFiles: {
       screen: MyFiles,
+      navigationOptions: {
+        header: null
+      }
+    },
+    Favourites: {
+      screen: Favourites,
       navigationOptions: {
         header: null
       }
