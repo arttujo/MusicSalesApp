@@ -63,10 +63,6 @@ typings/
 # expo ignore
 .expo
 
-# random
-report
-mintty
-
 # editorconfig
 .editorconfig
 
