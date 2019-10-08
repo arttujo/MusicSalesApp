@@ -81,7 +81,7 @@ const Upload = props => {
     };
 
     console.log(image);
-    if (inputs.description && inputs.title && inputs.price && isEmpty(image)) {
+    if (inputs.description && inputs.title && inputs.price && isEmpty(image)&& inputs.category) {
       return true;
     }
   };
@@ -120,7 +120,7 @@ const Upload = props => {
     );
     const priceError = validate({ price: inputs.price }, constraints);
 
-    if (!titleError.title && !descError.description && !priceError.price) {
+    if (!titleError.title && !descError.description && !priceError.price && inputs.category==="") {
       const uploadData = {
         title: inputs.title,
         description: inputs.description,
@@ -243,7 +243,7 @@ const Upload = props => {
               selectedValue={inputs.category}
               onValueChange={handleCategoryChange}
             >
-              <Picker.Item label="Select Category" value="" style={{textDecorationLine:"underline"}}/>
+              <Picker.Item label="Select Category" value = "" style={{textDecorationLine:"underline"}}/>
               <Picker.Item label="Guitars" value="guitars" />
               <Picker.Item label="Drums" value="drums" />
               <Picker.Item label="Amplifiers" value="amplifiers" />
