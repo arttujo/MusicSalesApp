@@ -21,10 +21,11 @@ import {
   Font
 } from "native-base";
 import mediaAPI from "../hooks/ApiHooks";
+import favouriteHooks from "../hooks/FavouriteHooks";
 
 const Profile = props => {
   const { getAvatar } = mediaAPI();
-
+  const {getOwnFavourites} = favouriteHooks();
   const [user, setUser] = useState({});
   const getUser = async () => {
     const user = await AsyncStorage.getItem("user");
@@ -61,6 +62,7 @@ const Profile = props => {
     props.navigation.navigate("Auth");
   };
   const navMyFiles = () => {
+    const array = getOwnFavourites();
     props.navigation.push("MyFiles");
   };
 

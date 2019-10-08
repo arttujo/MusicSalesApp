@@ -61,7 +61,7 @@ const favouriteHooks = () => {
         console.log('current iterable', i);
         fetchGetUrlNoToken(apiUrl + "media/" + i.file_id).then(json => {
           favouriteArray.push(json);
-          //console.log('fetched favourite file', json);
+          console.log('fetched favourite file', json);
           //console.log('current array', favouriteArray);
         });
       };

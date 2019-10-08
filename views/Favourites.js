@@ -45,7 +45,7 @@ const Favourites = props => {
       <BaseList
         dataArray={media}
         renderRow={item => (
-          <UserFilesListItem navigation={props.navigation} singleMedia={item} />
+          <FavouritesListItem navigation={props.navigation} singleMedia={item} />
         )}
         keyExtractor={(item, index) => index.toString()}
       />
