@@ -3,7 +3,8 @@ import { MediaProvider } from './contexts/MediaContext';
 import Navigator from './navigators/Navigator';
 import { Ionicons } from '@expo/vector-icons';
 import * as Font from 'expo-font';
-import Expo, { AppLoading } from 'expo';
+import { AppLoading } from 'expo';
+import { Root } from 'native-base';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -24,9 +25,11 @@ const App = () => {
     return <AppLoading />;
   } else {
     return (
+      <Root>
       <MediaProvider>
         <Navigator></Navigator>
       </MediaProvider>
+      </Root>
     );
   }
 };

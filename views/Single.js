@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { Image } from 'react-native';
 import { MapView } from 'expo';
 import {
   Container,
@@ -8,14 +8,14 @@ import {
   Card,
   CardItem,
   Item,
-  Thumbnail,
   Text,
   Button,
   Icon,
   Left,
   Body,
   Right,
-  Title
+  Title, 
+  Toast,
 } from "native-base";
 import mediaAPI from "../hooks/ApiHooks";
 import { Video } from "expo-av";
@@ -153,7 +153,15 @@ const Single = (props) => {
           <CardItem>
             <Button
               onPress={() => {
-                navigation.push('Kartta', { gpsData: file.description });
+                if(!parsedDesc.Latitude  || !parsedDesc.Longitude) {
+                  console.log('no map data');
+                  Toast.show({
+                    text: 'No location data',
+                    buttonText: 'Okay'
+                  })
+
+                }
+                else {navigation.push('Kartta', { gpsData: file.description })};
               }}
             >
               <Text>See Location</Text>

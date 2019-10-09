@@ -1,5 +1,4 @@
-import React, { useState, useEffect, Component } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import React from 'react';
 import PropTypes from 'prop-types';
 import MapView, { Marker, Circle } from 'react-native-maps';
 import {
