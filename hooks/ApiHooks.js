@@ -86,6 +86,7 @@ const fetchPutUrl = async (url, data) => {
 };
 
 const mediaAPI = () => {
+
   const getUserInfo = (user_id) => {
     return fetchGetUrl(regUrl + user_id).then((json) => {
       return json;
@@ -167,6 +168,13 @@ const mediaAPI = () => {
     const json = await fetchPostUrlUserData(apiUrl + 'comments', data);
     return json;
   };
+
+  const deleteComment = async (commentId) => {
+    fetchDeleteUrl(apiUrl + 'comments/' + commentId).then((json) => {
+      console.log(json);
+    });
+  };
+
   const fetchUploadUrl = async (url, data) => {
     const userToken = await AsyncStorage.getItem('userToken');
     console.log('fetchUploadUrl', url, data, userToken);
@@ -197,6 +205,7 @@ const mediaAPI = () => {
     }, []);
     return [media, loading];
   };
+
   const getThumbnail = (url) => {
     const [thumbnails, setThumbnails] = useState({});
     useEffect(() => {
@@ -206,6 +215,7 @@ const mediaAPI = () => {
     }, []);
     return thumbnails;
   };
+
   const signInAsync = async (inputs, props) => {
     const data = {
       username: inputs.username,
@@ -216,6 +226,7 @@ const mediaAPI = () => {
     await AsyncStorage.setItem('user', JSON.stringify(json.user));
     props.navigation.navigate('App');
   };
+
   const registerAsync = async (inputs, props) => {
     const data = {
       username: inputs.username,
@@ -235,12 +246,12 @@ const mediaAPI = () => {
       AsyncStorage.setItem('user', JSON.stringify(json));
     });
   };
+
   const getAvatar = () => {
     const { user } = useContext(MediaContext);
     //console.log("get user avatar", user);
     let avatar;
     // console.log("avatar", apiUrl + "tags/avatar_" + user.user_id);
-
     return fetchGetUrl(apiUrl + 'tags/avatar_' + user.user_id).then((json) => {
       if (json.length === 0) {
         console.log('there is no avatar!');
@@ -292,7 +303,7 @@ const mediaAPI = () => {
     const { user, setUser } = useContext(MediaContext);
     const getFromStorage = async () => {
       const storageUser = JSON.parse(await AsyncStorage.getItem('user'));
-      //console.log("storage", storageUser);
+      console.log("storage", storageUser);
       setUser(storageUser);
     };
     useEffect(() => {
@@ -380,6 +391,7 @@ const mediaAPI = () => {
     uploadAvatar,
     getComments,
     addComment,
+    deleteComment,
     getOtherUserAvatar,
     getUserInfo,
     getViaTag,
