@@ -62,3 +62,9 @@ typings/
 
 # expo ignore
 .expo
+
+# editorconfig
+.editorconfig
+
+# watchmanconfig
+.watchmanconfig
