@@ -204,7 +204,7 @@ const Upload = (props) => {
             />
           </Item>
           <Item floatingLabel>
-            <Label>Price</Label>>
+            <Label>Price</Label>
             <FormTextInput
               autoCapitalize='none'
               onChangeText={handlePriceChange}
