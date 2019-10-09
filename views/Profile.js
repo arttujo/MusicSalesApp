@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { AsyncStorage, Image, TouchableOpacity } from "react-native";
-import PropTypes from "prop-types";
-import * as ImagePicker from "expo-image-picker";
-import Constants from "expo-constants";
-import * as Permissions from "expo-permissions";
 import {
   Container,
   Header,
@@ -25,8 +21,9 @@ import favouriteHooks from "../hooks/FavouriteHooks";
 
 const Profile = props => {
   const { getAvatar } = mediaAPI();
-  const { getOwnFavourites, loadFavourites } = favouriteHooks();
+  const { loadFavourites } = favouriteHooks();
   const [user, setUser] = useState({});
+  
   const getUser = async () => {
     const user = await AsyncStorage.getItem("user");
     setUser(JSON.parse(user));
