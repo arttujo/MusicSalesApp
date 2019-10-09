@@ -37,7 +37,7 @@ const List = (props) => {
         </Picker>
       </Item>
       <BaseList
-        dataArray={media.reverse()}
+        dataArray={media}
         renderRow={(item) => (
           <ListItem navigation={props.navigation} singleMedia={item} />
         )}
