@@ -15,6 +15,7 @@ const FormTextInput = (props) => {
   );
 };
 
+
 const styles = StyleSheet.create({
   textInput: {}
 });

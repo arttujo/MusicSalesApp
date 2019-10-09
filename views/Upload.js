@@ -184,11 +184,8 @@ const Upload = (props) => {
                 <Text>Select Image</Text>
               </Button>
             </CardItem>
-            <CardItem>
-              <Body>
-                <Text>Selected Image</Text>
-              </Body>
-            </CardItem>
+           
+          
             {image && (
               <CardItem>
                 <Image
@@ -203,37 +200,40 @@ const Upload = (props) => {
             )}
           </Card>
 
-          <Item>
+          <Item >
+            <Label>Title</Label>
             <FormTextInput
               autoCapitalize='none'
-              placeholder='title'
               onChangeText={handleTitleChange}
               value={inputs.title}
               required
             />
           </Item>
-          <Item>
+          <Item  >
+            <Label>Price</Label>
             <FormTextInput
               autoCapitalize='none'
-              placeholder='price'
+   
               onChangeText={handlePriceChange}
               value={inputs.price}
               required
             />
           </Item>
-          <Item>
+          <Item >
+            <Label>Description</Label>
             <FormTextInput
               autoCapitalize='none'
-              placeholder='Description'
+            
               onChangeText={handleDescChange}
               value={inputs.description}
               required
             />
           </Item>
-          <Item>
+          <Item >
+            <Label>Contact Info</Label>
             <FormTextInput
               autoCapitalize='none'
-              placeholder='Contact Info'
+            
               onChangeText={handleInfoChange}
               value={inputs.contactInfo}
               required
