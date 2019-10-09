@@ -14,6 +14,7 @@ import {
 } from 'native-base';
 import mediaAPI from '../hooks/ApiHooks';
 import { format } from 'timeago.js';
+import favouriteHooks from '../hooks/FavouriteHooks'
 
 const getThumbnail = (url) => {
   // console.log('urli', url);
@@ -39,6 +40,7 @@ const ListItem = (props) => {
 
   const allData = JSON.parse(singleMedia.description);
   const { getOtherUserAvatar, getUserInfo, getComments } = mediaAPI();
+  const {getFavourites} = favouriteHooks(); 
 
   const [avatar, setAvatar] = useState(undefined);
   getOtherUserAvatar(singleMedia.user_id).then((result) => {
@@ -59,6 +61,11 @@ const ListItem = (props) => {
     setComments(total / 5);
   });
 
+  const [favouriteAmount,setFavourites] = useState();
+  getFavourites(singleMedia.file_id).then(json =>{
+    const total = json.reduce((a, obj) => a + Object.keys(obj).length, 0);
+    setFavourites(total/3)
+  })
   return (
     <BaseListItem>
       <Card style={{ flex: 1 }}>
@@ -94,7 +101,8 @@ const ListItem = (props) => {
           <CardItem>
             <Left>
               <Body>
-                <Text>Test</Text>
+                <Icon name='heart'/>
+                <Text>{favouriteAmount}</Text>
               </Body>
             </Left>
             <Body>

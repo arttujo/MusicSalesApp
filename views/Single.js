@@ -14,18 +14,18 @@ import {
   Left,
   Body,
   Right,
-  Title, 
-  Toast,
-} from "native-base";
-import mediaAPI from "../hooks/ApiHooks";
-import { Video } from "expo-av";
-import useSingleHooks from "../hooks/SingleHooks";
-import { List as BaseList } from "native-base";
-import CommentListItem from "../components/CommentListItem";
-import FormTextInput from "../components/FormTextInput";
-import favouriteHooks from "../hooks/FavouriteHooks";
+  Title,
+  Toast
+} from 'native-base';
+import mediaAPI from '../hooks/ApiHooks';
+import { Video } from 'expo-av';
+import useSingleHooks from '../hooks/SingleHooks';
+import { List as BaseList } from 'native-base';
+import CommentListItem from '../components/CommentListItem';
+import FormTextInput from '../components/FormTextInput';
+import favouriteHooks from '../hooks/FavouriteHooks';
 
-const Single = (props) => {
+const Single = props => {
   const { fetchUser, getTags, getComments, addComment } = mediaAPI();
   const [username, setUsername] = useState({});
   const [comments, setComments] = useState({});
@@ -38,22 +38,22 @@ const Single = (props) => {
     inputs,
     handleCommentChange,
     handleComment,
-    clearForm,
+    clearForm
   } = useSingleHooks();
   const { favourite, getPeopleWhoFavourited } = favouriteHooks();
   const [favourites, setFavourites] = useState({});
 
   const updateFavourites = () => {
-    setFavourites("");
+    setFavourites('');
     getPeopleWhoFavourited(file.file_id).then(json => {
-      console.log("like info update", json.length);
+      console.log('like info update', json.length);
       setFavourites(json);
     });
   };
 
   useEffect(() => {
     getPeopleWhoFavourited(file.file_id).then(json => {
-      console.log("like info", json.length);
+      console.log('like info', json.length);
       setFavourites(json);
     });
   }, []);
@@ -67,8 +67,8 @@ const Single = (props) => {
 
   useEffect(() => {
     getTags(file.file_id).then(json => {
-      console.log('tags object:', json[0].tag);
-      setTags(json[0].tag);
+      console.log('tags object:', json.tag);
+      setTags(json.tag);
     });
   }, []);
 
@@ -114,7 +114,7 @@ const Single = (props) => {
                 style={{
                   flex: 1,
                   width: null,
-                  height: 350,
+                  height: 350
                 }}
               />
             )}
@@ -133,39 +133,36 @@ const Single = (props) => {
               />
             )}
           </CardItem>
-
+          <CardItem>
+            <Text>{parsedDesc.description}</Text>
+          </CardItem>
           <CardItem>
             <Body>
               <Text>€: {parsedDesc.price}</Text>
             </Body>
-            <Body>
-              <Text>Description:</Text>
-              <Text>{parsedDesc.description}</Text>
-              <Text>Tags:</Text>
-              <Text>{tags}</Text>
-            </Body>
-            <Body>
-              <Text note>{parsedDesc.Longitude}</Text>
-              <Text note>{parsedDesc.Latitude}</Text>
-            </Body>
+           
+            
           </CardItem>
 
           <CardItem>
+            <Left>
             <Button
               onPress={() => {
-                if(!parsedDesc.Latitude  || !parsedDesc.Longitude) {
+                if (!parsedDesc.Latitude || !parsedDesc.Longitude) {
                   console.log('no map data');
                   Toast.show({
                     text: 'No location data',
                     buttonText: 'Okay'
-                  })
-
+                  });
+                } else {
+                  navigation.push('Kartta', { gpsData: file.description });
                 }
-                else {navigation.push('Kartta', { gpsData: file.description })};
               }}
             >
               <Text>See Location</Text>
             </Button>
+            </Left>
+            <Body><Text> Contact Info: {parsedDesc.contactInfo}</Text></Body>
           </CardItem>
           <CardItem>
             <Left>
@@ -178,7 +175,7 @@ const Single = (props) => {
                 }}
               >
                 <Text>{favourites.length}</Text>
-                <Icon name="snow" />
+                <Icon name='heart' />
               </Button>
             </Left>
           </CardItem>
@@ -201,7 +198,7 @@ const Single = (props) => {
                 handleComment(file.file_id);
                 setTimeout(() => {
                   setComments('');
-                  getComments(file.file_id).then((json) => {
+                  getComments(file.file_id).then(json => {
                     setComments(json.reverse());
                   });
                 }, 500);
@@ -214,7 +211,7 @@ const Single = (props) => {
 
         <BaseList
           dataArray={comments}
-          renderRow={(item) => (
+          renderRow={item => (
             <CommentListItem
               navigation={props.navigation}
               singleComment={item}
