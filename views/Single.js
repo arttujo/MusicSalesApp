@@ -15,7 +15,7 @@ import {
   Body,
   Right,
   Title,
-  Toast
+  Toast,
 } from 'native-base';
 import mediaAPI from '../hooks/ApiHooks';
 import { Video } from 'expo-av';
@@ -25,7 +25,7 @@ import CommentListItem from '../components/CommentListItem';
 import FormTextInput from '../components/FormTextInput';
 import favouriteHooks from '../hooks/FavouriteHooks';
 
-const Single = props => {
+const Single = (props) => {
   const { fetchUser, getTags, getComments, addComment } = mediaAPI();
   const [username, setUsername] = useState({});
   const [comments, setComments] = useState({});
@@ -38,42 +38,42 @@ const Single = props => {
     inputs,
     handleCommentChange,
     handleComment,
-    clearForm
+    clearForm,
   } = useSingleHooks();
   const { favourite, getPeopleWhoFavourited } = favouriteHooks();
   const [favourites, setFavourites] = useState({});
 
   const updateFavourites = () => {
     setFavourites('');
-    getPeopleWhoFavourited(file.file_id).then(json => {
+    getPeopleWhoFavourited(file.file_id).then((json) => {
       console.log('like info update', json.length);
       setFavourites(json);
     });
   };
 
   useEffect(() => {
-    getPeopleWhoFavourited(file.file_id).then(json => {
+    getPeopleWhoFavourited(file.file_id).then((json) => {
       console.log('like info', json.length);
       setFavourites(json);
     });
   }, []);
 
   useEffect(() => {
-    fetchUser(file.user_id).then(json => {
+    fetchUser(file.user_id).then((json) => {
       console.log('singleFetchUser', json);
       setUsername(json);
     });
   }, []);
 
   useEffect(() => {
-    getTags(file.file_id).then(json => {
+    getTags(file.file_id).then((json) => {
       console.log('tags object:', json.tag);
       setTags(json.tag);
     });
   }, []);
 
   useEffect(() => {
-    getComments(file.file_id).then(json => {
+    getComments(file.file_id).then((json) => {
       console.log('get comments', json);
       setComments(json.reverse());
       console.log('current comments', comments);
@@ -109,12 +109,12 @@ const Single = props => {
                 source={{
                   uri:
                     'http://media.mw.metropolia.fi/wbma/uploads/' +
-                    file.filename
+                    file.filename,
                 }}
                 style={{
                   flex: 1,
                   width: null,
-                  height: 350
+                  height: 350,
                 }}
               />
             )}
@@ -123,11 +123,11 @@ const Single = props => {
                 source={{
                   uri:
                     'http://media.mw.metropolia.fi/wbma/uploads/' +
-                    file.filename
+                    file.filename,
                 }}
                 style={{
                   width: '100%',
-                  height: 500
+                  height: 500,
                 }}
                 useNativeControls={true}
               />
@@ -140,29 +140,29 @@ const Single = props => {
             <Body>
               <Text>€: {parsedDesc.price}</Text>
             </Body>
-           
-            
           </CardItem>
 
           <CardItem>
             <Left>
-            <Button
-              onPress={() => {
-                if (!parsedDesc.Latitude || !parsedDesc.Longitude) {
-                  console.log('no map data');
-                  Toast.show({
-                    text: 'No location data',
-                    buttonText: 'Okay'
-                  });
-                } else {
-                  navigation.push('Kartta', { gpsData: file.description });
-                }
-              }}
-            >
-              <Text>See Location</Text>
-            </Button>
+              <Button
+                onPress={() => {
+                  if (!parsedDesc.Latitude || !parsedDesc.Longitude) {
+                    console.log('no map data');
+                    Toast.show({
+                      text: 'No location data',
+                      buttonText: 'Okay',
+                    });
+                  } else {
+                    navigation.push('Kartta', { gpsData: file.description });
+                  }
+                }}
+              >
+                <Text>See Location</Text>
+              </Button>
             </Left>
-            <Body><Text> Contact Info: {parsedDesc.contactInfo}</Text></Body>
+            <Body>
+              <Text> Contact Info: {parsedDesc.contactInfo}</Text>
+            </Body>
           </CardItem>
           <CardItem>
             <Left>
@@ -198,7 +198,7 @@ const Single = props => {
                 handleComment(file.file_id);
                 setTimeout(() => {
                   setComments('');
-                  getComments(file.file_id).then(json => {
+                  getComments(file.file_id).then((json) => {
                     setComments(json.reverse());
                   });
                 }, 500);
@@ -211,7 +211,7 @@ const Single = props => {
 
         <BaseList
           dataArray={comments}
-          renderRow={item => (
+          renderRow={(item) => (
             <CommentListItem
               navigation={props.navigation}
               singleComment={item}

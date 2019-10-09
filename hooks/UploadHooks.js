@@ -73,7 +73,7 @@ const useUploadHooks = (props) => {
       price: data.price,
       contactInfo: data.contactInfo,
       Longitude: data.Longitude,
-      Latitude: data.Latitude
+      Latitude: data.Latitude,
     };
     formData.append('file', { uri: localUri, name: filename, type });
     formData.append('title', data.title);

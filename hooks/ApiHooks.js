@@ -86,7 +86,6 @@ const fetchPutUrl = async (url, data) => {
 };
 
 const mediaAPI = () => {
-
   const getUserInfo = (user_id) => {
     return fetchGetUrl(regUrl + user_id).then((json) => {
       return json;
@@ -182,7 +181,7 @@ const mediaAPI = () => {
       method: 'POST',
       headers: {
         'content-type': 'multipart/form-data',
-        'x-access-token': userToken
+        'x-access-token': userToken,
       },
       body: data,
     });
@@ -303,7 +302,7 @@ const mediaAPI = () => {
     const { user, setUser } = useContext(MediaContext);
     const getFromStorage = async () => {
       const storageUser = JSON.parse(await AsyncStorage.getItem('user'));
-      console.log("storage", storageUser);
+      console.log('storage', storageUser);
       setUser(storageUser);
     };
     useEffect(() => {
@@ -367,8 +366,6 @@ const mediaAPI = () => {
     }, [tag]);
     return [media];
   };
-
-  
 
   return {
     getAllMedia,

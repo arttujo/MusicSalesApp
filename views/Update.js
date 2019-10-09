@@ -24,17 +24,17 @@ import {
   Card,
   CardItem,
   Icon,
-  Title
+  Title,
 } from 'native-base';
 import useUploadHooks from '../hooks/UploadHooks';
 import List from '../components/List';
 
-const Update = props => {
+const Update = (props) => {
   const {
     handleTitleChange,
     inputs,
     handleDescChange,
-    handlePriceChange
+    handlePriceChange,
   } = useUploadHooks();
 
   const [image, setImage] = useState({});
@@ -55,32 +55,32 @@ const Update = props => {
     const constraints = {
       title: {
         presence: {
-          message: '^You must enter a title!'
+          message: '^You must enter a title!',
         },
         length: {
           minimum: 5,
-          message: '^title must be atleast 5 characters'
-        }
+          message: '^title must be atleast 5 characters',
+        },
       },
       description: {
         presence: {
-          message: '^You must give a description of your image!'
+          message: '^You must give a description of your image!',
         },
         length: {
           minimum: 10,
-          message: '^Description must be atleast 10 characters'
-        }
+          message: '^Description must be atleast 10 characters',
+        },
       },
       price: {
         presence: {
-          message: '^You must give a price!'
-        }
+          message: '^You must give a price!',
+        },
       },
       price: {
         presence: {
-          message: "^You must give a price!"
-        }
-      }
+          message: '^You must give a price!',
+        },
+      },
     };
     const titleError = validate({ title: inputs.title }, constraints);
     const descError = validate(
@@ -92,14 +92,14 @@ const Update = props => {
     if (!titleError.title && !descError.description && !priceError.price) {
       const moreData = {
         description: inputs.description,
-        price: inputs.price
+        price: inputs.price,
       };
       console.log(moreData);
       const stringify = JSON.stringify(moreData);
       console.log(stringify);
       const data = {
         title: inputs.title,
-        description: stringify
+        description: stringify,
       };
       console.log(data);
       props.navigation.navigate('Loading');
@@ -115,7 +115,7 @@ const Update = props => {
       const errorArray = [
         titleError.title,
         descError.description,
-        priceError.price
+        priceError.price,
       ];
 
       for (let i = 0; i < errorArray.length; i++) {
@@ -158,12 +158,12 @@ const Update = props => {
                   source={{
                     uri:
                       'http://media.mw.metropolia.fi/wbma/uploads/' +
-                      file.filename
+                      file.filename,
                   }}
                   style={{
                     flex: 1,
                     width: null,
-                    height: 350
+                    height: 350,
                   }}
                 />
               </CardItem>

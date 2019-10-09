@@ -37,7 +37,7 @@ const Upload = (props) => {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       exif: true,
       allowsEditing: true,
-      aspect: [4, 4]
+      aspect: [4, 4],
     });
 
     console.log('Picked Image:', result);
@@ -95,16 +95,16 @@ const Upload = (props) => {
     const constraints = {
       title: {
         presence: {
-          message: '^You must enter a title!'
+          message: '^You must enter a title!',
         },
         length: {
           minimum: 5,
-          message: '^title must be atleast 5 characters'
-        }
+          message: '^title must be atleast 5 characters',
+        },
       },
       description: {
         presence: {
-          message: '^You must give a description of your image!'
+          message: '^You must give a description of your image!',
         },
         length: {
           minimum: 10,
@@ -124,12 +124,7 @@ const Upload = (props) => {
     );
     const priceError = validate({ price: inputs.price }, constraints);
 
-    if (
-      !titleError.title &&
-      !descError.description &&
-      !priceError.price
-
-    ) {
+    if (!titleError.title && !descError.description && !priceError.price) {
       const uploadData = {
         title: inputs.title,
         description: inputs.description,
@@ -138,7 +133,7 @@ const Upload = (props) => {
         image: image,
         contactInfo: inputs.contactInfo,
         Longitude: image.exif.GPSLongitude,
-        Latitude: image.exif.GPSLatitude
+        Latitude: image.exif.GPSLatitude,
       };
 
       handleUpload(uploadData);
@@ -184,8 +179,7 @@ const Upload = (props) => {
                 <Text>Select Image</Text>
               </Button>
             </CardItem>
-           
-          
+
             {image && (
               <CardItem>
                 <Image
@@ -209,11 +203,10 @@ const Upload = (props) => {
               required
             />
           </Item>
-          <Item  floatingLabel>
+          <Item floatingLabel>
             <Label>Price</Label>>
             <FormTextInput
               autoCapitalize='none'
-   
               onChangeText={handlePriceChange}
               value={inputs.price}
               required
@@ -223,7 +216,6 @@ const Upload = (props) => {
             <Label>Description</Label>
             <FormTextInput
               autoCapitalize='none'
-            
               onChangeText={handleDescChange}
               value={inputs.description}
               required
@@ -233,7 +225,6 @@ const Upload = (props) => {
             <Label>Contact Info</Label>
             <FormTextInput
               autoCapitalize='none'
-            
               onChangeText={handleInfoChange}
               value={inputs.contactInfo}
               required

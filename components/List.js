@@ -2,7 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ListItem from './ListItem';
 import { MediaContext } from '../contexts/MediaContext';
-import { List as BaseList, Container, Item, Icon, Picker, Content } from 'native-base';
+import {
+  List as BaseList,
+  Container,
+  Item,
+  Icon,
+  Picker,
+  Content,
+} from 'native-base';
 import mediaAPI from '../hooks/ApiHooks';
 import useListHooks from '../hooks/ListHooks';
 
