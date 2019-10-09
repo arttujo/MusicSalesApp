@@ -55,9 +55,9 @@ const favouriteHooks = () => {
 
   const loadFavourites = async () => {
     const firstArray = await getOwnFavourites();
-    console.log('first array', firstArray);
+    //console.log('first array', firstArray);
     const secondArray = await loopArray(firstArray);
-    console.log('load favourites', secondArray);
+    //console.log('load favourites', secondArray);
     return secondArray;
   };
 
@@ -76,7 +76,7 @@ const favouriteHooks = () => {
       })//.then(() => console.log('-------', favouriteArray));
     };
     //console.log('favourite array', favouriteArray);
-    return favouriteArray;
+    return favouriteArray.reverse();
   };
 
   /*const getFavouriteFiles = async() => {

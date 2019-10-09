@@ -356,12 +356,12 @@ const mediaAPI = () => {
       if (tag === undefined) {
         fetchGetUrl(tagUrl).then((json) => {
           console.log('get all media', json);
-          setMedia(json);
+          setMedia(json.reverse());
         });
       } else {
         fetchGetUrl(tagsUrl + tag).then((json) => {
           console.log('get via tag', json);
-          setMedia(json);
+          setMedia(json.reverse());
         });
       }
     }, [tag]);

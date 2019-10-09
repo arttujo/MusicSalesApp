@@ -200,7 +200,7 @@ const Upload = (props) => {
             )}
           </Card>
 
-          <Item floatingLabel>
+          <Item >
             <Label>Title</Label>
             <FormTextInput
               autoCapitalize='none'
@@ -209,8 +209,8 @@ const Upload = (props) => {
               required
             />
           </Item>
-          <Item  floatingLabel>
-            <Label>Price</Label>>
+          <Item  >
+            <Label>Price</Label>
             <FormTextInput
               autoCapitalize='none'
    
@@ -219,7 +219,7 @@ const Upload = (props) => {
               required
             />
           </Item>
-          <Item floatingLabel>
+          <Item >
             <Label>Description</Label>
             <FormTextInput
               autoCapitalize='none'
@@ -229,7 +229,7 @@ const Upload = (props) => {
               required
             />
           </Item>
-          <Item floatingLabel>
+          <Item >
             <Label>Contact Info</Label>
             <FormTextInput
               autoCapitalize='none'
