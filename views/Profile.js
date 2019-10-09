@@ -56,7 +56,6 @@ const Profile = props => {
     getFullname();
   }, []);
 
-  console.log();
   const signOutAsync = async () => {
     await AsyncStorage.clear();
     props.navigation.navigate("Auth");
