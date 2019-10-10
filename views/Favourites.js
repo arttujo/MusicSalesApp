@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import mediaAPI from "../hooks/ApiHooks";
+import React from "react";
 import { List as BaseList } from "native-base";
 import FavouritesListItem from "../components/FavouritesListItem";
-
 import {
   Container,
   Header,
@@ -12,12 +10,8 @@ import {
   Left,
   Icon
 } from "native-base";
-import favouriteHooks from "../hooks/FavouriteHooks";
 
 const Favourites = props => {
-  const { getOwnFavourites } = favouriteHooks();
-
-
   const { navigation } = props;
   const media = navigation.state.params.media
   console.log('navigation array', media);
