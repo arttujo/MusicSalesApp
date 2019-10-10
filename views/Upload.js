@@ -200,7 +200,7 @@ const Upload = (props) => {
             )}
           </Card>
 
-          <Item floatingLabel>
+          <Item>
             <Label>Title</Label>
             <FormTextInput
               autoCapitalize='none'
@@ -256,9 +256,9 @@ const Upload = (props) => {
                 style={{ textDecorationLine: 'underline' }}
               />
           <Picker.Item label='Guitars' value='music-sales_guitars' />
-          <Picker.Item label='Basses' value='music-sales_guitars' />
+          <Picker.Item label='Basses' value='music-sales_basses' />
           <Picker.Item label='Drums' value='music-sales_drums' />
-          <Picker.Item label='Keyboards' value='music-sales_drums' />
+          <Picker.Item label='Keyboards' value='music-sales_keyboards' />
           <Picker.Item label='Amplifiers' value='music-sales_amplifiers' />
           <Picker.Item label='Trombones' value='music-sales_trombones' />
           <Picker.Item label='Equipment' value='music-sales_equipment' />
