@@ -85,7 +85,7 @@ const FavouritesListItem = (props) => {
             navigation.push('Single', { file: singleMedia });
           }}
         >
-          <Icon name='play' />
+          <Icon name='open' />
         </Button>
       </Right>
     </BaseListItem>

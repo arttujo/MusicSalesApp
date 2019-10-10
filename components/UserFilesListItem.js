@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Text,
-  Alert,
-} from 'react-native';
+import { Text, Alert } from 'react-native';
 import mediaAPI from '../hooks/ApiHooks';
 import {
   ListItem as BaseListItem,
@@ -14,7 +11,7 @@ import {
   Content,
   Button,
   List,
-  Icon,
+  Icon
 } from 'native-base';
 
 const getThumbnail = (url) => {
@@ -48,7 +45,7 @@ const UserFilesListItem = (props) => {
           circle
           large
           source={{
-            uri: 'http://media.mw.metropolia.fi/wbma/uploads/' + tn.w160,
+            uri: 'http://media.mw.metropolia.fi/wbma/uploads/' + tn.w160
           }}
         />
       </Left>
@@ -62,10 +59,11 @@ const UserFilesListItem = (props) => {
         style={{
           flex: 1,
           flexDirection: 'row',
-          justifyContent: 'space-between',
+          justifyContent: 'space-between'
         }}
       >
         <Button
+          danger
           onPress={() => {
             Alert.alert(
               'Warning',
@@ -107,7 +105,7 @@ const UserFilesListItem = (props) => {
             navigation.push('Single', { file: singleMedia });
           }}
         >
-          <Icon name='play' />
+          <Icon name='open' />
         </Button>
       </Right>
     </BaseListItem>
@@ -115,7 +113,7 @@ const UserFilesListItem = (props) => {
 };
 
 UserFilesListItem.propTypes = {
-  singleMedia: PropTypes.object,
+  singleMedia: PropTypes.object
 };
 
 export default UserFilesListItem;
