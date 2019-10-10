@@ -107,22 +107,12 @@ const favouriteHooks = () => {
     });
   };
 
-  const getFavourites = (file_id) => {
-    return fetchGetUrlNoToken(apiUrl + 'favourites/file/' + file_id).then(
-      (json) => {
-        return json;
-      }
-    );
-  };
-
   return {
     getOwnFavourites,
     favourite,
     removeFavourite,
     getPeopleWhoFavourited,
     loadFavourites,
-    getFavourites
-    //getFavouriteFiles
   };
 };
 export default favouriteHooks;

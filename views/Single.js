@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Image } from 'react-native';
 import { MapView } from 'expo';
 import {
@@ -24,15 +24,19 @@ import { List as BaseList } from 'native-base';
 import CommentListItem from '../components/CommentListItem';
 import FormTextInput from '../components/FormTextInput';
 import favouriteHooks from '../hooks/FavouriteHooks';
+import { MediaContext } from '../contexts/MediaContext';
+import { isAvailable } from 'expo/build/AR';
 
-const Single = props => {
-  const { fetchUser, getTags, getComments, addComment } = mediaAPI();
+const Single = (props) => {
+  const { fetchUser, getTags, getComments } = mediaAPI();
+  const { user } = useContext(MediaContext);
   const [username, setUsername] = useState({});
   const [comments, setComments] = useState({});
+  const [isFavourite, setIsFavourite] = useState();
   const [tags, setTags] = useState();
   const { navigation } = props;
   const file = navigation.state.params.file;
-  console.log('single:', file);
+  //console.log('single:', file);
   const parsedDesc = JSON.parse(file.description);
   const {
     inputs,
@@ -45,39 +49,54 @@ const Single = props => {
 
   const updateFavourites = () => {
     setFavourites('');
-    getPeopleWhoFavourited(file.file_id).then(json => {
-      console.log('like info update', json.length);
+    getPeopleWhoFavourited(file.file_id).then((json) => {
+      //console.log('like info update', json.length);
       setFavourites(json);
     });
   };
 
   useEffect(() => {
-    getPeopleWhoFavourited(file.file_id).then(json => {
-      console.log('like info', json.length);
+    getPeopleWhoFavourited(file.file_id).then((json) => {
+      //console.log('like info', json.length);
       setFavourites(json);
     });
   }, []);
 
   useEffect(() => {
-    fetchUser(file.user_id).then(json => {
-      console.log('singleFetchUser', json);
+    fetchUser(file.user_id).then((json) => {
+      //console.log('singleFetchUser', json);
       setUsername(json);
     });
   }, []);
 
   useEffect(() => {
-    getTags(file.file_id).then(json => {
-      console.log('tags object:', json.tag);
+    getTags(file.file_id).then((json) => {
+      //console.log('tags object:', json.tag);
       setTags(json.tag);
     });
   }, []);
 
   useEffect(() => {
-    getComments(file.file_id).then(json => {
-      console.log('get comments', json);
+    getComments(file.file_id).then((json) => {
+      //console.log('get comments', json);
       setComments(json.reverse());
-      console.log('current comments', comments);
+      //console.log('current comments', comments);
     });
+  }, []);
+
+  const userFavourited = async () => {
+    const array = await getPeopleWhoFavourited(file.file_id);
+    console.log('------', user.user_id);
+    console.log('========', array);
+    if (array.some((item) => item.user_id === user.user_id)) {
+      setIsFavourite(true);
+    } else {
+      setIsFavourite(false);
+    }
+  };
+
+  useEffect(() => {
+    userFavourited();
   }, []);
 
   console.log('THIS IS TAGS STATE', tags);
@@ -140,29 +159,29 @@ const Single = props => {
             <Body>
               <Text>€: {parsedDesc.price}</Text>
             </Body>
-           
-            
           </CardItem>
 
           <CardItem>
             <Left>
-            <Button
-              onPress={() => {
-                if (!parsedDesc.Latitude || !parsedDesc.Longitude) {
-                  console.log('no map data');
-                  Toast.show({
-                    text: 'No location data',
-                    buttonText: 'Okay'
-                  });
-                } else {
-                  navigation.push('Kartta', { gpsData: file.description });
-                }
-              }}
-            >
-              <Text>See Location</Text>
-            </Button>
+              <Button
+                onPress={() => {
+                  if (!parsedDesc.Latitude || !parsedDesc.Longitude) {
+                    console.log('no map data');
+                    Toast.show({
+                      text: 'No location data',
+                      buttonText: 'Okay'
+                    });
+                  } else {
+                    navigation.push('Kartta', { gpsData: file.description });
+                  }
+                }}
+              >
+                <Text>See Location</Text>
+              </Button>
             </Left>
-            <Body><Text> Contact Info: {parsedDesc.contactInfo}</Text></Body>
+            <Body>
+              <Text> Contact Info: {parsedDesc.contactInfo}</Text>
+            </Body>
           </CardItem>
           <CardItem>
             <Left>
@@ -171,16 +190,19 @@ const Single = props => {
                   favourite(file.file_id);
                   setTimeout(() => {
                     updateFavourites();
+                    userFavourited(file.file_id);
                   }, 500);
                 }}
               >
                 <Text>{favourites.length}</Text>
-                <Icon name='heart' />
+                {isFavourite === false && (
+                  <Icon active={false} name='heart-empty' />
+                )}
+                {isFavourite === true && <Icon active={true} name='heart' />}
               </Button>
             </Left>
           </CardItem>
         </Card>
-
         <Card>
           <CardItem>
             <Item>
@@ -198,7 +220,7 @@ const Single = props => {
                 handleComment(file.file_id);
                 setTimeout(() => {
                   setComments('');
-                  getComments(file.file_id).then(json => {
+                  getComments(file.file_id).then((json) => {
                     setComments(json.reverse());
                   });
                 }, 500);
@@ -211,7 +233,7 @@ const Single = props => {
 
         <BaseList
           dataArray={comments}
-          renderRow={item => (
+          renderRow={(item) => (
             <CommentListItem
               navigation={props.navigation}
               singleComment={item}
