@@ -30,7 +30,9 @@ const List = (props) => {
         >
           <Picker.Item label='All items' value='music-sales_' />
           <Picker.Item label='Guitars' value='music-sales_guitars' />
+          <Picker.Item label='Basses' value='music-sales_guitars' />
           <Picker.Item label='Drums' value='music-sales_drums' />
+          <Picker.Item label='Keyboards' value='music-sales_drums' />
           <Picker.Item label='Amplifiers' value='music-sales_amplifiers' />
           <Picker.Item label='Trombones' value='music-sales_trombones' />
           <Picker.Item label='Equipment' value='music-sales_equipment' />

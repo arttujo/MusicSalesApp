@@ -36,7 +36,7 @@ const Favourites = props => {
           </Button>
         </Left>
         <Body>
-          <Title>My Files</Title>
+          <Title>Favourites</Title>
         </Body>
       </Header>
       <BaseList
