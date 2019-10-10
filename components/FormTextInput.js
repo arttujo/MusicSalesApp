@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 const FormTextInput = (props) => {
   const {style, ...otherProps} = props;
   return (
-    <Input
+    <Input 
       style={[styles.textInput, style]}
       {...otherProps}
     />

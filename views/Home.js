@@ -3,7 +3,7 @@ import List from '../components/List';
 import PropTypes from 'prop-types';
 import mediaAPI from '../hooks/ApiHooks';
 import favouriteHooks from '../hooks/FavouriteHooks';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Image } from 'react-native';
 import {
   Container,
   Header,
@@ -43,17 +43,18 @@ const Home = (props) => {
 
   return (
     <Container>
-      <Header>
+      <Header >
         <Body>
           <Title>Music Sales</Title>
         </Body>
         <Fab
+
           active={toggle}
           direction='left'
-          style={{ backgroundColor: '#5067FF' }}
+          style={{backgroundColor: "#3F51B5",}}
           position='topRight'
           onPress={() => setToggle(!toggle)}
-          containerStyle={{top: '0%'}}
+          containerStyle={{top: '0%', }}
         >
           <Icon name='menu' />
           <Button
@@ -63,19 +64,21 @@ const Home = (props) => {
             <Icon name='filing' />
           </Button>
           <Button
-            style={{ backgroundColor: '#3B5998' }}
+            style={{ backgroundColor: 'pink' }}
             onPress={() => navMyFavs()}
           >
-            <Icon name='snow' />
+            <Icon name='heart' />
           </Button>
           <Button
-            style={{ backgroundColor: '#DD5144' }}
+            style={{ backgroundColor: 'red' }}
             onPress={() => signOutAsync()}
           >
-            <Icon name='sad' />
+            <Icon name='exit' />
           </Button>
         </Fab>
+       
       </Header>
+     
       <Content>
         <List navigation={navigation}></List>
       </Content>

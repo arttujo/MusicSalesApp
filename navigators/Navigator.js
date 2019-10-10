@@ -15,7 +15,7 @@ import Loading from '../views/Loading';
 import Kartta from '../views/Map';
 import Favourites from "../views/Favourites";
 import { Icon, Container } from 'native-base';
-const iconBackgroundColor = 'royalblue';
+const iconBackgroundColor = '#3F51B5';
 const TabNavigator = createBottomTabNavigator(
   {
     Home,
@@ -70,7 +70,7 @@ const TabNavigator = createBottomTabNavigator(
       activeTintColor: 'lime',
       inactiveTintColor: 'white',
       style: {
-        backgroundColor: 'royalblue'
+        backgroundColor: '#3F51B5'
       }
     }
   }

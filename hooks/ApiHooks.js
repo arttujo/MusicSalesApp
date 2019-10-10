@@ -257,7 +257,7 @@ const mediaAPI = () => {
         console.log('there is no avatar!');
         const defAvatar = {
           url:
-            'https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png',
+            'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
         };
         return defAvatar;
       } else {
@@ -280,8 +280,9 @@ const mediaAPI = () => {
         // console.log("there is no avatar!");
         const defAvatar = {
           url:
-            'https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png',
+            'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
         };
+        
         return defAvatar;
       } else {
         avatarUrl = apiUrl + 'uploads/' + json[0].filename;
