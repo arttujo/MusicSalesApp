@@ -40,7 +40,7 @@ const ListItem = (props) => {
 
   const allData = JSON.parse(singleMedia.description);
   const { getOtherUserAvatar, getUserInfo, getComments } = mediaAPI();
-  const {getFavourites} = favouriteHooks(); 
+  const {getPeopleWhoFavourited} = favouriteHooks(); 
 
   const [avatar, setAvatar] = useState(undefined);
   getOtherUserAvatar(singleMedia.user_id).then((result) => {
@@ -62,7 +62,7 @@ const ListItem = (props) => {
   });
 
   const [favouriteAmount,setFavourites] = useState();
-  getFavourites(singleMedia.file_id).then(json =>{
+  getPeopleWhoFavourited(singleMedia.file_id).then(json =>{
     const total = json.reduce((a, obj) => a + Object.keys(obj).length, 0);
     setFavourites(total/3)
   })
