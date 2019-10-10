@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { AsyncStorage, Image, TouchableOpacity } from "react-native";
-import PropTypes from "prop-types";
-import * as ImagePicker from "expo-image-picker";
-import Constants from "expo-constants";
-import * as Permissions from "expo-permissions";
+import React, { useEffect, useState } from 'react';
+import { AsyncStorage, Image, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
 import {
   Container,
   Header,
@@ -18,35 +18,35 @@ import {
   Body,
   Title,
   Right,
-  Font
-} from "native-base";
-import mediaAPI from "../hooks/ApiHooks";
-import favouriteHooks from "../hooks/FavouriteHooks";
+  Font,
+} from 'native-base';
+import mediaAPI from '../hooks/ApiHooks';
+import favouriteHooks from '../hooks/FavouriteHooks';
 
-const Profile = props => {
+const Profile = (props) => {
   const { getAvatar } = mediaAPI();
   const { getOwnFavourites, loadFavourites } = favouriteHooks();
   const [user, setUser] = useState({});
   const getUser = async () => {
-    const user = await AsyncStorage.getItem("user");
+    const user = await AsyncStorage.getItem('user');
     setUser(JSON.parse(user));
   };
 
   const [avatar, setAvatar] = useState(undefined);
-  getAvatar().then(result => {
-    console.log("getAvatar", result);
+  getAvatar().then((result) => {
+    console.log('getAvatar', result);
     setAvatar(result.url);
   });
 
   const [email, setEMail] = useState({});
   const getEmail = async () => {
-    const email = await AsyncStorage.getItem("user");
+    const email = await AsyncStorage.getItem('user');
     setEMail(JSON.parse(email));
   };
 
   const [fullname, setFullname] = useState({});
   const getFullname = async () => {
-    const full_name = await AsyncStorage.getItem("user");
+    const full_name = await AsyncStorage.getItem('user');
     setFullname(JSON.parse(full_name));
   };
 
@@ -58,16 +58,16 @@ const Profile = props => {
 
   const signOutAsync = async () => {
     await AsyncStorage.clear();
-    props.navigation.navigate("Auth");
+    props.navigation.navigate('Auth');
   };
   const navMyFavs = async () => {
     const array = await loadFavourites();
-    console.log("array", array);
-    props.navigation.push("Favourites", { media: array });
+    console.log('array', array);
+    props.navigation.push('Favourites', { media: array });
   };
 
   const navMyFiles = () => {
-    props.navigation.push("MyFiles");
+    props.navigation.push('MyFiles');
   };
 
   return (
@@ -82,7 +82,7 @@ const Profile = props => {
           <Left>
             <TouchableOpacity
               onPress={() => {
-                props.navigation.push("ProfPicUpload");
+                props.navigation.push('ProfPicUpload');
               }}
             >
               <Image
@@ -100,10 +100,10 @@ const Profile = props => {
         <CardItem>
           <Body>
             <Button onPress={navMyFiles}>
-              <Text>View my files</Text>
+              <Text>My items</Text>
             </Button>
             <Button onPress={navMyFavs}>
-              <Text>View my favourites</Text>
+              <Text>My favorites</Text>
             </Button>
             <Button onPress={signOutAsync}>
               <Text>Log Out</Text>

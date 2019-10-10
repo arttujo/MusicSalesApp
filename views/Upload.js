@@ -194,8 +194,9 @@ const Upload = (props) => {
             )}
           </Card>
 
-          <Item floatingLabel>
+          <Item>
             <Label>Title</Label>
+
             <FormTextInput
               autoCapitalize='none'
               onChangeText={handleTitleChange}
@@ -203,8 +204,9 @@ const Upload = (props) => {
               required
             />
           </Item>
-          <Item floatingLabel>
+          <Item>
             <Label>Price</Label>
+
             <FormTextInput
               autoCapitalize='none'
               onChangeText={handlePriceChange}
@@ -212,8 +214,10 @@ const Upload = (props) => {
               required
             />
           </Item>
-          <Item floatingLabel>
+
+          <Item>
             <Label>Description</Label>
+
             <FormTextInput
               autoCapitalize='none'
               onChangeText={handleDescChange}
@@ -221,8 +225,9 @@ const Upload = (props) => {
               required
             />
           </Item>
-          <Item floatingLabel>
+          <Item>
             <Label>Contact Info</Label>
+
             <FormTextInput
               autoCapitalize='none'
               onChangeText={handleInfoChange}
@@ -246,11 +251,14 @@ const Upload = (props) => {
                 value=''
                 style={{ textDecorationLine: 'underline' }}
               />
-              <Picker.Item label='Guitars' value='guitars' />
-              <Picker.Item label='Drums' value='drums' />
-              <Picker.Item label='Amplifiers' value='amplifiers' />
-              <Picker.Item label='Trombones' value='trombones' />
-              <Picker.Item label='Equipment' value='equipment' />
+              <Picker.Item label='All items' value='music-sales_' />
+              <Picker.Item label='Guitars' value='music-sales_guitars' />
+              <Picker.Item label='Basses' value='music-sales_guitars' />
+              <Picker.Item label='Drums' value='music-sales_drums' />
+              <Picker.Item label='Keyboards' value='music-sales_drums' />
+              <Picker.Item label='Amplifiers' value='music-sales_amplifiers' />
+              <Picker.Item label='Trombones' value='music-sales_trombones' />
+              <Picker.Item label='Equipment' value='music-sales_equipment' />
             </Picker>
           </Item>
           <Button
