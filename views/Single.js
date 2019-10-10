@@ -1,49 +1,90 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Image } from "react-native";
-
+import React, { useState, useEffect, Component } from 'react';
+import { Image } from 'react-native';
+import { MapView } from 'expo';
 import {
   Container,
   Header,
   Content,
   Card,
   CardItem,
-  Thumbnail,
+  Item,
   Text,
   Button,
   Icon,
   Left,
   Body,
-  Right,Title,
-} from "native-base";
-import mediaAPI from "../hooks/ApiHooks";
-import { Video } from "expo-av";
+  Right,
+  Title,
+  Toast
+} from 'native-base';
+import mediaAPI from '../hooks/ApiHooks';
+import { Video } from 'expo-av';
+import useSingleHooks from '../hooks/SingleHooks';
+import { List as BaseList } from 'native-base';
+import CommentListItem from '../components/CommentListItem';
+import FormTextInput from '../components/FormTextInput';
+import favouriteHooks from '../hooks/FavouriteHooks';
+
 const Single = props => {
-  const { fetchUser, getTags } = mediaAPI();
+  const { fetchUser, getTags, getComments, addComment } = mediaAPI();
   const [username, setUsername] = useState({});
+  const [comments, setComments] = useState({});
   const [tags, setTags] = useState();
   const { navigation } = props;
   const file = navigation.state.params.file;
-  console.log("single:", file);
+  console.log('single:', file);
+  const parsedDesc = JSON.parse(file.description);
+  const {
+    inputs,
+    handleCommentChange,
+    handleComment,
+    clearForm
+  } = useSingleHooks();
+  const { favourite, getPeopleWhoFavourited } = favouriteHooks();
+  const [favourites, setFavourites] = useState({});
+
+  const updateFavourites = () => {
+    setFavourites('');
+    getPeopleWhoFavourited(file.file_id).then(json => {
+      console.log('like info update', json.length);
+      setFavourites(json);
+    });
+  };
+
+  useEffect(() => {
+    getPeopleWhoFavourited(file.file_id).then(json => {
+      console.log('like info', json.length);
+      setFavourites(json);
+    });
+  }, []);
 
   useEffect(() => {
     fetchUser(file.user_id).then(json => {
-      console.log("singleFetchUser", json);
+      console.log('singleFetchUser', json);
       setUsername(json);
     });
   }, []);
 
   useEffect(() => {
     getTags(file.file_id).then(json => {
-      console.log("tags object:", json[0].tag);
-      setTags(json[0].tag);
+      console.log('tags object:', json.tag);
+      setTags(json.tag);
     });
   }, []);
 
-  console.log("THIS IS TAGS STATE", tags);
+  useEffect(() => {
+    getComments(file.file_id).then(json => {
+      console.log('get comments', json);
+      setComments(json.reverse());
+      console.log('current comments', comments);
+    });
+  }, []);
+
+  console.log('THIS IS TAGS STATE', tags);
 
   return (
     <Container>
-       <Header>
+      <Header>
         <Left>
           <Button
             transparent
@@ -51,22 +92,23 @@ const Single = props => {
               props.navigation.goBack();
             }}
           >
-            <Icon name="arrow-back" />
+            <Icon name='arrow-back' />
           </Button>
         </Left>
         <Body>
-          <Title>{file.title} By: {username.username}</Title>
+          <Title>
+            {file.title} By: {username.username}
+          </Title>
         </Body>
       </Header>
       <Content>
         <Card>
-
           <CardItem>
-            {file.media_type === "image" && (
+            {file.media_type === 'image' && (
               <Image
                 source={{
                   uri:
-                    "http://media.mw.metropolia.fi/wbma/uploads/" +
+                    'http://media.mw.metropolia.fi/wbma/uploads/' +
                     file.filename
                 }}
                 style={{
@@ -76,34 +118,109 @@ const Single = props => {
                 }}
               />
             )}
-            {file.media_type === "video" && (
+            {file.media_type === 'video' && (
               <Video
                 source={{
                   uri:
-                    "http://media.mw.metropolia.fi/wbma/uploads/" +
+                    'http://media.mw.metropolia.fi/wbma/uploads/' +
                     file.filename
                 }}
                 style={{
-                  width: "100%",
+                  width: '100%',
                   height: 500
                 }}
                 useNativeControls={true}
               />
             )}
           </CardItem>
-
+          <CardItem>
+            <Text>{parsedDesc.description}</Text>
+          </CardItem>
           <CardItem>
             <Body>
-              <Text>Description:</Text>
-              <Text>{file.description}</Text>
-              <Text>Tags:</Text>
-              <Text>{tags}</Text>
+              <Text>€: {parsedDesc.price}</Text>
             </Body>
+           
+            
+          </CardItem>
+
+          <CardItem>
+            <Left>
+            <Button
+              onPress={() => {
+                if (!parsedDesc.Latitude || !parsedDesc.Longitude) {
+                  console.log('no map data');
+                  Toast.show({
+                    text: 'No location data',
+                    buttonText: 'Okay'
+                  });
+                } else {
+                  navigation.push('Kartta', { gpsData: file.description });
+                }
+              }}
+            >
+              <Text>See Location</Text>
+            </Button>
+            </Left>
+            <Body><Text> Contact Info: {parsedDesc.contactInfo}</Text></Body>
+          </CardItem>
+          <CardItem>
+            <Left>
+              <Button
+                onPress={() => {
+                  favourite(file.file_id);
+                  setTimeout(() => {
+                    updateFavourites();
+                  }, 500);
+                }}
+              >
+                <Text>{favourites.length}</Text>
+                <Icon name='heart' />
+              </Button>
+            </Left>
           </CardItem>
         </Card>
+
+        <Card>
+          <CardItem>
+            <Item>
+              <FormTextInput
+                autoCapitalize='none'
+                placeholder='add comment'
+                value={inputs.comment}
+                onChangeText={handleCommentChange}
+              />
+            </Item>
+          </CardItem>
+          <CardItem>
+            <Button
+              onPress={() => {
+                handleComment(file.file_id);
+                setTimeout(() => {
+                  setComments('');
+                  getComments(file.file_id).then(json => {
+                    setComments(json.reverse());
+                  });
+                }, 500);
+              }}
+            >
+              <Text>Post comment</Text>
+            </Button>
+          </CardItem>
+        </Card>
+
+        <BaseList
+          dataArray={comments}
+          renderRow={item => (
+            <CommentListItem
+              navigation={props.navigation}
+              singleComment={item}
+            />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </Content>
     </Container>
   );
 };
-
 export default Single;

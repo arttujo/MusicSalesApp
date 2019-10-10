@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 const useSignUpForm = () => {
   const [inputs, setInputs] = useState({});
@@ -34,12 +34,11 @@ const useSignUpForm = () => {
     }));
   };
 
-  const handleFormChange = (form) => {
-    setInputs((inputs) =>
-      ({
-        ...inputs,
-        form: form,
-      }));
+  const handleFormChange = form => {
+    setInputs(inputs => ({
+      ...inputs,
+      form: form
+    }));
   };
 
   return {

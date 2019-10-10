@@ -1,6 +1,6 @@
 {
   "urlRandomness": "6k-gmu",
-  "hostType": "lan",
+  "hostType": "localhost",
   "lanType": "ip",
   "dev": true,
   "minify": false,

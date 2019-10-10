@@ -21,10 +21,11 @@ import {
   Font
 } from "native-base";
 import mediaAPI from "../hooks/ApiHooks";
+import favouriteHooks from "../hooks/FavouriteHooks";
 
 const Profile = props => {
   const { getAvatar } = mediaAPI();
-
+  const { getOwnFavourites, loadFavourites } = favouriteHooks();
   const [user, setUser] = useState({});
   const getUser = async () => {
     const user = await AsyncStorage.getItem("user");
@@ -33,7 +34,7 @@ const Profile = props => {
 
   const [avatar, setAvatar] = useState(undefined);
   getAvatar().then(result => {
-    console.log("getAvatar",result)
+    console.log("getAvatar", result);
     setAvatar(result.url);
   });
 
@@ -55,49 +56,61 @@ const Profile = props => {
     getFullname();
   }, []);
 
-  console.log();
   const signOutAsync = async () => {
     await AsyncStorage.clear();
     props.navigation.navigate("Auth");
   };
+  const navMyFavs = async () => {
+    const array = await loadFavourites();
+    console.log("array", array);
+    props.navigation.push("Favourites", { media: array });
+  };
+
   const navMyFiles = () => {
     props.navigation.push("MyFiles");
   };
 
   return (
     <Container>
-    <Header><Body><Title>Profile</Title></Body></Header>
-    <Card>
-      <CardItem>
-        <Left>
-          <TouchableOpacity
-            onPress={() => {
-              props.navigation.push("ProfPicUpload")
-            }}
-          >
-            <Image
-              source={{ uri: avatar }}
-              style={{ width: 100, height: 100 }}
-            />
-          </TouchableOpacity>
-        </Left>
+      <Header>
         <Body>
-          <Text>Username: {user.username}</Text>
-          <Text>Email: {email.email}</Text>
-          <Text>Full Name: {fullname.full_name}</Text>
+          <Title>Profile</Title>
         </Body>
-      </CardItem>
-      <CardItem>
-        <Body>
-          <Button onPress={navMyFiles}>
-            <Text>View my files</Text>
-          </Button>
-          <Button onPress={signOutAsync}>
-            <Text>Log Out</Text>
-          </Button>
-        </Body>
-      </CardItem>
-    </Card>
+      </Header>
+      <Card>
+        <CardItem>
+          <Left>
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.push("ProfPicUpload");
+              }}
+            >
+              <Image
+                source={{ uri: avatar }}
+                style={{ width: 100, height: 100 }}
+              />
+            </TouchableOpacity>
+          </Left>
+          <Body>
+            <Text>Username: {user.username}</Text>
+            <Text>Email: {email.email}</Text>
+            <Text>Full Name: {fullname.full_name}</Text>
+          </Body>
+        </CardItem>
+        <CardItem>
+          <Body>
+            <Button onPress={navMyFiles}>
+              <Text>View my files</Text>
+            </Button>
+            <Button onPress={navMyFavs}>
+              <Text>View my favourites</Text>
+            </Button>
+            <Button onPress={signOutAsync}>
+              <Text>Log Out</Text>
+            </Button>
+          </Body>
+        </CardItem>
+      </Card>
     </Container>
   );
 };
