@@ -13,6 +13,7 @@ import {
 import mediaAPI from "../hooks/ApiHooks";
 import useListHooks from "../hooks/ListHooks";
 import { AsyncStorage, Image } from "react-native";
+import { Assets } from "react-navigation-stack";
 
 const List = props => {
   const { navigation } = props;
@@ -27,84 +28,57 @@ const List = props => {
     <Content>
       {inputs.pickedcategory === "music-sales_guitars" && (
         <Image
-          source={{
-            uri:
-              "https://cdn.pixabay.com/photo/2015/05/15/14/31/amplifier-768536_960_720.jpg"
-          }}
-          style={{ width: null, height: 75 }}
+          source={require("../assets/guitar.jpg")}
+          style={{ width: null, height: 200 }}
         />
       )}
 
       {inputs.pickedcategory === "music-sales_basses" && (
         <Image
-          source={{
-            uri:
-              "https://cdn.pixabay.com/photo/2015/05/15/14/31/amplifier-768536_960_720.jpg"
-          }}
-          style={{ width: null, height: 75 }}
+          source={require("../assets/bass.jpg")}
+          style={{ width: null, height: 200 }}
         />
       )}
       {inputs.pickedcategory === "music-sales_drums" && (
         <Image
-          source={{
-            uri:
-              "https://cdn.pixabay.com/photo/2016/11/19/13/57/drum-set-1839383_960_720.jpg"
-          }}
-          style={{ width: null, height: 75 }}
+          source={require("../assets/drums.jpg")}
+          style={{ width: null, height: 200 }}
         />
       )}
       {inputs.pickedcategory === "music-sales_keyboards" && (
         <Image
-          source={{
-            uri:
-              "https://cdn.pixabay.com/photo/2015/05/15/14/31/amplifier-768536_960_720.jpg"
-          }}
-          style={{ width: null, height: 75 }}
+          source={require("../assets/piano.jpg")}
+          style={{ width: null, height: 200 }}
         />
       )}
       {inputs.pickedcategory === "music-sales_amplifiers" && (
         <Image
-          source={{
-            uri:
-              "https://cdn.pixabay.com/photo/2015/05/15/14/31/amplifier-768536_960_720.jpg"
-          }}
-          style={{ width: null, height: 75 }}
+          source={require("../assets/amplifier.jpg")}
+          style={{ width: null, height: 200 }}
         />
       )}
       {inputs.pickedcategory === "music-sales_trombones" && (
         <Image
-          source={{
-            uri:
-              "https://cdn.pixabay.com/photo/2015/05/15/14/31/amplifier-768536_960_720.jpg"
-          }}
-          style={{ width: null, height: 75 }}
+          source={require("../assets/trombone.jpg")}
+          style={{ width: null, height: 200 }}
         />
       )}
       {inputs.pickedcategory === "music-sales_equipment" && (
         <Image
-          source={{
-            uri:
-              "https://cdn.pixabay.com/photo/2015/05/15/14/31/amplifier-768536_960_720.jpg"
-          }}
-          style={{ width: null, height: 75 }}
+          source={require("../assets/equipment.jpg")}
+          style={{ width: null, height: 200 }}
         />
       )}
       {inputs.pickedcategory === "music-sales_" && (
         <Image
-          source={{
-            uri:
-              "https://cdn.pixabay.com/photo/2015/05/15/14/31/amplifier-768536_960_720.jpg"
-          }}
-          style={{ width: null, height: 75 }}
+          source={require("../assets/instruments.png")}
+          style={{ width: null, height: 200 }}
         />
       )}
        {!inputs.pickedcategory && (
         <Image
-          source={{
-            uri:
-              "https://cdn.pixabay.com/photo/2019/09/20/05/57/music-instruments-4490883_960_720.png"
-          }}
-          style={{ width: null, height: 75 }}
+          source={require("../assets/instruments.png")}
+          style={{ width: null, height: 200 }}
         />
       )}
 
