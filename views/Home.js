@@ -50,10 +50,10 @@ const Home = (props) => {
         <Fab
           active={toggle}
           direction='left'
-          containerStyle={{}}
           style={{ backgroundColor: '#5067FF' }}
           position='topRight'
           onPress={() => setToggle(!toggle)}
+          containerStyle={{top: '0%'}}
         >
           <Icon name='menu' />
           <Button
@@ -69,7 +69,6 @@ const Home = (props) => {
             <Icon name='snow' />
           </Button>
           <Button
-            disabled
             style={{ backgroundColor: '#DD5144' }}
             onPress={() => signOutAsync()}
           >

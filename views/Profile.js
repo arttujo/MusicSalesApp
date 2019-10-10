@@ -97,10 +97,10 @@ const Profile = props => {
         <CardItem>
           <Body>
             <Button onPress={navMyFiles}>
-              <Text>View my files</Text>
+              <Text>View items</Text>
             </Button>
             <Button onPress={navMyFavs}>
-              <Text>View my favourites</Text>
+              <Text>View favourites</Text>
             </Button>
             <Button onPress={signOutAsync}>
               <Text>Log Out</Text>
