@@ -255,13 +255,13 @@ const Upload = (props) => {
                 value=''
                 style={{ textDecorationLine: 'underline' }}
               />
-          <Picker.Item label='Guitars' value='music-sales_guitars' />
-          <Picker.Item label='Basses' value='music-sales_basses' />
-          <Picker.Item label='Drums' value='music-sales_drums' />
-          <Picker.Item label='Keyboards' value='music-sales_keyboards' />
-          <Picker.Item label='Amplifiers' value='music-sales_amplifiers' />
-          <Picker.Item label='Trombones' value='music-sales_trombones' />
-          <Picker.Item label='Equipment' value='music-sales_equipment' />
+          <Picker.Item label='Guitars' value='guitars' />
+          <Picker.Item label='Basses' value='basses' />
+          <Picker.Item label='Drums' value='drums' />
+          <Picker.Item label='Keyboards' value='keyboards' />
+          <Picker.Item label='Amplifiers' value='amplifiers' />
+          <Picker.Item label='Trombones' value='trombones' />
+          <Picker.Item label='Equipment' value='equipment' />
             </Picker>
           </Item>
           <Button
@@ -270,7 +270,7 @@ const Upload = (props) => {
               validateInputs(inputs, props);
             }}
           >
-            <Text>Upload!</Text>
+            <Text>Submit Post!</Text>
           </Button>
           <Button
             onPress={() => {
