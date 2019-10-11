@@ -152,7 +152,7 @@ const Upload = (props) => {
         props.navigation.navigate('Home');
         console.log('Upload Done!');
         alert('Upload Done!');
-      }, 2000);
+      }, 3000);
     } else {
       const errorArray = [titleError.title, descError.description];
 

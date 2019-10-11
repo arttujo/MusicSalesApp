@@ -78,7 +78,7 @@ const FavouritesListItem = (props) => {
             }, 1000);
           }}
         >
-          <Icon name='remove-circle-outline' />
+          <Icon name='heart-dislike' />
         </Button>
         <Button
           onPress={() => {
